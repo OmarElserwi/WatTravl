@@ -5,6 +5,7 @@ data class HallwayNode(
     var east: HallwayNode? = null,             // East neighboring hallway node
     var west: HallwayNode? = null,             // West neighboring hallway node
     val classrooms: MutableList<ClassroomNode> = mutableListOf() // Connected classroom nodes
+    val distances: MutableMap<HallwayNode, Int> = mutableMapOf()  
 )
 
 data class ClassroomNode(
