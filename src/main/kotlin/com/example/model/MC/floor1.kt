@@ -1,6 +1,4 @@
-package com.example.graph
-import com.example.graph.*
-import NodeStructure.*
+package com.example.model.MC
 
 fun buildGraph(): List<HallwayNode> {
     // Create classroom nodes

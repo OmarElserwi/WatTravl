@@ -1,3 +1,5 @@
+package com.example.model.MC
+
 data class HallwayNode(
     val nodeId: Int,                        // Identifier for the hallway node
     var north: HallwayNode? = null,         // North neighboring hallway node
@@ -89,5 +91,3 @@ fun main() {
     // Print the map structure
     printMap(listOf(hallway1, hallway2, hallway3))
 }
-
-main()

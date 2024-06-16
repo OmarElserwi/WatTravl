@@ -1,8 +1,6 @@
-package com.example.graph
+package com.example.model.MC
 
-import com.example.graph.*
 import java.util.PriorityQueue
-import NodeStructure.*
 
 fun dijkstra(start: HallwayNode): Map<HallwayNode, Int> {
     val distances = mutableMapOf<HallwayNode, Int>().withDefault { Int.MAX_VALUE }

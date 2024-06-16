@@ -1,7 +1,6 @@
-package com.example.graph
-import com.example.graph.*
-import com.example.graph.floor1.*
-import com.example.graph.Dijkstra.*
+package com.example.model.MC
+
+import com.example.model.MC.*
 
 fun main() {
     // Build the graph
