@@ -7,7 +7,7 @@ fun main() {
     val hallways = buildGraph()
 
     // Run Dijkstra's algorithm from hallway1
-    val startNode = hallways.first()
+    val startNode = hallways.values.first()
     val distances = dijkstra(startNode)
 
     // Print the distances

@@ -2,12 +2,12 @@ package com.example.model.MC
 
 import java.util.PriorityQueue
 
-fun dijkstra(start: HallwayNode): Map<HallwayNode, Int> {
-    val distances = mutableMapOf<HallwayNode, Int>().withDefault { Int.MAX_VALUE }
-    val priorityQueue = PriorityQueue<Pair<HallwayNode, Int>>(compareBy { it.second })
+fun dijkstra(start: HallwayNode): Map<HallwayNode, Double> {
+    val distances = mutableMapOf<HallwayNode, Double>().withDefault { Double.MAX_VALUE }
+    val priorityQueue = PriorityQueue<Pair<HallwayNode, Double>>(compareBy { it.second })
 
-    priorityQueue.add(start to 0)
-    distances[start] = 0
+    priorityQueue.add(start to 0.0)
+    distances[start] = 0.0
 
     while (priorityQueue.isNotEmpty()) {
         val (currentNode, currentDistance) = priorityQueue.poll()
