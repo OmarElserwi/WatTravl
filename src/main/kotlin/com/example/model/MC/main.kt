@@ -1,17 +1,14 @@
 package com.example.model.MC
 
-import com.example.model.MC.*
-
 fun main() {
-    // Build the graph
     val hallways = buildGraph()
-
-    // Run Dijkstra's algorithm from hallway1
-    val startNode = hallways.values.first()
+    
+    // Change this to the desired starting node
+    val startNodeId = 123
+    val startNode = hallways[startNodeId] ?: throw IllegalArgumentException("Hallway node $startNodeId does not exist")
+    
     val distances = dijkstra(startNode)
-
-    // Print the distances
     distances.forEach { (hallway, distance) ->
-        println("Distance from Hallway ${startNode.nodeId} to Hallway ${hallway.nodeId}: $distance")
+        println("Distance from ${startNode.nodeId} to ${hallway.nodeId}: $distance")
     }
 }
