@@ -387,8 +387,8 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[114]!! to hallways[115]!!] = 2 * unit
     globalDistances[hallways[115]!! to hallways[114]!!] = 2 * unit
     
-    globalDistances[hallways[109]!! to hallways[115]!!] = 1.5 * unit
-    globalDistances[hallways[115]!! to hallways[109]!!] = 1.5 * unit
+    globalDistances[hallways[109]!! to hallways[116]!!] = 1.5 * unit
+    globalDistances[hallways[116]!! to hallways[109]!!] = 1.5 * unit
     
     globalDistances[hallways[114]!! to hallways[117]!!] = 1.2 * unit
     globalDistances[hallways[117]!! to hallways[114]!!] = 1.2 * unit
