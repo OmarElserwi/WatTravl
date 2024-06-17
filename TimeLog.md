@@ -4,3 +4,4 @@
 | June 1, 2024 |     | 1    |       |        |        |     | Test |
 | June 16, 2024|     | 1    |       |        |        |     | Add Base Project |
 | June 17, 2024|     | 1    |       |        |        |     | Location Selectors, Filters and "Find Route" Button |
+| June 17, 2024|     | 1    |       |        |        |     | Add Activity Switch to Map |
