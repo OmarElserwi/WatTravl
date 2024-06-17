@@ -1,17 +1,19 @@
 package com.example.model.MC
 
-import com.example.model.MC.*
-
 fun main() {
-    // Build the graph
     val hallways = buildGraph()
 
-    // Run Dijkstra's algorithm from hallway1
-    val startNode = hallways.first()
-    val distances = dijkstra(startNode)
+    // Change these to the desired starting and ending nodes
+    val startNodeId = 101
+    val endNodeId = 153
 
-    // Print the distances
+    val startNode = hallways[startNodeId] ?: throw IllegalArgumentException("Hallway node $startNodeId does not exist")
+    val endNode = hallways[endNodeId] ?: throw IllegalArgumentException("Hallway node $endNodeId does not exist")
+
+    val distances = dijkstra(startNode)
     distances.forEach { (hallway, distance) ->
-        println("Distance from Hallway ${startNode.nodeId} to Hallway ${hallway.nodeId}: $distance")
+        println("Distance from ${startNode.nodeId} to ${hallway.nodeId}: ${distance.first}")
     }
+
+    printPath(distances, startNode, endNode)
 }
