@@ -1,35 +1,41 @@
 package com.example.wattravl
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.wattravl.databinding.ActivityMainBinding
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
-        val navView: BottomNavigationView = binding.navView
+        // Add Location Spinner
+        val fromLocationSpinner: Spinner = findViewById(R.id.fromLocationSpinner)
+        val toLocationSpinner: Spinner = findViewById(R.id.toLocationSpinner)
+        val locationItems = resources.getStringArray(R.array.Locations)
+        val locationAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, locationItems)
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        fromLocationSpinner.adapter = locationAdapter
+        toLocationSpinner.adapter = locationAdapter
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        // Add Room Spinner
+        val fromRoomSpinner: Spinner = findViewById(R.id.fromRoomSpinner)
+        val toRoomSpinner: Spinner = findViewById(R.id.toRoomSpinner)
+        val roomItems = resources.getStringArray(R.array.Rooms)
+        val roomAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, roomItems)
+        roomAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        fromRoomSpinner.adapter = roomAdapter
+        toRoomSpinner.adapter = roomAdapter
     }
 }
