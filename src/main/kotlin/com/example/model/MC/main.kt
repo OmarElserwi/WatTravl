@@ -3,11 +3,16 @@ package com.example.model.MC
 fun main() {
     val hallways = buildGraph()
 
-    classroomToHallwayMap = createClassroomToHallwayMap(hallways)
+    // Create the classroom to hallway map
+    val classroomToHallwayMap = createClassroomToHallwayMap(hallways)
 
-    // Change these to the desired starting and ending nodes
-    val startNodeId = 101
-    val endNodeId = 153
+    // Change these to the desired starting and ending classroom IDs
+    val startClassroomId = 1027
+    val endClassroomId = 1085
+
+    // Find the corresponding hallway nodes for the start and end classrooms
+    val startNodeId = classroomToHallwayMap[startClassroomId] ?: throw IllegalArgumentException("Classroom $startClassroomId does not exist in the map")
+    val endNodeId = classroomToHallwayMap[endClassroomId] ?: throw IllegalArgumentException("Classroom $endClassroomId does not exist in the map")
 
     val startNode = hallways[startNodeId] ?: throw IllegalArgumentException("Hallway node $startNodeId does not exist")
     val endNode = hallways[endNodeId] ?: throw IllegalArgumentException("Hallway node $endNodeId does not exist")

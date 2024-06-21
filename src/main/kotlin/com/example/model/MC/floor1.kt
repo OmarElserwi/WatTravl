@@ -302,8 +302,8 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[114]!! to hallways[115]!!] = 2 * unit
     globalDistances[hallways[115]!! to hallways[114]!!] = 2 * unit
     
-    globalDistances[hallways[109]!! to hallways[116]!!] = 1.5 * unit
-    globalDistances[hallways[116]!! to hallways[109]!!] = 1.5 * unit
+    globalDistances[hallways[109]!! to hallways[116]!!] = 1.0 * unit
+    globalDistances[hallways[116]!! to hallways[109]!!] = 1.0 * unit
     
     globalDistances[hallways[114]!! to hallways[117]!!] = 1.2 * unit
     globalDistances[hallways[117]!! to hallways[114]!!] = 1.2 * unit
@@ -514,10 +514,12 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     hallways[153]?.classrooms?.add(1001)
 }
 
-fun createClassroomToHallwayMap(hallways: Map<Int, HallwayNode>) {
+fun createClassroomToHallwayMap(hallways: Map<Int, HallwayNode>): Map<Int, Int> {
+    val map = mutableMapOf<Int, Int>()
     hallways.forEach { (hallwayId, hallway) ->
         hallway.classrooms.forEach { classroomId ->
-            classroomToHallwayMap[classroomId] = hallwayId
+            map[classroomId] = hallwayId
         }
     }
+    return map
 }
