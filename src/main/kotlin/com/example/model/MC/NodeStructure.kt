@@ -6,7 +6,7 @@ data class HallwayNode(
     var south: HallwayNode? = null,         // South neighboring hallway node
     var east: HallwayNode? = null,          // East neighboring hallway node
     var west: HallwayNode? = null,          // West neighboring hallway node
-    val classrooms: MutableList<ClassroomNode> = mutableListOf()  // Connected classroom nodes
+    val classrooms: MutableList<Int> = mutableListOf()  // Connected classrooms
 ) {
     override fun hashCode(): Int {
         return nodeId
@@ -18,11 +18,6 @@ data class HallwayNode(
         return nodeId == other.nodeId
     }
 }
-
-data class ClassroomNode(
-    val roomId: Int,       // Identifier for the classroom
-    var connectedHallway: HallwayNode? = null // Connected hallway node
-)
 
 val globalDistances = mutableMapOf<Pair<HallwayNode, HallwayNode>, Double>()
 

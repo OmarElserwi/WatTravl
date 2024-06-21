@@ -3,6 +3,8 @@ package com.example.model.MC
 fun main() {
     val hallways = buildGraph()
 
+    classroomToHallwayMap = createClassroomToHallwayMap(hallways)
+
     // Change these to the desired starting and ending nodes
     val startNodeId = 101
     val endNodeId = 153

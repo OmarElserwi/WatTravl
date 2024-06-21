@@ -1,9 +1,6 @@
 package com.example.model.MC
 
 fun buildGraph(): Map<Int, HallwayNode> {
-    // Create classroom nodes
-    val classrooms = createClassrooms()
-
     println("Classrooms created")
 
     // Create hallway nodes
@@ -22,96 +19,14 @@ fun buildGraph(): Map<Int, HallwayNode> {
     println("Distances set")
 
     // Connect classrooms to hallways
-    connectClassroomsToHallways(hallways, classrooms)
+    connectClassroomsToHallways(hallways)
 
     println("Classrooms connected")
 
-    return hallways
-}
+    
 
-fun createClassrooms(): Map<Int, ClassroomNode> {
-    return mapOf(
-        1001 to ClassroomNode(roomId = 1001),
-        1003 to ClassroomNode(roomId = 1003),
-        1007 to ClassroomNode(roomId = 1007),
-        1004 to ClassroomNode(roomId = 1004),
-        1005 to ClassroomNode(roomId = 1005),
-        1006 to ClassroomNode(roomId = 1006),
-        1008 to ClassroomNode(roomId = 1008),
-        1009 to ClassroomNode(roomId = 1009),
-        1010 to ClassroomNode(roomId = 1010),
-        1011 to ClassroomNode(roomId = 1011),
-        1012 to ClassroomNode(roomId = 1012),
-        1013 to ClassroomNode(roomId = 1013),
-        1014 to ClassroomNode(roomId = 1014),
-        1015 to ClassroomNode(roomId = 1015),
-        1016 to ClassroomNode(roomId = 1016),
-        1017 to ClassroomNode(roomId = 1017),
-        1018 to ClassroomNode(roomId = 1018),
-        1020 to ClassroomNode(roomId = 1020),
-        1021 to ClassroomNode(roomId = 1021),
-        1022 to ClassroomNode(roomId = 1022),
-        1023 to ClassroomNode(roomId = 1023),
-        1024 to ClassroomNode(roomId = 1024),
-        1025 to ClassroomNode(roomId = 1025),
-        1026 to ClassroomNode(roomId = 1026),
-        1027 to ClassroomNode(roomId = 1027),
-        1028 to ClassroomNode(roomId = 1028),
-        1029 to ClassroomNode(roomId = 1029),
-        1030 to ClassroomNode(roomId = 1030),
-        1031 to ClassroomNode(roomId = 1031),
-        1032 to ClassroomNode(roomId = 1032),
-        1033 to ClassroomNode(roomId = 1033),
-        1034 to ClassroomNode(roomId = 1034),
-        1035 to ClassroomNode(roomId = 1035),
-        1036 to ClassroomNode(roomId = 1036),
-        1037 to ClassroomNode(roomId = 1037),
-        1038 to ClassroomNode(roomId = 1038),
-        1039 to ClassroomNode(roomId = 1039),
-        1040 to ClassroomNode(roomId = 1040),
-        1041 to ClassroomNode(roomId = 1041),
-        1042 to ClassroomNode(roomId = 1042),
-        1043 to ClassroomNode(roomId = 1043),
-        1044 to ClassroomNode(roomId = 1044),
-        1045 to ClassroomNode(roomId = 1045),
-        1046 to ClassroomNode(roomId = 1046),
-        1048 to ClassroomNode(roomId = 1048),
-        1049 to ClassroomNode(roomId = 1049),
-        1052 to ClassroomNode(roomId = 1052),
-        1056 to ClassroomNode(roomId = 1056),
-        1058 to ClassroomNode(roomId = 1058),
-        1059 to ClassroomNode(roomId = 1059),
-        1061 to ClassroomNode(roomId = 1061),
-        1063 to ClassroomNode(roomId = 1063),
-        1065 to ClassroomNode(roomId = 1065),
-        1066 to ClassroomNode(roomId = 1066),
-        1068 to ClassroomNode(roomId = 1068),
-        1070 to ClassroomNode(roomId = 1070),
-        1071 to ClassroomNode(roomId = 1071),
-        1072 to ClassroomNode(roomId = 1072),
-        1073 to ClassroomNode(roomId = 1073),
-        1074 to ClassroomNode(roomId = 1074),
-        1076 to ClassroomNode(roomId = 1076),
-        1077 to ClassroomNode(roomId = 1077),
-        1078 to ClassroomNode(roomId = 1078),
-        1079 to ClassroomNode(roomId = 1079),
-        1080 to ClassroomNode(roomId = 1080),
-        1081 to ClassroomNode(roomId = 1081),
-        1082 to ClassroomNode(roomId = 1082),
-        1084 to ClassroomNode(roomId = 1084),
-        1085 to ClassroomNode(roomId = 1085),
-        1088 to ClassroomNode(roomId = 1088),
-        1089 to ClassroomNode(roomId = 1089),
-        1092 to ClassroomNode(roomId = 1092),
-        1107 to ClassroomNode(roomId = 1107),
-        10601 to ClassroomNode(roomId = 10601),
-        10602 to ClassroomNode(roomId = 10602),
-        10603 to ClassroomNode(roomId = 10603),
-        10604 to ClassroomNode(roomId = 10604),
-        10605 to ClassroomNode(roomId = 10605),
-        10607 to ClassroomNode(roomId = 10607),
-        10608 to ClassroomNode(roomId = 10608)
-    )
+
+    return hallways
 }
 
 fun createHallways(): Map<Int, HallwayNode> {
@@ -508,13 +423,101 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[153]!! to hallways[152]!!] = 0.5 * unit
 }
 
-fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>, classrooms: Map<Int, ClassroomNode>) {
+fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     // Example connections, adjust based on actual requirements
-    hallways[101]?.classrooms?.add(classrooms[1001]!!)
-    hallways[102]?.classrooms?.add(classrooms[1003]!!)
-    hallways[103]?.classrooms?.add(classrooms[1007]!!)
+    hallways[101]?.classrooms?.add(1027)
+    hallways[102]?.classrooms?.add(1028)
+    hallways[102]?.classrooms?.add(1029)
+    hallways[103]?.classrooms?.add(1030)
+    hallways[103]?.classrooms?.add(1031)
+    hallways[103]?.classrooms?.add(1032)
+    hallways[104]?.classrooms?.add(1033)
+    hallways[104]?.classrooms?.add(1034)
+    hallways[104]?.classrooms?.add(1035)
+    hallways[104]?.classrooms?.add(1036)
+    hallways[105]?.classrooms?.add(1037)
+    hallways[105]?.classrooms?.add(1038)
+    hallways[105]?.classrooms?.add(1039)
+    hallways[105]?.classrooms?.add(1040)
+    hallways[106]?.classrooms?.add(1041)
+    hallways[106]?.classrooms?.add(1042)
+    hallways[107]?.classrooms?.add(1043)
+    hallways[107]?.classrooms?.add(1044)
+    hallways[107]?.classrooms?.add(1049)
+    hallways[107]?.classrooms?.add(1049) //1049A
+    hallways[108]?.classrooms?.add(1045)
+    hallways[108]?.classrooms?.add(1046)
+    hallways[109]?.classrooms?.add(1096)
+    hallways[109]?.classrooms?.add(1026) //bathroom
+    hallways[110]?.classrooms?.add(1058)
+    hallways[111]?.classrooms?.add(1056)
+    hallways[113]?.classrooms?.add(1052)
+    hallways[114]?.classrooms?.add(1099)
+    hallways[115]?.classrooms?.add(1047) //bathroom
+    hallways[115]?.classrooms?.add(1048)
+    hallways[115]?.classrooms?.add(1100) //elevators
+    hallways[116]?.classrooms?.add(1025)
+    hallways[116]?.classrooms?.add(1024)
+    hallways[118]?.classrooms?.add(1023)
+    hallways[118]?.classrooms?.add(1022)
+    hallways[120]?.classrooms?.add(1021)
+    hallways[120]?.classrooms?.add(1020)
+    hallways[121]?.classrooms?.add(1018)
+    hallways[124]?.classrooms?.add(1061)
+    hallways[125]?.classrooms?.add(1063)
+    hallways[126]?.classrooms?.add(1070)
+    hallways[126]?.classrooms?.add(1071)
+    hallways[127]?.classrooms?.add(1016)
+    hallways[127]?.classrooms?.add(1014)
+    hallways[127]?.classrooms?.add(1017)
+    hallways[127]?.classrooms?.add(1015)
+    hallways[128]?.classrooms?.add(10601) //1060A
+    hallways[129]?.classrooms?.add(1073)
+    hallways[129]?.classrooms?.add(1072)
+    hallways[130]?.classrooms?.add(1012)
+    hallways[130]?.classrooms?.add(1013)
+    hallways[130]?.classrooms?.add(1010)
+    hallways[130]?.classrooms?.add(1011)
+    hallways[131]?.classrooms?.add(10602) //1060B
+    //hallways[132]?.classrooms?.add(1012) double entrance case
+    hallways[131]?.classrooms?.add(10603) //1060C
+    hallways[133]?.classrooms?.add(1074)
+    hallways[133]?.classrooms?.add(1076)
+    hallways[133]?.classrooms?.add(1077)
+    hallways[134]?.classrooms?.add(1006)
+    hallways[134]?.classrooms?.add(1007)
+    hallways[134]?.classrooms?.add(1008)
+    hallways[134]?.classrooms?.add(1009)
+    hallways[135]?.classrooms?.add(10607) //1060G
+    hallways[136]?.classrooms?.add(1079)
+    hallways[136]?.classrooms?.add(1080)
+    hallways[137]?.classrooms?.add(1005)
+    //hallways[138]?.classrooms?.add(1003) double entrance case
+    hallways[139]?.classrooms?.add(1004)
+    hallways[139]?.classrooms?.add(1003)
+    hallways[140]?.classrooms?.add(10604) // 1060D
+    hallways[141]?.classrooms?.add(1081)
+    hallways[141]?.classrooms?.add(1078)
+    hallways[141]?.classrooms?.add(1082)
+    hallways[141]?.classrooms?.add(1083)
+    hallways[142]?.classrooms?.add(1092) //elevators
+    hallways[142]?.classrooms?.add(1002)
+    hallways[142]?.classrooms?.add(1091)
+    hallways[144]?.classrooms?.add(10605) //1060E
+    hallways[146]?.classrooms?.add(1088)
+    //hallways[148]?.classrooms?.add(1088) double entrance case
+    //hallways[148]?.classrooms?.add(1085) double entrace case
+    hallways[149]?.classrooms?.add(1107)
+    hallways[150]?.classrooms?.add(1085)
+    hallways[151]?.classrooms?.add(1106)
+    hallways[152]?.classrooms?.add(1089)
+    hallways[153]?.classrooms?.add(1001)
+}
 
-    classrooms[1001]?.connectedHallway = hallways[101]
-    classrooms[1003]?.connectedHallway = hallways[102]
-    classrooms[1007]?.connectedHallway = hallways[103]
+fun createClassroomToHallwayMap(hallways: Map<Int, HallwayNode>) {
+    hallways.forEach { (hallwayId, hallway) ->
+        hallway.classrooms.forEach { classroomId ->
+            classroomToHallwayMap[classroomId] = hallwayId
+        }
+    }
 }
