@@ -29,54 +29,16 @@ fun dijkstra(start: HallwayNode): Map<HallwayNode, Pair<Double, HallwayNode?>> {
 
 fun printPath(distances: Map<HallwayNode, Pair<Double, HallwayNode?>>, start: HallwayNode, end: HallwayNode) {
     val path = mutableListOf<HallwayNode>()
-    val pathDistances = mutableListOf<Double>()
-    val orientations = mutableListOf<String>()
     var currentNode: HallwayNode? = end
 
     while (currentNode != null) {
         path.add(currentNode)
-        val previousNode = distances[currentNode]?.second
-        if (previousNode != null) {
-            pathDistances.add(globalDistances[previousNode to currentNode] ?: 0.0)
-            val orientation = when (currentNode) {
-                previousNode.north -> "north"
-                previousNode.south -> "south"
-                previousNode.east -> "east"
-                previousNode.west -> "west"
-                else -> "unknown"
-            }
-            orientations.add(orientation)
-        }
-        currentNode = previousNode
+        currentNode = distances[currentNode]?.second
     }
 
     path.reverse()
-    pathDistances.reverse()
-    orientations.reverse()
 
     println("Path from ${start.nodeId} to ${end.nodeId}:")
-
-    var currentDirection = orientations.firstOrNull()
-    var currentDistance = 0.0
-
-    path.forEachIndexed { index, node ->
-        if (index < pathDistances.size) {
-            if (orientations[index] == currentDirection) {
-                currentDistance += pathDistances[index]
-            } else {
-                if (currentDirection != null) {
-                    print("Go $currentDistance m $currentDirection, ")
-                }
-                currentDirection = orientations[index]
-                currentDistance = pathDistances[index]
-            }
-        }
-    }
-
-    // Print the last segment
-    if (currentDirection != null) {
-        print("Go $currentDistance m $currentDirection to Hallway Node ${end.nodeId}")
-    }
-
-    println()
+    println(path.joinToString(" -> ") { it.nodeId.toString() })
+    return path
 }
