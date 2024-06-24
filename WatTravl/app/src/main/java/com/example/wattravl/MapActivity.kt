@@ -16,7 +16,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.example.wattravl.viewmodel.ViewModel
-import java.util.logging.Level
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger("MapActivity")
@@ -26,8 +25,8 @@ class MapActivity : AppCompatActivity() {
     private lateinit var scaleDetector: ScaleGestureDetector
     private lateinit var gestureDetector: GestureDetector
     private var scale = 10f
-    private var curOffsetX = 0f
-    private var curOffsetY = 0f
+    private var curOffsetX = 500f
+    private var curOffsetY = 200f
     private lateinit var viewModel: ViewModel
     private lateinit var imgView: ImageView
 
@@ -45,6 +44,14 @@ class MapActivity : AppCompatActivity() {
         imgView.setImageBitmap(bitmap)
     }
 
+    fun convertCharRooms(id: String): Int {
+        if (id.length == 5) {
+            val lastDigit = id[4] - 'A' + 1
+            return id.substring(0, 4).toInt() * 10 + lastDigit
+        } else {
+            return id.toInt()
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +79,10 @@ class MapActivity : AppCompatActivity() {
         imgView = findViewById(R.id.imageView)
 
         viewModel = ViewModel(this)
-        viewModel.drawPath()
+
+
+        viewModel.drawPath(convertCharRooms(selectedFromRoom!!), convertCharRooms(selectedToRoom!!))
+
         updateImage()
 
         scaleDetector = ScaleGestureDetector(applicationContext, object: OnScaleGestureListener {
@@ -137,5 +147,66 @@ class MapActivity : AppCompatActivity() {
             // logger.log(Level.INFO, "Touched at " + motionEvent.x + " " + motionEvent.y)
             true
         }
+    }
+
+    companion object {
+        val nodesToCoords = mapOf(
+            101 to Pair(600, 640),
+            102 to Pair(600, 595),
+            103 to Pair(600, 539),
+            104 to Pair(600, 474),
+            105 to Pair(600, 405),
+            106 to Pair(600, 362),
+            107 to Pair(600, 305),
+            108 to Pair(600, 260),
+            109 to Pair(665, 640),
+            110 to Pair(665, 620),
+            111 to Pair(665, 580),
+            112 to Pair(665, 520),
+            113 to Pair(665, 407),
+            114 to Pair(665, 260),
+            115 to Pair(665, 167),
+            116 to Pair(710, 640),
+            118 to Pair(765, 640),
+            120 to Pair(825, 640),
+            122 to Pair(900, 640),
+            117 to Pair(715, 260),
+            119 to Pair(760, 260),
+            121 to Pair(825, 260),
+            123 to Pair(900, 545),
+            124 to Pair(900, 435),
+            125 to Pair(900, 360),
+            126 to Pair(900, 260),
+            127 to Pair(940, 640),
+            130 to Pair(1000, 640),
+            134 to Pair(1060, 640),
+            137 to Pair(1110, 640),
+            139 to Pair(1140, 640),
+            143 to Pair(1165, 640),
+            145 to Pair(1200, 640),
+        )
+
+        val nodesToCoords2 = mapOf(
+            146 to Pair(900, 430),
+            147 to Pair(900, 408),
+            148 to Pair(900, 345),
+            149 to Pair(900, 320),
+            150 to Pair(900, 285),
+            151 to Pair(900, 195),
+            129 to Pair(705, 195),
+            133 to Pair(750, 195),
+            141 to Pair(850, 195),
+            136 to Pair(795, 195),
+            128 to Pair(725, 408),
+            131 to Pair(757, 408),
+            132 to Pair(757, 389),
+            135 to Pair(795, 408),
+            138 to Pair(825, 408),
+            140 to Pair(840, 408),
+            144 to Pair(866, 408),
+            142 to Pair(873, 565),
+            152 to Pair(940, 452),
+            153 to Pair(970, 452),
+        )
     }
 }

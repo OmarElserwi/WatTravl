@@ -9,7 +9,13 @@
 
     <string-array name="Rooms">
         <item>Room #</item>
-        <item>1234</item>
-        <item>4321</item>
+        <item>1023</item>
+        <item>1048</item>
+        <item>1027</item>
+        <item>1012</item>
+        <item>1001</item>
+        <item>1061</item>
+        <item>1060B</item>
+        <item>1089</item>
     </string-array>
 </resources>

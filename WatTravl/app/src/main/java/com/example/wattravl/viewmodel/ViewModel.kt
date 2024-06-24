@@ -15,6 +15,7 @@ import com.caverock.androidsvg.SVG
 import com.example.wattravl.MapActivity
 import com.example.wattravl.model.*
 import com.example.wattravl.model.MC.Model
+import java.lang.Exception
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -133,18 +134,57 @@ class ViewModel(
         pathCoordinates.addAll(pathCoords)
     }
 
+    fun getNodeCoords(id: Int): Pair<Int, Int> {
+        if (MapActivity.Companion.nodesToCoords.containsKey(id)) {
+            val coords = MapActivity.Companion.nodesToCoords[id]!!
+            return Pair((coords.first * 1224 / 1632), (coords.second * 792 / 1056))
+        } else if (MapActivity.Companion.nodesToCoords2.containsKey(id)) {
+            return MapActivity.Companion.nodesToCoords2[id]!!
+        } else {
+            throw Exception("Invalid node ID " + id)
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     fun drawPath(start: Int, end: Int) {
         val path = model.getPath(start, end)
+        val coords = mutableListOf<Pair<Int, Int>>()
         path.forEach {
             logger.log(Level.INFO, it.nodeId.toString())
+            // coords.add(MapActivity.Companion.nodesToCoords[it.nodeId]!!)
+            coords.add(getNodeCoords(it.nodeId))
         }
 
+
+        /*
+        coords.clear()
+        coords.add(MapActivity.Companion.nodesToCoords[110]!!)
+        coords.add(MapActivity.Companion.nodesToCoords[115]!!)
+
+         */
+
+        // 1632 1056: coordinates you thought
+        // 1224 792: coordinates actual
+
+
+        /*
+        setPathCoordinates(coords.map { (x, y) ->
+            Pair((x * 1224 / 1632), (y * 792 / 1056))
+        })
+*/
+        setPathCoordinates(coords)
+
+
+
+
+        /*
         setPathCoordinates(listOf(
-            Pair(300, 200),
-            Pair(500, 1000),
-            Pair(200, 700),
-            Pair(1000, 200)
+            Pair(500, 200),
+            Pair(900, 200),
+            // Pair(200, 700),
+            // Pair(1000, 200)
         ))
+
+         */
     }
 }
