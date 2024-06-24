@@ -1,5 +1,6 @@
 package com.example.wattravl
 
+import android.graphics.Matrix
 import android.os.Build
 import android.os.Bundle
 import android.view.GestureDetector
@@ -24,11 +25,15 @@ class MapActivity : AppCompatActivity() {
     // private val viewModel = ViewModel(this)
     private lateinit var scaleDetector: ScaleGestureDetector
     private lateinit var gestureDetector: GestureDetector
-    private var scale = 1.0f
-    private var curOffsetX = 0.0f
-    private var curOffsetY = 0.0f
+    private var scale = 10f
+    private var curOffsetX = 0f
+    private var curOffsetY = 0f
     private lateinit var viewModel: ViewModel
     private lateinit var imgView: ImageView
+
+    var densityScale = 0f // used to convert screen distances to pixels
+
+    val matrix = Matrix()
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun updateImage() {
@@ -62,15 +67,19 @@ class MapActivity : AppCompatActivity() {
         btn.text = "PUT MAP HERE:\n" + "From Location: $selectedFromLocation Room $selectedFromRoom\nTo Location: $selectedToLocation Room $selectedToRoom"
         btn.isVisible = false
 
+        densityScale = applicationContext.resources.displayMetrics.density - 0.55f
+
         imgView = findViewById(R.id.imageView)
 
         viewModel = ViewModel(this)
+        viewModel.drawPath()
         updateImage()
 
         scaleDetector = ScaleGestureDetector(applicationContext, object: OnScaleGestureListener {
             override fun onScale(detector: ScaleGestureDetector): Boolean {
                 // logger.log(Level.INFO, "On scale called")
                 scale *= detector.scaleFactor
+                matrix.postScale(detector.scaleFactor, detector.scaleFactor, detector.focusX, detector.focusY)
                 return true // event handled
             }
 
@@ -92,8 +101,9 @@ class MapActivity : AppCompatActivity() {
             ): Boolean {
                 // Implement movement code here
                 // logger.log(Level.INFO, "On scroll called")
-                curOffsetX += p2
-                curOffsetY += p3
+                curOffsetX += p2 * densityScale / scale
+                curOffsetY += p3 * densityScale / scale
+                matrix.postTranslate(p2 * densityScale / scale, p3 * densityScale / scale)
                 return true
             }
 
@@ -123,6 +133,8 @@ class MapActivity : AppCompatActivity() {
             scaleDetector.onTouchEvent(motionEvent)
             gestureDetector.onTouchEvent(motionEvent)
             updateImage()
+
+            // logger.log(Level.INFO, "Touched at " + motionEvent.x + " " + motionEvent.y)
             true
         }
     }

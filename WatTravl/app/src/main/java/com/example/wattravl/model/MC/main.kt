@@ -2,7 +2,6 @@ package com.example.wattravl.model
 import android.os.Build
 import androidx.annotation.RequiresApi
 
-
 @RequiresApi(Build.VERSION_CODES.N)
 fun main() {
     val hallways = buildGraph()
