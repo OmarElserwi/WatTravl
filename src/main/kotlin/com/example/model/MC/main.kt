@@ -7,8 +7,8 @@ fun main() {
     val classroomToHallwayMap = createClassroomToHallwayMap(hallways)
 
     // Change these to the desired starting and ending classroom IDs
-    val startClassroomId = 1027
-    val endClassroomId = 1085
+    val startClassroomId = 10602
+    val endClassroomId = 1001
 
     // Find the corresponding hallway nodes for the start and end classrooms
     val startNodeId = classroomToHallwayMap[startClassroomId] ?: throw IllegalArgumentException("Classroom $startClassroomId does not exist in the map")
