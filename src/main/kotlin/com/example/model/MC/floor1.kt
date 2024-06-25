@@ -284,20 +284,20 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[108]!! to hallways[114]!!] = 1.5 * unit
     globalDistances[hallways[114]!! to hallways[108]!!] = 1.5 * unit
     
-    globalDistances[hallways[109]!! to hallways[110]!!] = 0.5 * unit
-    globalDistances[hallways[110]!! to hallways[109]!!] = 0.5 * unit
+    globalDistances[hallways[109]!! to hallways[110]!!] = 1.0 * unit
+    globalDistances[hallways[110]!! to hallways[109]!!] = 1.0 * unit
     
-    globalDistances[hallways[110]!! to hallways[111]!!] = 0.8 * unit
-    globalDistances[hallways[111]!! to hallways[110]!!] = 0.8 * unit
+    globalDistances[hallways[110]!! to hallways[111]!!] = 1.0 * unit
+    globalDistances[hallways[111]!! to hallways[110]!!] = 1.0 * unit
     
-    globalDistances[hallways[111]!! to hallways[112]!!] = 1 * unit
-    globalDistances[hallways[112]!! to hallways[111]!!] = 1 * unit
+    globalDistances[hallways[111]!! to hallways[112]!!] = 1.5 * unit
+    globalDistances[hallways[112]!! to hallways[111]!!] = 1.5 * unit
     
-    globalDistances[hallways[112]!! to hallways[113]!!] = 2 * unit
-    globalDistances[hallways[113]!! to hallways[112]!!] = 2 * unit
+    globalDistances[hallways[112]!! to hallways[113]!!] = 2.5 * unit
+    globalDistances[hallways[113]!! to hallways[112]!!] = 2.5 * unit
     
-    globalDistances[hallways[113]!! to hallways[114]!!] = 2.5 * unit
-    globalDistances[hallways[114]!! to hallways[113]!!] = 2.5 * unit
+    globalDistances[hallways[113]!! to hallways[114]!!] = 3.0 * unit
+    globalDistances[hallways[114]!! to hallways[113]!!] = 3.0 * unit
     
     globalDistances[hallways[114]!! to hallways[115]!!] = 2 * unit
     globalDistances[hallways[115]!! to hallways[114]!!] = 2 * unit
@@ -305,8 +305,8 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[109]!! to hallways[116]!!] = 1.0 * unit
     globalDistances[hallways[116]!! to hallways[109]!!] = 1.0 * unit
     
-    globalDistances[hallways[114]!! to hallways[117]!!] = 1.2 * unit
-    globalDistances[hallways[117]!! to hallways[114]!!] = 1.2 * unit
+    globalDistances[hallways[114]!! to hallways[117]!!] = 1.5 * unit
+    globalDistances[hallways[117]!! to hallways[114]!!] = 1.5 * unit
     
     globalDistances[hallways[116]!! to hallways[118]!!] = 1.5 * unit
     globalDistances[hallways[118]!! to hallways[116]!!] = 1.5 * unit
@@ -329,17 +329,17 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[122]!! to hallways[123]!!] = 2 * unit
     globalDistances[hallways[123]!! to hallways[122]!!] = 2 * unit
     
-    globalDistances[hallways[123]!! to hallways[124]!!] = 2.5 * unit
-    globalDistances[hallways[124]!! to hallways[123]!!] = 2.5 * unit
+    globalDistances[hallways[123]!! to hallways[124]!!] = 3.0 * unit
+    globalDistances[hallways[124]!! to hallways[123]!!] = 3.0 * unit
     
-    globalDistances[hallways[124]!! to hallways[125]!!] = 1.7 * unit
-    globalDistances[hallways[125]!! to hallways[124]!!] = 1.7 * unit
+    globalDistances[hallways[124]!! to hallways[125]!!] = 2.0 * unit
+    globalDistances[hallways[125]!! to hallways[124]!!] = 2.0 * unit
     
     globalDistances[hallways[125]!! to hallways[126]!!] = 2 * unit
     globalDistances[hallways[126]!! to hallways[125]!!] = 2 * unit
     
-    globalDistances[hallways[122]!! to hallways[127]!!] = 1 * unit
-    globalDistances[hallways[127]!! to hallways[122]!!] = 1 * unit
+    globalDistances[hallways[122]!! to hallways[127]!!] = 1.0 * unit
+    globalDistances[hallways[127]!! to hallways[122]!!] = 1.0 * unit
     
     globalDistances[hallways[123]!! to hallways[128]!!] = 1 * unit
     globalDistances[hallways[128]!! to hallways[123]!!] = 1 * unit
@@ -347,23 +347,26 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[126]!! to hallways[129]!!] = 1 * unit
     globalDistances[hallways[129]!! to hallways[126]!!] = 1 * unit
     
-    globalDistances[hallways[127]!! to hallways[130]!!] = 1.2 * unit
-    globalDistances[hallways[130]!! to hallways[127]!!] = 1.2 * unit
+    globalDistances[hallways[127]!! to hallways[130]!!] = 1.5 * unit
+    globalDistances[hallways[130]!! to hallways[127]!!] = 1.5 * unit
     
-    globalDistances[hallways[128]!! to hallways[131]!!] = 1.2 * unit
-    globalDistances[hallways[131]!! to hallways[128]!!] = 1.2 * unit
+    globalDistances[hallways[128]!! to hallways[131]!!] = 1.0 * unit
+    globalDistances[hallways[131]!! to hallways[128]!!] = 1.0 * unit
     
-    globalDistances[hallways[129]!! to hallways[133]!!] = 1.3 * unit
-    globalDistances[hallways[133]!! to hallways[129]!!] = 1.3 * unit
+    globalDistances[hallways[129]!! to hallways[133]!!] = 1.5 * unit
+    globalDistances[hallways[133]!! to hallways[129]!!] = 1.5 * unit
     
-    globalDistances[hallways[130]!! to hallways[134]!!] = 1 * unit
-    globalDistances[hallways[134]!! to hallways[130]!!] = 1 * unit
+    globalDistances[hallways[130]!! to hallways[134]!!] = 1.5 * unit
+    globalDistances[hallways[134]!! to hallways[130]!!] = 1.5 * unit
     
-    globalDistances[hallways[131]!! to hallways[132]!!] = 0.8 * unit
-    globalDistances[hallways[132]!! to hallways[131]!!] = 0.8 * unit
+    globalDistances[hallways[131]!! to hallways[132]!!] = 1.0 * unit
+    globalDistances[hallways[132]!! to hallways[131]!!] = 1.0 * unit
     
-    globalDistances[hallways[133]!! to hallways[136]!!] = 1.2 * unit
-    globalDistances[hallways[136]!! to hallways[133]!!] = 1.2 * unit
+    globalDistances[hallways[131]!! to hallways[135]!!] = 1.0 * unit
+    globalDistances[hallways[135]!! to hallways[131]!!] = 1.0 * unit
+    
+    globalDistances[hallways[133]!! to hallways[136]!!] = 1.5 * unit
+    globalDistances[hallways[136]!! to hallways[133]!!] = 1.5 * unit
     
     globalDistances[hallways[134]!! to hallways[137]!!] = 1 * unit
     globalDistances[hallways[137]!! to hallways[134]!!] = 1 * unit
@@ -374,17 +377,17 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[136]!! to hallways[141]!!] = 1.5 * unit
     globalDistances[hallways[141]!! to hallways[136]!!] = 1.5 * unit
     
-    globalDistances[hallways[137]!! to hallways[139]!!] = 0.2 * unit
-    globalDistances[hallways[139]!! to hallways[137]!!] = 0.2 * unit
+    globalDistances[hallways[137]!! to hallways[139]!!] = 0.5 * unit
+    globalDistances[hallways[139]!! to hallways[137]!!] = 0.5 * unit
     
-    globalDistances[hallways[138]!! to hallways[140]!!] = 0.2 * unit
-    globalDistances[hallways[140]!! to hallways[138]!!] = 0.2 * unit
+    globalDistances[hallways[138]!! to hallways[140]!!] = 0.5 * unit
+    globalDistances[hallways[140]!! to hallways[138]!!] = 0.5 * unit
     
-    globalDistances[hallways[141]!! to hallways[151]!!] = 1.3 * unit
-    globalDistances[hallways[151]!! to hallways[141]!!] = 1.3 * unit
+    globalDistances[hallways[141]!! to hallways[151]!!] = 1.5 * unit
+    globalDistances[hallways[151]!! to hallways[141]!!] = 1.5 * unit
     
-    globalDistances[hallways[139]!! to hallways[143]!!] = 0.4 * unit
-    globalDistances[hallways[143]!! to hallways[139]!!] = 0.4 * unit
+    globalDistances[hallways[139]!! to hallways[143]!!] = 0.5 * unit
+    globalDistances[hallways[143]!! to hallways[139]!!] = 0.5 * unit
     
     globalDistances[hallways[140]!! to hallways[144]!!] = 1 * unit
     globalDistances[hallways[144]!! to hallways[140]!!] = 1 * unit
@@ -392,8 +395,8 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[142]!! to hallways[143]!!] = 2 * unit
     globalDistances[hallways[143]!! to hallways[142]!!] = 2 * unit
     
-    globalDistances[hallways[143]!! to hallways[145]!!] = 0.3 * unit
-    globalDistances[hallways[145]!! to hallways[143]!!] = 0.3 * unit
+    globalDistances[hallways[143]!! to hallways[145]!!] = 1.0 * unit
+    globalDistances[hallways[145]!! to hallways[143]!!] = 1.0 * unit
     
     globalDistances[hallways[144]!! to hallways[147]!!] = 1 * unit
     globalDistances[hallways[147]!! to hallways[144]!!] = 1 * unit
@@ -401,20 +404,20 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[145]!! to hallways[146]!!] = 1 * unit
     globalDistances[hallways[146]!! to hallways[145]!!] = 1 * unit
     
-    globalDistances[hallways[146]!! to hallways[147]!!] = 0.3 * unit
-    globalDistances[hallways[147]!! to hallways[146]!!] = 0.3 * unit
+    globalDistances[hallways[146]!! to hallways[147]!!] = 1 * unit
+    globalDistances[hallways[147]!! to hallways[146]!!] = 1 * unit
     
-    globalDistances[hallways[147]!! to hallways[148]!!] = 1.3 * unit
-    globalDistances[hallways[148]!! to hallways[147]!!] = 1.3 * unit
+    globalDistances[hallways[147]!! to hallways[148]!!] = 1.5 * unit
+    globalDistances[hallways[148]!! to hallways[147]!!] = 1.5 * unit
     
-    globalDistances[hallways[148]!! to hallways[149]!!] = 0.3 * unit
-    globalDistances[hallways[149]!! to hallways[148]!!] = 0.3 * unit
+    globalDistances[hallways[148]!! to hallways[149]!!] = 0.5 * unit
+    globalDistances[hallways[149]!! to hallways[148]!!] = 0.5 * unit
     
     globalDistances[hallways[149]!! to hallways[150]!!] = 1 * unit
     globalDistances[hallways[150]!! to hallways[149]!!] = 1 * unit
     
-    globalDistances[hallways[150]!! to hallways[151]!!] = 1.5 * unit
-    globalDistances[hallways[151]!! to hallways[150]!!] = 1.5 * unit
+    globalDistances[hallways[150]!! to hallways[151]!!] = 3.0 * unit
+    globalDistances[hallways[151]!! to hallways[150]!!] = 3.0 * unit
     
     globalDistances[hallways[145]!! to hallways[152]!!] = 1 * unit
     globalDistances[hallways[152]!! to hallways[145]!!] = 1 * unit
