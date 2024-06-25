@@ -1,4 +1,4 @@
-package com.example.model.MC
+package com.example.wattravl.model
 
 data class HallwayNode(
     val nodeId: Int,                        // Identifier for the hallway node

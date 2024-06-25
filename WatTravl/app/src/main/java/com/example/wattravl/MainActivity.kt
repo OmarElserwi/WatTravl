@@ -41,10 +41,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var longitudeText: TextView
     private lateinit var latitudeText: TextView
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
