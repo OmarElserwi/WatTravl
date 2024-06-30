@@ -7,7 +7,7 @@ fun main() {
     val classroomToHallwayMap = createClassroomToHallwayMap(hallways)
 
     // Change these to the desired starting and ending classroom IDs
-    val startClassroomId = 1065
+    val startClassroomId = 1081
     val endClassroomId = 10602
 
     // Find the corresponding hallway nodes for the start and end classrooms
