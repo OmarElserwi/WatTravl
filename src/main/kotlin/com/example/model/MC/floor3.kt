@@ -333,3 +333,18 @@ fun connectHallways(hallways: Map<Int, HallwayNode>) {
     }
 }
 
+fun createClassroomToHallwayMap(hallways: Map<Int, HallwayNode>): Map<Int, List<Int>> {
+    val map = mutableMapOf<Int, MutableList<Int>>()
+    hallways.forEach { (hallwayId, hallway) ->
+        hallway.classrooms.forEach { classroomId ->
+            if (map.containsKey(classroomId)) {
+                map[classroomId]?.add(hallwayId)
+            } else {
+                map[classroomId] = mutableListOf(hallwayId)
+            }
+        }
+    }
+    return map
+}
+
+

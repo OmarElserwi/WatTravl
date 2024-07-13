@@ -30,7 +30,7 @@ fun buildGraph(): Map<Int, HallwayNode> {
 }
 
 fun createHallways(): Map<Int, HallwayNode> {
-    return (101..155).associateWith { HallwayNode(nodeId = it) }
+    return (101..153).associateWith { HallwayNode(nodeId = it) }
 }
 
 fun connectHallways(hallways: Map<Int, HallwayNode>) {
@@ -521,12 +521,17 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     hallways[153]?.classrooms?.add(1001)
 }
 
-fun createClassroomToHallwayMap(hallways: Map<Int, HallwayNode>): Map<Int, Int> {
-    val map = mutableMapOf<Int, Int>()
+fun createClassroomToHallwayMap(hallways: Map<Int, HallwayNode>): Map<Int, List<Int>> {
+    val map = mutableMapOf<Int, MutableList<Int>>()
     hallways.forEach { (hallwayId, hallway) ->
         hallway.classrooms.forEach { classroomId ->
-            map[classroomId] = hallwayId
+            if (map.containsKey(classroomId)) {
+                map[classroomId]?.add(hallwayId)
+            } else {
+                map[classroomId] = mutableListOf(hallwayId)
+            }
         }
     }
     return map
 }
+
