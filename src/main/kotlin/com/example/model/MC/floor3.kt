@@ -151,7 +151,7 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     hallways[304]?.classrooms?.addAll(listOf(3115))
     hallways[305]?.classrooms?.addAll(listOf(30151, 3016, 3091))
     hallways[306]?.classrooms?.add(3091)
-    hallways[307]?.classrooms?.addAll(listOf(3074, 3093, 3094))
+    hallways[307]?.classrooms?.addAll(listOf(3074, 3093, 30000)) //30000 is dc link, 3074 is bathroom, 3093 is elevator
     hallways[308]?.classrooms?.add(listof(3017, 3018))
     hallways[309]?.classrooms?.addAll(listOf(3068, 3066, 3067, 3065))
     hallways[310]?.classrooms?.addAll(listOf(3010, 30091))
