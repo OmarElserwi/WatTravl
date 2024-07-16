@@ -1,5 +1,6 @@
 package com.example.wattravl
 
+import android.content.Intent
 import android.graphics.Matrix
 import android.os.Build
 import android.os.Bundle
@@ -70,9 +71,16 @@ class MapActivity : AppCompatActivity() {
         val selectedFromRoom = intent.getStringExtra("SELECTED_FROM_ROOM")
         val selectedToRoom = intent.getStringExtra("SELECTED_TO_ROOM")
 
-        val btn: Button = findViewById(R.id.button2)
-        btn.text = "PUT MAP HERE:\n" + "From Location: $selectedFromLocation Room $selectedFromRoom\nTo Location: $selectedToLocation Room $selectedToRoom"
-        btn.isVisible = false
+        val button: Button = findViewById(R.id.button)
+        button.setOnClickListener {
+            // Start SecondActivity and pass the selected items
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        //val btn: Button = findViewById(R.id.button2)
+        //btn.text = "PUT MAP HERE:\n" + "From Location: $selectedFromLocation Room $selectedFromRoom\nTo Location: $selectedToLocation Room $selectedToRoom"
+        //btn.isVisible = false
 
         densityScale = applicationContext.resources.displayMetrics.density - 0.55f
 
