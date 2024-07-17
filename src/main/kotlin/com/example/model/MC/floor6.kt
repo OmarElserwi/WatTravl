@@ -115,7 +115,6 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
    hallways[685]?.classrooms?.addAll(listOf(6231, 6232, 6233, 6234))
    hallways[686]?.classrooms?.addAll(listOf(6237, 6236, 6239, 6238))
    hallways[687]?.classrooms?.addAll(listOf(6244, 6246))
-
 }
 
 fun connectHallways(hallways: Map<Int, HallwayNode>) {
