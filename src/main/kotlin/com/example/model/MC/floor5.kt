@@ -1,4 +1,5 @@
 package com.example.model.MC
+import com.example.model.MC.unit
 
 fun createHallways(): Map<Int, HallwayNode> {
     return (501..587).associateWith { HallwayNode(nodeId = it) }

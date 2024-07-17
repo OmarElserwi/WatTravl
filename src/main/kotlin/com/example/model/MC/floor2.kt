@@ -1,4 +1,5 @@
 package com.example.model.MC
+import com.example.model.MC.unit
 
 fun buildGraph(): Map<Int, HallwayNode> {
     println("Classrooms created")
@@ -42,8 +43,8 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     hallways[207]?.classrooms?.addAll(listOf(2034, 2035, 20361))
     hallways[208]?.classrooms?.addAll(listOf(2086, 2037))
     hallways[209]?.classrooms?.addAll(listOf(2035, 2038))
-    hallways[210]?.classrooms?.addAll(listOf(20371))
-    hallways[211]?.classrooms?.addAll(listOf(2038))
+    hallways[210]?.classrooms?.add(20371)
+    hallways[211]?.classrooms?.add(2038)
     hallways[212]?.classrooms?.addAll(listOf(2042, 2041))
     hallways[213]?.classrooms?.addAll(listOf(2027, 2025))
     hallways[214]?.classrooms?.addAll(listOf(2044, 2045, 2018, 2047))
@@ -55,11 +56,11 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     hallways[220]?.classrooms?.add(2054)
     hallways[221]?.classrooms?.addAll(listOf(2018, 2054))
     hallways[223]?.classrooms?.addAll(listOf(2052, 2053))
-    hallways[223]?.classrooms?.addAll(listOf(2016))
+    hallways[223]?.classrooms?.add(2016)
     hallways[224]?.classrooms?.addAll(listOf(2055, 2056))
-    hallways[225]?.classrooms?.add(listOf(2016, 2010))
+    hallways[225]?.classrooms?.addAll(listOf(2016, 2010))
     hallways[226]?.classrooms?.addAll(listOf(2014, 2015, 2009))
-    hallways[227]?.classrooms?.addAll(listOf(2057))
+    hallways[227]?.classrooms?.add(2057)
     hallways[228]?.classrooms?.addAll(listOf(2008, 2009))
     hallways[229]?.classrooms?.addAll(listOf(2058, 2060))
     hallways[230]?.classrooms?.add(2007)

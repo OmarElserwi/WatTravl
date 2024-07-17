@@ -1,4 +1,5 @@
 package com.example.model.MC
+import com.example.model.MC.unit
 
 fun buildGraph(): Map<Int, HallwayNode> {
     println("Classrooms created")
@@ -33,57 +34,59 @@ fun createHallways(): Map<Int, HallwayNode> {
     return (400..458).associateWith { HallwayNode(nodeId = it) }
 }
 
+val unit: Double = 1.0
+
 fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     hallways[400]?.classrooms?.addAll(listOf(4130, 4110))
     hallways[401]?.classrooms?.addAll(listOf(4107, 4108, 4109))
-    hallways[402]?.classrooms?.addAll(listOf(40186))
-    hallways[403]?.classrooms?.addAll(listOf(4018))
+    hallways[402]?.classrooms?.add(40186)
+    hallways[403]?.classrooms?.add(4018)
     hallways[456]?.classrooms?.addAll(listOf(40196, 40195))
     hallways[457]?.classrooms?.addAll(listOf(40194, 40197, 40193))
     hallways[458]?.classrooms?.addAll(listOf(40192, 4022, 40191))
-    hallways[404]?.classrooms?.addAll(listOf(4020))
-    hallways[405]?.classrooms?.addAll(listOf(4021))
-    hallways[406]?.classrooms?.addAll(listOf(4022))
+    hallways[404]?.classrooms?.add(4020)
+    hallways[405]?.classrooms?.add(4021)
+    hallways[406]?.classrooms?.add(4022)
     hallways[408]?.classrooms?.addAll(listOf(4022, 4021))
     hallways[409]?.classrooms?.addAll(listOf(4131, 4111, 4118)) //4111 are stairs
     hallways[410]?.classrooms?.addAll(listOf(4114, 4115, 40000)) // 40000 is dc link, 4114 is bathroom, 4115 is elevator
     hallways[411]?.classrooms?.addAll(listOf(4016, 4017))
-    hallways[412]?.classrooms?.addAll(listOf(4023))
-    hallways[413]?.classrooms?.addAll(listOf(4014))
-    hallways[414]?.classrooms?.addAll(listOf(4024))
+    hallways[412]?.classrooms?.add(4023)
+    hallways[413]?.classrooms?.add(4014)
+    hallways[414]?.classrooms?.add(4024)
     hallways[415]?.classrooms?.addAll(listOf(4013, 4012, 40201, 4020))
-    hallways[416]?.classrooms?.addAll(listOf(4026))
+    hallways[416]?.classrooms?.add(4026)
     hallways[417]?.classrooms?.addAll(listOf(4010, 4011))
     hallways[418]?.classrooms?.addAll(listOf(4027, 4028))
-    hallways[419]?.classrooms?.addAll(listOf(4009))
+    hallways[419]?.classrooms?.add(4009)
     hallways[420]?.classrooms?.add(4029)
     hallways[421]?.classrooms?.addAll(listOf(4008, 4058))
-    hallways[422]?.classrooms?.addAll(listOf(4059))
+    hallways[422]?.classrooms?.add(4059)
     hallways[423]?.classrooms?.addAll(listOf(4058, 4060))
     hallways[424]?.classrooms?.addAll(listOf(4059, 4061))
-    hallways[425]?.classrooms?.add(listOf(4060))
+    hallways[425]?.classrooms?.add(4060)
     hallways[426]?.classrooms?.addAll(listOf(4062, 4063, 4061))
     hallways[427]?.classrooms?.addAll(listOf(4063, 4064))
-    hallways[428]?.classrooms?.addAll(listOf(4030))
+    hallways[428]?.classrooms?.add(4030)
     hallways[429]?.classrooms?.addAll(listOf(4007, 4006))
     hallways[430]?.classrooms?.addAll(listOf(4031, 4032))
     hallways[431]?.classrooms?.addAll(listOf(4005, 4004))
     hallways[432]?.classrooms?.addAll(listOf(4033, 4034))
-    hallways[433]?.classrooms?.addAll(listOf(4003))
+    hallways[433]?.classrooms?.add(4003)
     hallways[434]?.classrooms?.addAll(listOf(4035, 4036))
     hallways[436]?.classrooms?.add(4039)
     hallways[437]?.classrooms?.add(4037)
     hallways[438]?.classrooms?.addAll(listOf(4104, 4103))
-    hallways[439]?.classrooms?.addAll(listOf(4101)) //4101 are stairs
-    hallways[440]?.classrooms?.addAll(listOf(4045))
-    hallways[441]?.classrooms?.addAll(listOf(4046))
+    hallways[439]?.classrooms?.add(4101) //4101 are stairs
+    hallways[440]?.classrooms?.add(4045)
+    hallways[441]?.classrooms?.add(4046)
     hallways[442]?.classrooms?.addAll(listOf(4044, 4042, 4045))
     hallways[443]?.classrooms?.addAll(listOf(4042, 4043, 4040, 4124))
     hallways[444]?.classrooms?.add(4041)
     hallways[445]?.classrooms?.add(4041)
     hallways[446]?.classrooms?.addAll(listOf(4119, 4040))
     hallways[447]?.classrooms?.addAll(listOf(4048, 4049))
-    hallways[448]?.classrooms?.addAll(listOf(4122)) //4122 are stairs
+    hallways[448]?.classrooms?.add(4122) //4122 are stairs
     hallways[449]?.classrooms?.addAll(listOf(4050, 4051, 40511))
     hallways[450]?.classrooms?.addAll(listOf(40512, 4052, 4053))
     hallways[451]?.classrooms?.addAll(listOf(4069, 4068, 4067, 4066))

@@ -1,3 +1,6 @@
+package com.example.model.MC
+import com.example.model.MC.unit
+
 fun buildGraph(): Map<Int, HallwayNode> {
     println("Classrooms created")
 
@@ -31,6 +34,8 @@ fun createHallways(): Map<Int, HallwayNode> {
     return (301..335).associateWith { HallwayNode(nodeId = it) } +
            additionalHallways.associateWith { HallwayNode(nodeId = it) }
 }
+
+val unit: Double = 1.0
 
 fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[301]!! to hallways[302]!!] = 1 * unit
@@ -148,14 +153,14 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     hallways[301]?.classrooms?.addAll(listOf(30121, 3012, 3072, 3089))
     hallways[302]?.classrooms?.addAll(listOf(3011, 30901, 3009, 3071))
     hallways[303]?.classrooms?.addAll(listOf(3009, 3115))
-    hallways[304]?.classrooms?.addAll(listOf(3115))
+    hallways[304]?.classrooms?.add(3115)
     hallways[305]?.classrooms?.addAll(listOf(30151, 3016, 3091))
     hallways[306]?.classrooms?.add(3091)
     hallways[307]?.classrooms?.addAll(listOf(3074, 3093, 30000)) //30000 is dc link, 3074 is bathroom, 3093 is elevator
-    hallways[308]?.classrooms?.add(listof(3017, 3018))
+    hallways[308]?.classrooms?.addAll(listOf(3017, 3018))
     hallways[309]?.classrooms?.addAll(listOf(3068, 3066, 3067, 3065))
     hallways[310]?.classrooms?.addAll(listOf(3010, 30091))
-    hallways[311]?.classrooms?.addAll(listOf(3018, 3022, 3061 3026))
+    hallways[311]?.classrooms?.addAll(listOf(3018, 3022, 3061, 3026))
     hallways[312]?.classrooms?.addAll(listOf(3062, 3064))
     hallways[313]?.classrooms?.addAll(listOf(3060, 3059, 3058))
     hallways[314]?.classrooms?.addAll(listOf(3008, 3007, 3006, 3005))

@@ -1,4 +1,5 @@
 package com.example.model.MC
+import com.example.model.MC.unit
 
 fun buildGraph(): Map<Int, HallwayNode> {
     println("Classrooms created")
@@ -256,7 +257,6 @@ fun connectHallways(hallways: Map<Int, HallwayNode>) {
     }
 }
 
-val unit = 1.0  // Example value for unit
 
 fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[101]!! to hallways[102]!!] = 1 * unit
