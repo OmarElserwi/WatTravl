@@ -1,5 +1,7 @@
 package com.example.model.MC
 
+val unit: Double = 1.0  // Example value for unit
+
 data class HallwayNode(
     val nodeId: Int,                        // Identifier for the hallway node
     var north: HallwayNode? = null,         // North neighboring hallway node
