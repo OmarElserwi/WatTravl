@@ -20,19 +20,52 @@ val elevators = mapOf(
     6 to listOf(6811, 6803)
 )
 
-fun dijkstra(startClassroomId: Int, endClassroomId: Int, hallways: Map<Int, HallwayNode>, classroomToHallwayMap: Map<Int, List<Int>>) {
+fun findFloor(number: Int): Int {
+    val numberStr = number.toString()
+    return numberStr[0].toString().toInt()
+}
+
+fun dijkstra(startClassroomId: Int, endClassroomId: Int, hallways: Map<Int, HallwayNode>, classroomToHallwayMap: Map<Int, List<Int>>, useElevator: Boolean) {
     val startNodeIds = classroomToHallwayMap[startClassroomId] ?: throw IllegalArgumentException("Classroom $startClassroomId does not exist in the map")
     val endNodeIds = classroomToHallwayMap[endClassroomId] ?: throw IllegalArgumentException("Classroom $endClassroomId does not exist in the map")
-    
-    if (false) {//endClassroomId - startClassroomId > 1000) {
-        if (endClassroomId - startClassroomId >= 2000) {
+    val startingFloor = findFloor(startClassroomId)
+    val endingFloor = findFloor(endClassroomId)
+    if (endingFloor != startingFloor) {
+        if (useElevator){ //|| endClassroomId - startClassroomId >= 2000) {
 
         }
         else { //use stairs instead
-
+            val floor = findFloor(startNodeIds[0])
+            val stairs = staircases[floor] ?: throw IllegalArgumentException("stairs not found")
+            var minDistance = Double.MAX_VALUE
+            var closestStaircase: HallwayNode? = null
+            var closestStartNode: HallwayNode? = null
+            var bestDistances: Map<HallwayNode, Pair<Double, HallwayNode?>>? = null
+            
+            for (startNodeId in startNodeIds) {
+                val startNode = hallways[startNodeId] ?: throw IllegalArgumentException("Hallway node $startNodeId does not exist")
+                val distances = dijkstraInternal(startNode, hallways)
+                distances.forEach { (hallway, distance) ->
+                    println("Distance from ${startNode.nodeId} to ${hallway.nodeId}: ${distance.first}")
+                }
+                for (s in stairs) {
+                    val targetNode = classroomToHallwayMap[s]?.getOrNull(0)?.let { hallways[it] } //staircases only have one entrance
+                    val distanceToTarget = distances[targetNode]?.first ?: throw IllegalArgumentException("Distance to hallway node $targetNode not found")
+                    if (distanceToTarget < minDistance) {
+                        minDistance = distanceToTarget
+                        closestStaircase = targetNode
+                        closestStartNode = startNode
+                        bestDistances = distances
+                    }
+                }
+            }
+            if (closestStartNode != null && closestStaircase != null && bestDistances != null) {
+                println("Distance from start node to hallway node ${closestStaircase.nodeId}: $minDistance")
+                printPath(bestDistances, closestStartNode, closestStaircase)
+            } else {
+                println("No path found from start nodes to end nodes.")
+            }
         }
-        
-
     }
     else { // both nodes are on the same floor
         val targetEndHallwayNodes = classroomToHallwayMap[endClassroomId] ?: throw IllegalArgumentException("End classroom ID $endClassroomId does not exist in the map")
@@ -106,6 +139,5 @@ fun dijkstraInternal(start: HallwayNode, hallways: Map<Int, HallwayNode>): Map<H
             }
         }
     }
-
     return distances
 }

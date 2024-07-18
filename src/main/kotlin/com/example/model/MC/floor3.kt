@@ -170,9 +170,9 @@ fun connectClassroomsToHallways3(hallways: Map<Int, HallwayNode>) {
     hallways[320]?.classrooms?.addAll(listOf(3031, 3033))
     hallways[321]?.classrooms?.addAll(listOf(3047, 3048, 3045, 3046))
     hallways[322]?.classrooms?.addAll(listOf(3044, 3043))
-    hallways[323]?.classrooms?.add(3034)
+    hallways[323]?.classrooms?.addAll(listOf(3034, 3003))
     hallways[324]?.classrooms?.add(3041)
-    hallways[325]?.classrooms?.add(3035)
+    hallways[325]?.classrooms?.addAll(listOf(3035, 3036, 3003))
     hallways[326]?.classrooms?.addAll(listOf(3035, 3036, 3038))
     hallways[327]?.classrooms?.addAll(listOf(3082, 3069)) //3082 is an elevator
     hallways[328]?.classrooms?.add(3080)
@@ -309,6 +309,7 @@ fun connectHallways3(hallways: Map<Int, HallwayNode>) {
         west = hallways[329]
     }
     hallways[331]?.apply {
+        north = hallways[319]
         east = hallways[332]
         west = hallways[330]
     }
@@ -321,6 +322,7 @@ fun connectHallways3(hallways: Map<Int, HallwayNode>) {
         west = hallways[332]
     }
     hallways[334]?.apply {
+        north = hallways[325]
         east = hallways[335]
         west = hallways[333]
     }
