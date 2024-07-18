@@ -27,7 +27,7 @@ if [ $? -eq 0 ]; then
     echo "Compilation successful."
     echo "Running the application..."
     # Run the application
-    kotlin -classpath ../../../../build/classes/kotlin main.MainKt
+    kotlin -classpath ../../../../build/classes/kotlin/main.jar com.example.model.MC.MainKt
 else
     echo "Compilation failed."
     exit 1

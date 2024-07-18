@@ -1,28 +1,28 @@
 package com.example.model.MC
 import com.example.model.MC.unit
 
-fun buildGraph(): Map<Int, HallwayNode> {
-    println("Classrooms created")
+fun buildGraphFloor3(): Map<Int, HallwayNode> {
+    println("Floor 3 classrooms created")
 
     // Create hallway nodes
-    val hallways = createHallways()
+    val hallways = createHallways3()
 
-    println("Hallways created")
+    println("Floor 3 hallways created")
 
     // Connect hallways
-    connectHallways(hallways)
+    connectHallways3(hallways)
 
-    println("Hallways connected")
+    println("Floor 3 hallways connected")
 
     // Set distances between hallways in the global distances map
-    setDistances(hallways)
+    setDistances3(hallways)
 
-    println("Distances set")
+    println("Floor 3 distances set")
 
     // Connect classrooms to hallways
-    connectClassroomsToHallways(hallways)
+    connectClassroomsToHallways3(hallways)
 
-    println("Classrooms connected")
+    println("Floor 3 classrooms connected \n")
 
     
 
@@ -30,13 +30,12 @@ fun buildGraph(): Map<Int, HallwayNode> {
     return hallways
 }
 
-fun createHallways(): Map<Int, HallwayNode> {
-    return (301..335).associateWith { HallwayNode(nodeId = it) } +
-           additionalHallways.associateWith { HallwayNode(nodeId = it) }
+fun createHallways3(): Map<Int, HallwayNode> {
+    return (301..335).associateWith { HallwayNode(nodeId = it) }
 }
 
 
-fun setDistances(hallways: Map<Int, HallwayNode>) {
+fun setDistances3(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[301]!! to hallways[302]!!] = 1 * unit
     globalDistances[hallways[302]!! to hallways[301]!!] = 1 * unit
 
@@ -115,8 +114,8 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[324]!! to hallways[326]!!] = 1.5 * unit
     globalDistances[hallways[326]!! to hallways[324]!!] = 1.5 * unit
 
-    globalDistances[hallways[325]!! to hallways[339]!!] = 2 * unit
-    globalDistances[hallways[339]!! to hallways[325]!!] = 2 * unit
+    globalDistances[hallways[325]!! to hallways[334]!!] = 2 * unit
+    globalDistances[hallways[334]!! to hallways[325]!!] = 2 * unit
 
     globalDistances[hallways[326]!! to hallways[335]!!] = 1.5 * unit
     globalDistances[hallways[335]!! to hallways[326]!!] = 1.5 * unit
@@ -148,7 +147,7 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
 
 
 
-fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
+fun connectClassroomsToHallways3(hallways: Map<Int, HallwayNode>) {
     hallways[301]?.classrooms?.addAll(listOf(30121, 3012, 3072, 3089))
     hallways[302]?.classrooms?.addAll(listOf(3011, 30901, 3009, 3071))
     hallways[303]?.classrooms?.addAll(listOf(3009, 3115))
@@ -175,7 +174,7 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     hallways[324]?.classrooms?.add(3041)
     hallways[325]?.classrooms?.add(3035)
     hallways[326]?.classrooms?.addAll(listOf(3035, 3036, 3038))
-    hallways[327]?.classrooms?.addAll(listOf(3082, 3083, 3069))
+    hallways[327]?.classrooms?.addAll(listOf(3082, 3069)) //3082 is an elevator
     hallways[328]?.classrooms?.add(3080)
     hallways[329]?.classrooms?.add(30842)
     hallways[330]?.classrooms?.add(3070)
@@ -187,7 +186,7 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
 }
 
 
-fun connectHallways(hallways: Map<Int, HallwayNode>) {
+fun connectHallways3(hallways: Map<Int, HallwayNode>) {
     hallways[301]?.apply {
         south = hallways[302]
 
@@ -257,8 +256,6 @@ fun connectHallways(hallways: Map<Int, HallwayNode>) {
     hallways[317]?.apply {
         north = hallways[315]
         south = hallways[320]
-        east = hallways[XXX]
-        west = hallways[XXX]
     }
     hallways[318]?.apply {
         north = hallways[316]
@@ -267,14 +264,10 @@ fun connectHallways(hallways: Map<Int, HallwayNode>) {
     hallways[319]?.apply {
         north = hallways[314]
         south = hallways[331]
-        east = hallways[XXX]
-        west = hallways[XXX]
     }
     hallways[320]?.apply {
         north = hallways[317]
         south = hallways[323]
-        east = hallways[XXX]
-        west = hallways[XXX]
     }
     hallways[321]?.apply {
         north = hallways[318]
@@ -294,7 +287,7 @@ fun connectHallways(hallways: Map<Int, HallwayNode>) {
     }
     hallways[325]?.apply {
         north = hallways[323]
-        south = hallways[339]
+        south = hallways[334]
     }
     hallways[326]?.apply {
         north = hallways[324]
@@ -335,9 +328,10 @@ fun connectHallways(hallways: Map<Int, HallwayNode>) {
         north = hallways[326]
         west = hallways[334]
     }
+
 }
 
-fun createClassroomToHallwayMap(hallways: Map<Int, HallwayNode>): Map<Int, List<Int>> {
+fun createClassroomToHallwayMap3(hallways: Map<Int, HallwayNode>): Map<Int, List<Int>> {
     val map = mutableMapOf<Int, MutableList<Int>>()
     hallways.forEach { (hallwayId, hallway) ->
         hallway.classrooms.forEach { classroomId ->

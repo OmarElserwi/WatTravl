@@ -1,11 +1,36 @@
 package com.example.model.MC
 import com.example.model.MC.unit
+fun buildGraphFloor5(): Map<Int, HallwayNode> {
+    println("Floor 5 classrooms created")
 
-fun createHallways(): Map<Int, HallwayNode> {
+    // Create hallway nodes
+    val hallways = createHallways5()
+
+    println("Floor 5 hallways created")
+
+    // Connect hallways
+    connectHallways5(hallways)
+
+    println("Floor 5 hallways connected")
+
+    // Set distances between hallways in the global distances map
+    setDistances5(hallways)
+
+    println("Floor 5 distances set")
+
+    // Connect classrooms to hallways
+    connectClassroomsToHallways5(hallways)
+
+    println("Floor 5 classrooms connected\n")
+
+    return hallways
+}
+
+fun createHallways5(): Map<Int, HallwayNode> {
     return (501..587).associateWith { HallwayNode(nodeId = it) }
 }
 
-fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
+fun connectClassroomsToHallways5(hallways: Map<Int, HallwayNode>) {
   hallways[501]?.classrooms?.addAll(listOf(5042, 5044, 5038, 5908))
   hallways[502]?.classrooms?.addAll(listOf(5036, 5034, 5497))
   hallways[503]?.classrooms?.addAll(listOf(5032, 5028, 5031, 5029))
@@ -28,7 +53,7 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
   hallways[522]?.classrooms?.addAll(listOf(5411, 5406, 5408))
   hallways[523]?.classrooms?.addAll(listOf(5304, 5307, 5306, 5309))
   hallways[524]?.classrooms?.addAll(listOf(5132, 5128))
-  hallways[525]?.classrooms?.add(listOf(5129, 5127))
+  hallways[525]?.classrooms?.addAll(listOf(5129, 5127))
   hallways[526]?.classrooms?.addAll(listOf(5486, 5484))
   hallways[527]?.classrooms?.addAll(listOf(5501))
   hallways[528]?.classrooms?.addAll(listOf(5511))
@@ -81,7 +106,7 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
   hallways[576]?.classrooms?.addAll(listOf(5237))
   hallways[577]?.classrooms?.addAll(listOf(5256, 5257, 5251))
   hallways[578]?.classrooms?.addAll(listOf(5236, 5234))
-  hallways[579]?.classrooms?.addAll(listOf(5206 5208))
+  hallways[579]?.classrooms?.addAll(listOf(5206, 5208))
   hallways[580]?.classrooms?.addAll(listOf(5205, 5210, 5212))
   hallways[581]?.classrooms?.addAll(listOf(5207, 5209))
   hallways[582]?.classrooms?.addAll(listOf(5214, 5226))
@@ -91,7 +116,7 @@ fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
   hallways[587]?.classrooms?.addAll(listOf(5246, 5248, 5249))
 }
 
-fun connectHallways(hallways: Map<Int, HallwayNode>) {
+fun connectHallways5(hallways: Map<Int, HallwayNode>) {
   hallways[501]?.apply {
       east = hallways[502]
   }
@@ -449,7 +474,7 @@ fun connectHallways(hallways: Map<Int, HallwayNode>) {
 }
 
 
-fun setDistances(hallways: Map<Int, HallwayNode>) {
+fun setDistances5(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[501]!! to hallways[502]!!] = 1.5 * unit
     globalDistances[hallways[502]!! to hallways[501]!!] = 1.5 * unit
 
@@ -726,7 +751,7 @@ fun setDistances(hallways: Map<Int, HallwayNode>) {
 
 
 
-fun createClassroomToHallwayMap(hallways: Map<Int, HallwayNode>): Map<Int, List<Int>> {
+fun createClassroomToHallwayMap5(hallways: Map<Int, HallwayNode>): Map<Int, List<Int>> {
     val map = mutableMapOf<Int, MutableList<Int>>()
     hallways.forEach { (hallwayId, hallway) ->
         hallway.classrooms.forEach { classroomId ->

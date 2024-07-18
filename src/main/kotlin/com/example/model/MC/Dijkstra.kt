@@ -2,7 +2,74 @@ package com.example.model.MC
 
 import java.util.PriorityQueue
 
-fun dijkstra(start: HallwayNode): Map<HallwayNode, Pair<Double, HallwayNode?>> {
+val staircases = mapOf(
+    1 to listOf(1099, 1106, 1096, 1091),
+    2 to listOf(2077, 2099, 2074, 2068),
+    3 to listOf(3091, 3095, 3089, 3080),
+    4 to listOf(4111, 4122, 4108, 4101),
+    5 to listOf(5808, 5813, 5806, 5801),
+    6 to listOf(6808, 6813, 6806, 6801)
+)
+
+val elevators = mapOf(
+    1 to listOf(1100, 1092),
+    2 to listOf(2078, 2070),
+    3 to listOf(3093, 3082),
+    4 to listOf(4115, 4104),
+    5 to listOf(5811, 5803),
+    6 to listOf(6811, 6803)
+)
+
+fun dijkstra(startClassroomId: Int, endClassroomId: Int, hallways: Map<Int, HallwayNode>, classroomToHallwayMap: Map<Int, List<Int>>, useElevator: Boolean) {
+    if (endClassroomId - startClassroomId > 1000) {
+        if (useElevator == True or endClassroomId - startClassroomId >= 2000) {
+
+        }
+        
+
+    }
+    else {
+
+    }
+    /*
+    val startNodeIds = classroomToHallwayMap[startClassroomId] ?: throw IllegalArgumentException("Classroom $startClassroomId does not exist in the map")
+    val endNodeIds = classroomToHallwayMap[endClassroomId] ?: throw IllegalArgumentException("Classroom $endClassroomId does not exist in the map")
+    
+    
+    println(hallways)
+    println(startNodeId)
+    println(endNodeId)
+
+    val startNode = hallways[startNodeId] ?: throw IllegalArgumentException("Hallway node $startNodeId does not exist")
+    val endNode = hallways[endNodeId] ?: throw IllegalArgumentException("Hallway node $endNodeId does not exist")
+
+    val distances = dijkstraInternal(startNode)
+    distances.forEach { (hallway, distance) ->
+        println("Distance from ${startNode.nodeId} to ${hallway.nodeId}: ${distance.first}")
+    }
+
+    printPath(distances, startNode, endNode)
+    */
+    
+}
+
+fun printPath(distances: Map<HallwayNode, Pair<Double, HallwayNode?>>, start: HallwayNode, end: HallwayNode): MutableList<HallwayNode> {
+    val path = mutableListOf<HallwayNode>()
+    var currentNode: HallwayNode? = end
+
+    while (currentNode != null) {
+        path.add(currentNode)
+        currentNode = distances[currentNode]?.second
+    }
+
+    path.reverse()
+
+    println("Path from ${start.nodeId} to ${end.nodeId}:")
+    println(path.joinToString(" -> ") { it.nodeId.toString() })
+    return path
+}
+
+fun dijkstraInternal(start: HallwayNode): Map<HallwayNode, Pair<Double, HallwayNode?>> {
     val distances = mutableMapOf<HallwayNode, Pair<Double, HallwayNode?>>().withDefault { Double.MAX_VALUE to null }
     val priorityQueue = PriorityQueue<Pair<HallwayNode, Double>>(compareBy { it.second })
 
@@ -25,20 +92,4 @@ fun dijkstra(start: HallwayNode): Map<HallwayNode, Pair<Double, HallwayNode?>> {
     }
 
     return distances
-}
-
-fun printPath(distances: Map<HallwayNode, Pair<Double, HallwayNode?>>, start: HallwayNode, end: HallwayNode): MutableList<HallwayNode> {
-    val path = mutableListOf<HallwayNode>()
-    var currentNode: HallwayNode? = end
-
-    while (currentNode != null) {
-        path.add(currentNode)
-        currentNode = distances[currentNode]?.second
-    }
-
-    path.reverse()
-
-    println("Path from ${start.nodeId} to ${end.nodeId}:")
-    println(path.joinToString(" -> ") { it.nodeId.toString() })
-    return path
 }
