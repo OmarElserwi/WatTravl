@@ -183,6 +183,7 @@ fun connectHallways4(hallways: Map<Int, HallwayNode>) {
    hallways[421]?.apply {
        north = hallways[419]
        south = hallways[429]
+       east = hallways[422]
    }
    hallways[422]?.apply {
        west = hallways[421]
@@ -211,6 +212,7 @@ fun connectHallways4(hallways: Map<Int, HallwayNode>) {
    hallways[428]?.apply {
        north = hallways[420]
        south = hallways[430]
+       west = hallways[427]
    }
    hallways[429]?.apply {
        north = hallways[421]
@@ -258,6 +260,7 @@ fun connectHallways4(hallways: Map<Int, HallwayNode>) {
    hallways[440]?.apply {
        west = hallways[439]
        east = hallways[441]
+       south = hallways[447]
    }
    hallways[441]?.apply {
        west = hallways[440]

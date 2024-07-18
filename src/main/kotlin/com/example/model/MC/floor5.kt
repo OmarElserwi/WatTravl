@@ -62,9 +62,9 @@ fun connectClassroomsToHallways5(hallways: Map<Int, HallwayNode>) {
   hallways[531]?.classrooms?.addAll(listOf(5311, 5312, 5313, 5314))
   hallways[532]?.classrooms?.addAll(listOf(5126, 5124))
   hallways[533]?.classrooms?.addAll(listOf(5123, 5121))
-  hallways[534]?.classrooms?.addAll(listOf(5482, 5121))
+  hallways[534]?.classrooms?.addAll(listOf(5482, 5121, 5479))
   hallways[535]?.classrooms?.addAll(listOf(5417, 5416, 5418))
-  hallways[535]?.classrooms?.addAll(listOf(5319, 5316, 5318))
+  hallways[536]?.classrooms?.addAll(listOf(5319, 5316, 5318))
   hallways[537]?.classrooms?.addAll(listOf(5122, 5118))
   hallways[538]?.classrooms?.addAll(listOf(5119, 5117))
   hallways[539]?.classrooms?.addAll(listOf(5477, 5474))
@@ -303,7 +303,7 @@ fun connectHallways5(hallways: Map<Int, HallwayNode>) {
   }
   hallways[546]?.apply {
       north = hallways[543]
-      south = hallways[546]
+      south = hallways[549]
   }
   hallways[547]?.apply {
       north = hallways[544]
@@ -388,16 +388,16 @@ fun connectHallways5(hallways: Map<Int, HallwayNode>) {
   }
   
   hallways[567]?.apply {
-      west = hallways[556]
-      east = hallways[558]
+      west = hallways[566]
+      east = hallways[568]
       south = hallways[575]
   }
   hallways[568]?.apply {
-      west = hallways[557]
-      east = hallways[559]
+      west = hallways[567]
+      east = hallways[569]
   }
   hallways[569]?.apply {
-      west = hallways[558]
+      west = hallways[568]
       east = hallways[570]
       south = hallways[572]
   }
@@ -504,6 +504,9 @@ fun setDistances5(hallways: Map<Int, HallwayNode>) {
 
     globalDistances[hallways[509]!! to hallways[510]!!] = 1.5 * unit
     globalDistances[hallways[510]!! to hallways[509]!!] = 1.5 * unit
+
+    globalDistances[hallways[509]!! to hallways[515]!!] = 1.5 * unit
+    globalDistances[hallways[515]!! to hallways[509]!!] = 1.5 * unit
 
     globalDistances[hallways[510]!! to hallways[516]!!] = 1.5 * unit
     globalDistances[hallways[516]!! to hallways[510]!!] = 1.5 * unit
