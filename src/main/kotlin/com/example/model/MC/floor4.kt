@@ -34,8 +34,6 @@ fun createHallways(): Map<Int, HallwayNode> {
     return (400..458).associateWith { HallwayNode(nodeId = it) }
 }
 
-val unit: Double = 1.0
-
 fun connectClassroomsToHallways(hallways: Map<Int, HallwayNode>) {
     hallways[400]?.classrooms?.addAll(listOf(4130, 4110))
     hallways[401]?.classrooms?.addAll(listOf(4107, 4108, 4109))

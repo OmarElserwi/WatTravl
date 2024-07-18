@@ -35,7 +35,6 @@ fun createHallways(): Map<Int, HallwayNode> {
            additionalHallways.associateWith { HallwayNode(nodeId = it) }
 }
 
-val unit: Double = 1.0
 
 fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[301]!! to hallways[302]!!] = 1 * unit

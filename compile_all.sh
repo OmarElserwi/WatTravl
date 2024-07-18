@@ -1,27 +1,33 @@
 #!/bin/bash
 
+# Navigate to the src directory
+cd "$(dirname "$0")/src/main/kotlin"
+
 # Set the source directory
-SRC_DIR="src/main/kotlin"
+SRC_DIR="com/example/model/MC"
 
 # List of all Kotlin files to compile
 FILES=(
-    "com/example/model/MC/Dijkstra.kt"
-    "com/example/model/MC/main.kt"
-    "com/example/model/MC/NodeStructure.kt"
-    "com/example/model/MC/floor1.kt"
-    "com/example/model/MC/floor2.kt"
-    "com/example/model/MC/floor3.kt"
-    "com/example/model/MC/floor4.kt"
-    "com/example/model/MC/floor5.kt"
-    "com/example/model/MC/floor6.kt"
+    "Dijkstra.kt"
+    "main.kt"
+    "NodeStructure.kt"
+    "floor1.kt"
+    "floor2.kt"
+    "floor3.kt"
+    "floor4.kt"
+    "floor5.kt"
+    "floor6.kt"
 )
 
 # Compile all the Kotlin files
 echo "Compiling Kotlin files..."
-kotlinc ${FILES[@]/#/$SRC_DIR/} -include-runtime -d build/classes
+kotlinc ${FILES[@]/#/$SRC_DIR/} -include-runtime -d ../../../../build/classes/kotlin/main.jar
 
 if [ $? -eq 0 ]; then
     echo "Compilation successful."
+    echo "Running the application..."
+    # Run the application
+    kotlin -classpath ../../../../build/classes/kotlin main.MainKt
 else
     echo "Compilation failed."
     exit 1
