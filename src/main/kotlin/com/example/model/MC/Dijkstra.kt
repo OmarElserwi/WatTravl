@@ -25,29 +25,31 @@ fun findFloor(number: Int): Int {
     return numberStr[0].toString().toInt()
 }
 
-fun findCorrespondingStaircase(startingStaircase: Int, endingFloor: Int): Int? {
-    // Find the index of the startingStaircase in its corresponding floor list
-    val startFloorIndex = staircases.values.indexOfFirst { it.contains(startingStaircase) }
+fun findCorrespondingTransition(startingTransition: Int, endingFloor: Int, useElevator: Boolean): Int? {
+    val transitions = if (useElevator) elevators else staircases
+
+    // Find the index of the startingTransition in its corresponding floor list
+    val startFloorIndex = transitions.values.indexOfFirst { it.contains(startingTransition) }
     
-    // If the startingStaircase is found in one of the floor lists
+    // If the startingTransition is found in one of the floor lists
     if (startFloorIndex != -1) {
-        // Get the list of staircases for the starting floor
-        val startStaircases = staircases[startFloorIndex + 1]
+        // Get the list of transitions for the starting floor
+        val startTransitions = transitions[startFloorIndex + 1]
         
-        // Find the index of the startingStaircase in its list
-        val staircaseIndex = startStaircases?.indexOf(startingStaircase)
+        // Find the index of the startingTransition in its list
+        val transitionIndex = startTransitions?.indexOf(startingTransition)
         
         // If the index is found
-        if (staircaseIndex != -1) {
-            // Get the list of staircases for the ending floor
-            val endStaircases = staircases[endingFloor]
+        if (transitionIndex != -1) {
+            // Get the list of transitions for the ending floor
+            val endTransitions = transitions[endingFloor]
             
-            // Return the staircase at the same index for the ending floor
-            return endStaircases?.get(staircaseIndex!!)
+            // Return the transition at the same index for the ending floor
+            return endTransitions?.get(transitionIndex!!)
         }
     }
     
-    // If the startingStaircase is not found or index is invalid, return null
+    // If the startingTransition is not found or index is invalid, return null
     return null
 }
 
@@ -57,71 +59,69 @@ fun dijkstra(startClassroomId: Int, endClassroomId: Int, hallways: Map<Int, Hall
     val startingFloor = findFloor(startClassroomId)
     val endingFloor = findFloor(endClassroomId)
     val targetEndHallwayNodes = classroomToHallwayMap[endClassroomId] ?: throw IllegalArgumentException("End classroom ID $endClassroomId does not exist in the map")
-    if (endingFloor != startingFloor) {
-        if (useElevator){ //|| endClassroomId - startClassroomId >= 2000) {
-
+    if (endingFloor != startingFloor) { //use stairs or elevator
+        val floor = findFloor(startNodeIds[0])
+        val transitions = if (useElevator || endingFloor - startingFloor > 1) {
+            elevators[floor] ?: throw IllegalArgumentException("Elevators not found")
+        } else {
+            staircases[floor] ?: throw IllegalArgumentException("Staircases not found")
         }
-        else { //use stairs instead
-            val floor = findFloor(startNodeIds[0])
-            val stairs = staircases[floor] ?: throw IllegalArgumentException("stairs not found")
-            var minDistance = Double.MAX_VALUE
-            var closestStaircase: HallwayNode? = null
-            var closestStaircaseNum: Int? = null
-            var closestStartNode: HallwayNode? = null
-            var bestDistances: Map<HallwayNode, Pair<Double, HallwayNode?>>? = null
-            
-            for (startNodeId in startNodeIds) {
-                val startNode = hallways[startNodeId] ?: throw IllegalArgumentException("Hallway node $startNodeId does not exist")
-                val distances = dijkstraInternal(startNode, hallways)
-                distances.forEach { (hallway, distance) ->
-                    println("Distance from ${startNode.nodeId} to ${hallway.nodeId}: ${distance.first}")
-                }
-                for (s in stairs) {
-                    val targetNode = classroomToHallwayMap[s]?.getOrNull(0)?.let { hallways[it] } //staircases only have one entrance
-                    val distanceToTarget = distances[targetNode]?.first ?: throw IllegalArgumentException("Distance to hallway node $targetNode not found")
-                    if (distanceToTarget < minDistance) {
-                        minDistance = distanceToTarget
-                        closestStaircase = targetNode
-                        closestStartNode = startNode
-                        bestDistances = distances
-                        closestStaircaseNum = s
-                    }
+        var minDistance = Double.MAX_VALUE
+        var closestTransition: HallwayNode? = null
+        var closestTransitionNum: Int? = null
+        var closestStartNode: HallwayNode? = null
+        var bestDistances: Map<HallwayNode, Pair<Double, HallwayNode?>>? = null
+        
+        for (startNodeId in startNodeIds) {
+            val startNode = hallways[startNodeId] ?: throw IllegalArgumentException("Hallway node $startNodeId does not exist")
+            val distances = dijkstraInternal(startNode, hallways)
+            for (t in transitions) {
+                val targetNode = classroomToHallwayMap[t]?.getOrNull(0)?.let { hallways[it] } //staircases only have one entrance
+                val distanceToTarget = distances[targetNode]?.first ?: throw IllegalArgumentException("Distance to hallway node $targetNode not found")
+                if (distanceToTarget < minDistance) {
+                    minDistance = distanceToTarget
+                    closestTransition = targetNode
+                    closestStartNode = startNode
+                    bestDistances = distances
+                    closestTransitionNum = t
                 }
             }
-            if (closestStartNode != null && closestStaircase != null && closestStaircaseNum != null && bestDistances != null) {
-                var minDistance2 = Double.MAX_VALUE
-                var closestEndNode2: HallwayNode? = null
-                var closestStartNode2: HallwayNode? = null
-                var bestDistances2: Map<HallwayNode, Pair<Double, HallwayNode?>>? = null
-                println("Distance from start node to hallway node ${closestStaircase.nodeId}: $minDistance")
-                printPath(bestDistances, closestStartNode, closestStaircase)
-                println("take staircase ${closestStaircaseNum} ...")
-                val newStart: Int? = findCorrespondingStaircase(closestStaircaseNum, findFloor(endClassroomId))
-                val newStartNodeNum: Int = classroomToHallwayMap[newStart]?.firstOrNull() ?: throw IllegalArgumentException("Hallway node $newStart does not exist")
-                val newStartNode: HallwayNode = hallways[newStartNodeNum] ?: throw IllegalArgumentException("Hallway node $newStartNodeNum does not exist")
-                val distances2: Map<HallwayNode, Pair<Double, HallwayNode?>> = dijkstraInternal(newStartNode, hallways)
-                distances2.forEach { (hallway, distance) ->
-                    println("Distance from ${newStartNode.nodeId} to ${hallway.nodeId}: ${distance.first}")
+        }
+        if (closestStartNode != null && closestTransition != null && closestTransitionNum != null && bestDistances != null) {
+            var minDistance2 = Double.MAX_VALUE
+            var closestEndNode2: HallwayNode? = null
+            var closestStartNode2: HallwayNode? = null
+            var bestDistances2: Map<HallwayNode, Pair<Double, HallwayNode?>>? = null
+            printPath(bestDistances, closestStartNode, closestTransition)
+            val newStart: Int? = findCorrespondingTransition(closestTransitionNum, findFloor(endClassroomId), useElevator || endingFloor - startingFloor > 1)
+            val newStartNodeNum: Int = classroomToHallwayMap[newStart]?.firstOrNull() ?: throw IllegalArgumentException("Hallway node $newStart does not exist")
+            val newStartNode: HallwayNode = hallways[newStartNodeNum] ?: throw IllegalArgumentException("Hallway node $newStartNodeNum does not exist")
+            val distances2: Map<HallwayNode, Pair<Double, HallwayNode?>> = dijkstraInternal(newStartNode, hallways)
+            if (useElevator || endingFloor - startingFloor > 1) {
+                println("take elevator ${closestTransitionNum} ...")
+                println("get off elevator at ${newStart}...")
+            }
+            else {
+                println("take staircase ${closestTransitionNum} ...")
+                println("get off stairs at ${newStart}...")
+            }
+            for (targetEndHallwayNode in targetEndHallwayNodes) {
+                val targetNode = hallways[targetEndHallwayNode]
+                val distanceToTarget = distances2[targetNode]?.first ?: throw IllegalArgumentException("Distance to hallway node $targetNode not found")
+                if (distanceToTarget < minDistance2) {
+                    minDistance2 = distanceToTarget
+                    closestEndNode2 = targetNode
+                    closestStartNode2 = newStartNode
+                    bestDistances2 = distances2
                 }
-                for (targetEndHallwayNode in targetEndHallwayNodes) {
-                    val targetNode = hallways[targetEndHallwayNode]
-                    val distanceToTarget = distances2[targetNode]?.first ?: throw IllegalArgumentException("Distance to hallway node $targetNode not found")
-                    if (distanceToTarget < minDistance2) {
-                        minDistance2 = distanceToTarget
-                        closestEndNode2 = targetNode
-                        closestStartNode2 = newStartNode
-                        bestDistances2 = distances2
-                    }
-                }
-                if (closestStartNode2 != null && closestEndNode2 != null && bestDistances2 != null) {
-                    println("Distance from start node to hallway node ${closestEndNode2.nodeId}: $minDistance2")
-                    printPath(bestDistances2, closestStartNode2, closestEndNode2)
-                } else {
-                    println("No path found from start nodes to end nodes.")
-                }
+            }
+            if (closestStartNode2 != null && closestEndNode2 != null && bestDistances2 != null) {
+                printPath(bestDistances2, closestStartNode2, closestEndNode2)
             } else {
                 println("No path found from start nodes to end nodes.")
             }
+        } else {
+            println("No path found from start nodes to end nodes.")
         }
     }
     else { // both nodes are on the same floor

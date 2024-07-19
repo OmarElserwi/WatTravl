@@ -90,9 +90,10 @@ fun connectHallways2(hallways: Map<Int, HallwayNode>) {
    }
    hallways[203]?.apply {
        south = hallways[212]
+       east = hallways[204]
    }
    hallways[204]?.apply {
-       west = hallways[212]
+       west = hallways[203]
    }
    hallways[205]?.apply {
        east = hallways[206]
@@ -265,8 +266,8 @@ fun setDistances2(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[203]!! to hallways[212]!!] = 0.5 * unit
     globalDistances[hallways[212]!! to hallways[203]!!] = 0.5 * unit
 
-    globalDistances[hallways[204]!! to hallways[212]!!] = 3 * unit
-    globalDistances[hallways[212]!! to hallways[204]!!] = 3 * unit
+    globalDistances[hallways[204]!! to hallways[203]!!] = 3 * unit
+    globalDistances[hallways[203]!! to hallways[204]!!] = 3 * unit
 
     globalDistances[hallways[205]!! to hallways[206]!!] = 1.5 * unit
     globalDistances[hallways[206]!! to hallways[205]!!] = 1.5 * unit

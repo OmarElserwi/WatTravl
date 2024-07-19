@@ -29,8 +29,8 @@ fun main() {
 
     // Change these to the desired starting and ending classroom IDs
     val startClassroomId = 2015
-    val endClassroomId = 5471
-    val useElevator = false
+    val endClassroomId = 3055
+    val useElevator = true
 
     dijkstra(startClassroomId, endClassroomId, hallways, classroomToHallwayMap, useElevator)
 }
