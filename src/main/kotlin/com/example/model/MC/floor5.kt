@@ -39,7 +39,7 @@ fun connectClassroomsToHallways5(hallways: Map<Int, HallwayNode>) {
   hallways[506]?.classrooms?.addAll(listOf(5016, 5014, 5017, 5013))
   hallways[507]?.classrooms?.addAll(listOf(5008, 5012, 5011))
   hallways[508]?.classrooms?.addAll(listOf(5006, 5004, 5002))
-  hallways[509]?.classrooms?.addAll(listOf(5094, 5086, 5907)) //5086 are stairs
+  hallways[509]?.classrooms?.addAll(listOf(5094, 5806, 5907)) //5806 are stairs
   hallways[510]?.classrooms?.addAll(listOf(5491))
   hallways[511]?.classrooms?.addAll(listOf(5403))
   hallways[512]?.classrooms?.addAll(listOf(5808)) //5808 are stairs
@@ -363,7 +363,7 @@ fun connectHallways5(hallways: Map<Int, HallwayNode>) {
   }
   hallways[561]?.apply {
       north = hallways[557]
-      south = hallways[571]
+      south = hallways[570]
       east = hallways[562]
   }
   hallways[562]?.apply {

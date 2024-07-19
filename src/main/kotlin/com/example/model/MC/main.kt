@@ -28,8 +28,8 @@ fun main() {
     val classroomToHallwayMap = createClassroomToHallwayMap(hallways)
 
     // Change these to the desired starting and ending classroom IDs
-    val startClassroomId = 1077
-    val endClassroomId = 3006
+    val startClassroomId = 2015
+    val endClassroomId = 5471
     val useElevator = false
 
     dijkstra(startClassroomId, endClassroomId, hallways, classroomToHallwayMap, useElevator)
