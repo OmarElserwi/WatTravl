@@ -28,10 +28,16 @@ class EmailVerifier(
 ) {
     var secretCode = ""
     @RequiresApi(Build.VERSION_CODES.O)
-    fun sendEmail(toEmailString: String) {
+    fun sendEmail(toEmailString: String): Boolean {
         val pref = activity.getSharedPreferences("LOGINS", Context.MODE_PRIVATE)
         var canSendEmail = false
         var moveEnd = 0
+
+        // COMMENT OUT AFTER DEBUG
+        val edit = pref.edit()
+        edit.putLong("lastLogin1", 0L)
+        edit.commit()
+
         for (i in 1..cap) {
             if (pref.getLong("lastLogin$i", 0) == 0L) {
                 // we permit sending a new email
@@ -48,7 +54,7 @@ class EmailVerifier(
                 moveEnd = cap - 1
             } else {
                 Toast.makeText(activity, "Too many verifications, please wait 24 hours", Toast.LENGTH_SHORT).show()
-                return
+                return false
             }
         }
 
@@ -66,7 +72,7 @@ class EmailVerifier(
             secretCode += Random.nextInt(0, 10).digitToChar()
         }
         editor.putString("secretCode", secretCode)
-        editor.commit()
+        editor.apply()
         // logger.log(Level.INFO, "Secret code is $secretCode")
 
         val fromEmail = Email("pduc07622@gmail.com")
@@ -87,9 +93,13 @@ class EmailVerifier(
 
         if (!response.isSuccessful) {
             logger.log(Level.WARNING, "Failed to send verification email, error code ${response.code}")
+            return false
         } else {
             logger.log(Level.INFO, "Successfully sent verification email")
+            Toast.makeText(activity, "Verification code sent to $toEmailString", Toast.LENGTH_SHORT).show()
         }
+
+        return true
 
         /*
         // val sg = SendGrid("REDACTED_SENDGRID_API_KEY")

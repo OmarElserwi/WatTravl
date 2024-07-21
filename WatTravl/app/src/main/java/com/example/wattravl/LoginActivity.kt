@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var sharedPref: SharedPreferences
     private lateinit var emailVerifier: EmailVerifier
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
@@ -33,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         showEmailStep()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showEmailStep() {
         setContentView(R.layout.activity_login_step1)
 
@@ -57,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showVerificationStep() {
         setContentView(R.layout.activity_login_step2)
 
@@ -101,11 +104,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun sendVerificationCode(email: String) {
+    private fun sendVerificationCode(email: String): Boolean {
         // Logic to send a verification code to the provided email
         // This is just a placeholder. Implement actual email sending here.
-        emailVerifier.sendEmail(email)
-        Toast.makeText(this, "Verification code sent to $email", Toast.LENGTH_SHORT).show()
+        return emailVerifier.sendEmail(email)
+        // Toast.makeText(this, "Verification code sent to $email", Toast.LENGTH_SHORT).show()
     }
 
     private fun isValidVerificationCode(code: String): Boolean {
