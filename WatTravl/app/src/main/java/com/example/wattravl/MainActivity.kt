@@ -73,8 +73,8 @@ class MainActivity : AppCompatActivity() {
             showAlertMessage()
         }
 
-        longitudeText = findViewById(R.id.longitudeText)
-        latitudeText = findViewById(R.id.latitudeText)
+//        longitudeText = findViewById(R.id.longitudeText)
+//        latitudeText = findViewById(R.id.latitudeText)
 
         checkForPermission(this)
         startLocationUpdates()
@@ -117,12 +117,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val locationRefreshButton: Button = findViewById(R.id.refreshButton)
-        locationRefreshButton.setOnClickListener {
-            Log.d("MainActivity", "Refreshing location")
-            updateLocation()
-            startLocationUpdates()
-        }
+//        val locationRefreshButton: Button = findViewById(R.id.refreshButton)
+//        locationRefreshButton.setOnClickListener {
+//            Log.d("MainActivity", "Refreshing location")
+//            updateLocation()
+//            startLocationUpdates()
+//        }
     }
 
     private val locationCallback = object : LocationCallback() {
