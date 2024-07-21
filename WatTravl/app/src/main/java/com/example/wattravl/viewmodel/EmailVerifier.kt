@@ -21,7 +21,7 @@ import kotlin.random.Random
 // Limit to sending 10 emails per day
 
 private val logger = Logger.getLogger("EmailVerifier")
-private val cap = 10
+private val cap = 1
 
 class EmailVerifier(
     private val activity: LoginActivity,

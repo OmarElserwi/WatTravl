@@ -217,12 +217,16 @@ class ViewModel(
     }
      */
 
+    fun getBuildingOfNode(nodeId: Int): String {
+        return "MC"
+    }
+
     fun getFloorOfNode(nodeId: Int): Int {
-        return 0
+        return nodeId.toString().first().digitToInt()
     }
 
     fun getFloorOfRoom(roomId: Int): Int {
-        return 0
+        return roomId.toString().first().digitToInt()
     }
 
     /**
@@ -241,6 +245,10 @@ class ViewModel(
                 endPathCoord = i
             }
         }
+    }
+
+    fun updateBuilding(newBuilding: String) {
+        TODO("Implement update building")
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
