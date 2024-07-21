@@ -36,7 +36,7 @@ class EmailVerifier(
             if (pref.getLong("lastLogin$i", 0) == 0L) {
                 // we permit sending a new email
                 canSendEmail = true
-                moveEnd = i
+                moveEnd = i - 1
                 break
             }
         }
