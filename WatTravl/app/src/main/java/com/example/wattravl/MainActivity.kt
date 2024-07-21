@@ -41,13 +41,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Check if user is logged in
-        val isLoggedIn = intent.getBooleanExtra("isloggedin", false)
+        //val isLoggedIn = intent.getBooleanExtra("isloggedin", false)
+        //if (!isLoggedIn) {
+        //    val intent = Intent(this, LoginActivity::class.java)
+        //    startActivity(intent)
+        //    finish()
+        //    return
+        //}
+
+        val sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
         if (!isLoggedIn) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
-            return
         }
+
+        // Remove this to stop constant login
+        val editor = sharedPref.edit()
+        editor.putBoolean("isLoggedIn", false)
+        editor.apply()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
