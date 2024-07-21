@@ -10,3 +10,4 @@
 | July 21, 2024|     | 1    |       |        |        |     | Add Login Page |
 | July 21, 2024|     | 1    |       |        |        |     | Add building and floor changes to map activity |
 | July 21, 2024|     | 1    |       |        |        |     | Use shared_preference singleton for log in |
+| July 21, 2024|     | 1    |       |        |        |     | Update Login Page for 2 step verification |

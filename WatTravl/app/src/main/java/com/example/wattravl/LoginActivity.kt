@@ -2,37 +2,108 @@ package com.example.wattravl
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var emailEditText: EditText
+    private lateinit var verificationCodeEditText: EditText
+    private lateinit var nextButton: Button
+    private lateinit var loginButton: Button
+    private lateinit var backButton: ImageButton
+    private lateinit var resendCodeButton: Button
+
+    private lateinit var sharedPref: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
 
-        val emailEditText: EditText = findViewById(R.id.emailEditText)
-        val verificationCodeEditText: EditText = findViewById(R.id.verificationCodeEditText)
-        val loginButton: Button = findViewById(R.id.loginButton)
+        // Start with the email input step
+        showEmailStep()
+    }
 
-        val sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
+    private fun showEmailStep() {
+        setContentView(R.layout.activity_login_step1)
+
+        emailEditText = findViewById(R.id.emailEditText)
+        nextButton = findViewById(R.id.nextButton)
+
+        nextButton.setOnClickListener {
+            val email = emailEditText.text.toString()
+
+            if (isValidEmail(email)) {
+                // Save the email and move to the next step
+                sharedPref.edit().putString("email", email).apply()
+
+                // Send the verification code to the user's email
+                sendVerificationCode(email)
+
+                // Move to the next step
+                showVerificationStep()
+            } else {
+                Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun showVerificationStep() {
+        setContentView(R.layout.activity_login_step2)
+
+        verificationCodeEditText = findViewById(R.id.verificationCodeEditText)
+        loginButton = findViewById(R.id.loginButton)
+        backButton = findViewById(R.id.backButton)
+        resendCodeButton = findViewById(R.id.resendCodeButton)
+
+        backButton.setOnClickListener {
+            // Go back to email input step
+            showEmailStep()
+        }
+
+        resendCodeButton.setOnClickListener {
+            val email = sharedPref.getString("email", null)
+            if (email != null) {
+                // Resend the verification code to the saved email
+                sendVerificationCode(email)
+            } else {
+                Toast.makeText(this, "Error: No email found", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         loginButton.setOnClickListener {
-            val email = emailEditText.text.toString()
             val verificationCode = verificationCodeEditText.text.toString()
 
-            if (email == "user@example.com" && verificationCode == "123456") { // Replace with actual authentication logic
-                editor.putBoolean("isLoggedIn", true)
-                editor.apply()
+            if (isValidVerificationCode(verificationCode)) {
+                // Save login state
+                sharedPref.edit().putBoolean("isLoggedIn", true).apply()
+
+                // Go to the main activity
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
-                Toast.makeText(this, "Invalid email or verification code", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Invalid verification code", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun sendVerificationCode(email: String) {
+        // Logic to send a verification code to the provided email
+        // This is just a placeholder. Implement actual email sending here.
+        Toast.makeText(this, "Verification code sent to $email", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isValidVerificationCode(code: String): Boolean {
+        // Placeholder for actual verification logic
+        return code == "123456"
     }
 }
