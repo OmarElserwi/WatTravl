@@ -58,13 +58,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/buttonGoogleMapsNav"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Finfefd Route"
-                tools:layout_editor_absoluteX="36dp"
-                tools:layout_editor_absoluteY="375dp" />
+<!--            <Button-->
+<!--                android:id="@+id/buttonGoogleMapsNav"-->
+<!--                android:layout_width="40sp"-->
+<!--                android:layout_height="40sp"-->
+<!--                android:text="Finfefd Route"-->
+<!--                tools:layout_editor_absoluteX="36dp"-->
+<!--                tools:layout_editor_absoluteY="375dp" />-->
             <!--            <Button-->
 <!--                android:id="@+id/refreshButton"-->
 <!--                android:layout_width="wrap_content"-->

@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 //        latitudeText = findViewById(R.id.latitudeText)
 
         checkForPermission(this)
-        startLocationUpdates()
+//        startLocationUpdates()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -125,50 +125,50 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
-    private val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            Log.d("MainActivity", "mLocationCallback: updating location")
-            updateUI(locationResult.lastLocation)
-        }
-    }
+//    private val locationCallback = object : LocationCallback() {
+//        override fun onLocationResult(locationResult: LocationResult) {
+//            Log.d("MainActivity", "mLocationCallback: updating location")
+//            updateUI(locationResult.lastLocation)
+//        }
+//    }
 
-    private fun updateUI(lastLocation: Location?) {
-        latitude = lastLocation?.latitude ?: 0.0
-        longitude = lastLocation?.longitude ?: 0.0
-        Log.d("MainActivity", "updateUI: $latitude, $longitude")
-        longitudeText.text = "Longitude: $longitude"
-        latitudeText.text = "Latitude: $latitude"
-    }
+//    private fun updateUI(lastLocation: Location?) {
+//        latitude = lastLocation?.latitude ?: 0.0
+//        longitude = lastLocation?.longitude ?: 0.0
+//        Log.d("MainActivity", "updateUI: $latitude, $longitude")
+//        longitudeText.text = "Longitude: $longitude"
+//        latitudeText.text = "Latitude: $latitude"
+//    }
 
-    private fun startLocationUpdates() {
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = interval
-        locationRequest.fastestInterval = fastestInterval
+//    private fun startLocationUpdates() {
+//        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+//        locationRequest.interval = interval
+//        locationRequest.fastestInterval = fastestInterval
+//
+//        val builder = LocationSettingsRequest.Builder()
+//        builder.addLocationRequest(locationRequest)
+//        val locationSettingsRequest = builder.build()
+//        val settingsClient = LocationServices.getSettingsClient(this)
+//        settingsClient.checkLocationSettings(locationSettingsRequest)
+//
+//        if (ActivityCompat.checkSelfPermission(
+//                this, Manifest.permission.ACCESS_FINE_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+//                this, Manifest.permission.ACCESS_COARSE_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED) {
+//            return
+//        }
+//        fusedLocationClient!!.requestLocationUpdates(
+//            locationRequest,
+//            locationCallback,
+//            null)
+//    }
 
-        val builder = LocationSettingsRequest.Builder()
-        builder.addLocationRequest(locationRequest)
-        val locationSettingsRequest = builder.build()
-        val settingsClient = LocationServices.getSettingsClient(this)
-        settingsClient.checkLocationSettings(locationSettingsRequest)
-
-        if (ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED) {
-            return
-        }
-        fusedLocationClient!!.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            null)
-    }
-
-    private fun updateLocation() {
-        Log.d("MainActivity", "updateLocation: called")
-        checkForPermission(this)
-        fusedLocationClient?.lastLocation?.addOnSuccessListener { updateUI(it) }
-    }
+//    private fun updateLocation() {
+//        Log.d("MainActivity", "updateLocation: called")
+//        checkForPermission(this)
+//        fusedLocationClient?.lastLocation?.addOnSuccessListener { updateUI(it) }
+//    }
 
     private fun checkForPermission(context: Context) {
         if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -198,18 +198,18 @@ class MainActivity : AppCompatActivity() {
         alert.show()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == requestPermissionCode) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startLocationUpdates()
-            } else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == requestPermissionCode) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                startLocationUpdates()
+//            } else {
+//                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 }
