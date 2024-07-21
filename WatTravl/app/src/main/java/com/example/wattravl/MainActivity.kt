@@ -17,6 +17,7 @@ import android.location.LocationManager
 import android.provider.Settings
 import android.util.Log
 import android.widget.TextView
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -77,22 +78,17 @@ class MainActivity : AppCompatActivity() {
         fromLocationSpinner.adapter = locationAdapter
         toLocationSpinner.adapter = locationAdapter
 
-        // Add Room Spinner
-        val fromRoomSpinner: Spinner = findViewById(R.id.fromRoomSpinner)
-        val toRoomSpinner: Spinner = findViewById(R.id.toRoomSpinner)
-        val roomItems = resources.getStringArray(R.array.Rooms)
-        val roomAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, roomItems)
-        roomAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        fromRoomSpinner.adapter = roomAdapter
-        toRoomSpinner.adapter = roomAdapter
+        // Add Room EditText
+        val fromRoomEditText: EditText = findViewById(R.id.fromRoomEditText)
+        val toRoomEditText: EditText = findViewById(R.id.toRoomEditText)
 
         val button: Button = findViewById(R.id.button)
         button.setOnClickListener {
             // Get the selected items from the spinners
             val selectedFromLocation = fromLocationSpinner.selectedItem.toString()
             val selectedToLocation = toLocationSpinner.selectedItem.toString()
-            val selectedFromRoom = fromRoomSpinner.selectedItem.toString()
-            val selectedToRoom = toRoomSpinner.selectedItem.toString()
+            val selectedFromRoom = fromRoomEditText.text.toString()
+            val selectedToRoom = toRoomEditText.text.toString()
 
             // Start SecondActivity and pass the selected items
             val intent = Intent(this, MapActivity::class.java).apply {
@@ -192,6 +188,7 @@ class MainActivity : AppCompatActivity() {
         val alert: AlertDialog = builder.create()
         alert.show()
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

@@ -6,3 +6,4 @@
 | June 17, 2024|     | 1    |       |        |        |     | Location Selectors, Filters and "Find Route" Button |
 | June 17, 2024|     | 1    |       |        |        |     | Add Activity Switch to Map |
 | July 14, 2024|     | 1    |       |        |        |     | Create Button to Switch Between Activities |
+| July 21, 2024|     | 1    |       |        |        |     | Swap Room Dropdowns to Text Boxes |
