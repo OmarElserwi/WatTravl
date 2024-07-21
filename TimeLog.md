@@ -8,3 +8,4 @@
 | July 14, 2024|     | 1    |       |        |        |     | Create Button to Switch Between Activities |
 | July 21, 2024|     | 1    |       |        |        |     | Swap Room Dropdowns to Text Boxes |
 | July 21, 2024|     | 1    |       |        |        |     | Add Login Page |
+| July 21, 2024|     | 1    |       |        |        |     | Add building and floor changes to map activity |

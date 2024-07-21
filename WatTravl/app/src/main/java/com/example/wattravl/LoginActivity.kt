@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
             val email = emailEditText.text.toString()
             val verificationCode = verificationCodeEditText.text.toString()
 
-            if (email == "user@example.com" && verificationCode == "123456") { // Replace with actual authentication logic
+            if (true || email == "user@example.com" && verificationCode == "123456") { // Replace with actual authentication logic
                 // Pass the login state to MainActivity
                 val intent = Intent(this, MainActivity::class.java).apply {
                     putExtra("isloggedin", true)

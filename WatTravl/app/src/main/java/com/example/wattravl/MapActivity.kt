@@ -8,23 +8,26 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.ScaleGestureDetector.OnScaleGestureListener
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
 import com.example.wattravl.model.MC.Model
 import com.example.wattravl.viewmodel.ViewModel
 import java.lang.Exception
 import java.util.logging.Logger
+import kotlin.math.floor
 
 private val logger = Logger.getLogger("MapActivity")
 
 class MapActivity : AppCompatActivity() {
-    // private val viewModel = ViewModel(this)
     private lateinit var scaleDetector: ScaleGestureDetector
     private lateinit var gestureDetector: GestureDetector
     private var scale = 10f
@@ -32,6 +35,8 @@ class MapActivity : AppCompatActivity() {
     private var curOffsetY = 200f
     private lateinit var viewModel: ViewModel
     private lateinit var imgView: ImageView
+    private lateinit var buildingSpinner: Spinner
+    private lateinit var floorSpinner: Spinner
 
     var densityScale = 0f // used to convert screen distances to pixels
 
@@ -75,9 +80,9 @@ class MapActivity : AppCompatActivity() {
         val selectedFromRoom = intent.getStringExtra("SELECTED_FROM_ROOM")
         val selectedToRoom = intent.getStringExtra("SELECTED_TO_ROOM")
 
-        val button: Button = findViewById(R.id.button)
-        button.setOnClickListener {
-            // Start SecondActivity and pass the selected items
+        val backButton: ImageButton = findViewById(R.id.imageButton)
+        backButton.setOnClickListener {
+            // Start MainActivity and pass the login state
             val intent = Intent(this, MainActivity::class.java).apply {
                 putExtra("isloggedin", true)
             }
@@ -85,9 +90,27 @@ class MapActivity : AppCompatActivity() {
             finish()
         }
 
-        //val btn: Button = findViewById(R.id.button2)
-        //btn.text = "PUT MAP HERE:\n" + "From Location: $selectedFromLocation Room $selectedFromRoom\nTo Location: $selectedToLocation Room $selectedToRoom"
-        //btn.isVisible = false
+        val relaunchButton: Button = findViewById(R.id.relaunchButton)
+        relaunchButton.setOnClickListener {
+            val buildingSpinner: Spinner = findViewById(R.id.buildingSpinner)
+            val floorSpinner: Spinner = findViewById(R.id.floorSpinner)
+            val building = buildingSpinner.selectedItem.toString()
+            val floor = floorSpinner.selectedItem.toString()
+
+            // Put logic here for update floor
+        }
+
+        buildingSpinner = findViewById(R.id.buildingSpinner)
+        floorSpinner = findViewById(R.id.floorSpinner)
+
+        // Set up spinners
+        val buildingAdapter = ArrayAdapter.createFromResource(this, R.array.Locations, android.R.layout.simple_spinner_item)
+        buildingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        buildingSpinner.adapter = buildingAdapter
+
+        val floorAdapter = ArrayAdapter.createFromResource(this, R.array.Floors, android.R.layout.simple_spinner_item)
+        floorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        floorSpinner.adapter = floorAdapter
 
         densityScale = applicationContext.resources.displayMetrics.density - 0.55f
 
@@ -104,16 +127,14 @@ class MapActivity : AppCompatActivity() {
 
         updateImage()
 
-        scaleDetector = ScaleGestureDetector(applicationContext, object: OnScaleGestureListener {
+        scaleDetector = ScaleGestureDetector(applicationContext, object : OnScaleGestureListener {
             override fun onScale(detector: ScaleGestureDetector): Boolean {
-                // logger.log(Level.INFO, "On scale called")
                 scale *= detector.scaleFactor
                 matrix.postScale(detector.scaleFactor, detector.scaleFactor, detector.focusX, detector.focusY)
                 return true // event handled
             }
 
             override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-                // logger.log(Level.INFO, "On scale begin")
                 return true
             }
 
@@ -121,15 +142,13 @@ class MapActivity : AppCompatActivity() {
             }
         })
 
-        gestureDetector = GestureDetector(applicationContext, object: GestureDetector.OnGestureListener {
+        gestureDetector = GestureDetector(applicationContext, object : GestureDetector.OnGestureListener {
             override fun onScroll(
                 p0: MotionEvent?,
                 p1: MotionEvent,
                 p2: Float,
                 p3: Float
             ): Boolean {
-                // Implement movement code here
-                // logger.log(Level.INFO, "On scroll called")
                 curOffsetX += p2 * densityScale / scale
                 curOffsetY += p3 * densityScale / scale
                 matrix.postTranslate(p2 * densityScale / scale, p3 * densityScale / scale)
@@ -137,33 +156,28 @@ class MapActivity : AppCompatActivity() {
             }
 
             override fun onDown(p0: MotionEvent): Boolean {
-                return false;
+                return false
             }
 
             override fun onFling(p0: MotionEvent?, p1: MotionEvent, p2: Float, p3: Float): Boolean {
-                return false;
+                return false
             }
 
             override fun onLongPress(p0: MotionEvent) {
-
             }
 
             override fun onShowPress(p0: MotionEvent) {
-
             }
 
             override fun onSingleTapUp(p0: MotionEvent): Boolean {
-                return false;
+                return false
             }
         })
 
         imgView.setOnTouchListener { view, motionEvent ->
-            // logger.log(Level.INFO, "Touch listener")
             scaleDetector.onTouchEvent(motionEvent)
             gestureDetector.onTouchEvent(motionEvent)
             updateImage()
-
-            // logger.log(Level.INFO, "Touched at " + motionEvent.x + " " + motionEvent.y)
             true
         }
     }

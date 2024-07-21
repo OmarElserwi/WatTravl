@@ -18,6 +18,15 @@
         <item>1060B</item>
         <item>1089</item>
     </string-array>
+
+    <string-array name="Floors">
+        <item>Floor 1</item>
+        <item>Floor 2</item>
+        <item>Floor 3</item>
+        <item>Floor 4</item>
+        <item>Floor 5</item>
+    </string-array>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -66,4 +75,5 @@
     <string name="verification_code_hint">Verification Code</string>
     <string name="login_button">Login</string>
     <string name="login_button_description">Button to log in</string>
+    <string name="back_button_description">Back</string>
 </resources>
