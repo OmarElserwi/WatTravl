@@ -107,13 +107,16 @@ class LoginActivity : AppCompatActivity() {
     private fun sendVerificationCode(email: String): Boolean {
         // Logic to send a verification code to the provided email
         // This is just a placeholder. Implement actual email sending here.
-        return emailVerifier.sendEmail(email)
-        // Toast.makeText(this, "Verification code sent to $email", Toast.LENGTH_SHORT).show()
+
+        // return emailVerifier.sendEmail(email)
+        Toast.makeText(this, "Verification code sent to $email", Toast.LENGTH_SHORT).show()
+        return true
     }
 
     private fun isValidVerificationCode(code: String): Boolean {
         // Placeholder for actual verification logic
-        // return code == "123456"
-        return emailVerifier.verifyCode(code)
+
+        return code == "123456"
+        // return emailVerifier.verifyCode(code)
     }
 }
