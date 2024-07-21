@@ -34,4 +34,8 @@ class Model {
 
         return printPath(distances, startNode, endNode)
     }
+
+    fun getNodeId(roomId: Int): Int {
+        return classroomToHallwayMap[roomId] ?: throw IllegalArgumentException("Classroom $roomId does not exist in the map")
+    }
 }

@@ -16,7 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import com.example.wattravl.model.MC.Model
 import com.example.wattravl.viewmodel.ViewModel
+import java.lang.Exception
 import java.util.logging.Logger
 
 private val logger = Logger.getLogger("MapActivity")
@@ -34,6 +36,8 @@ class MapActivity : AppCompatActivity() {
     var densityScale = 0f // used to convert screen distances to pixels
 
     val matrix = Matrix()
+
+    private val model = Model()
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun updateImage() {
@@ -88,8 +92,12 @@ class MapActivity : AppCompatActivity() {
 
         viewModel = ViewModel(this)
 
-
-        viewModel.drawPath(convertCharRooms(selectedFromRoom!!), convertCharRooms(selectedToRoom!!))
+        val fromRoom = convertCharRooms(selectedFromRoom!!)
+        val toRoom = convertCharRooms(selectedToRoom!!)
+        val coords = getNodeCoords(model.getNodeId(fromRoom))
+        curOffsetX = coords.first.toFloat() * densityScale / scale
+        curOffsetY = coords.second.toFloat() * densityScale / scale
+        viewModel.drawPath(fromRoom, toRoom)
 
         updateImage()
 
@@ -216,5 +224,16 @@ class MapActivity : AppCompatActivity() {
             152 to Pair(940, 452),
             153 to Pair(970, 452),
         )
+
+        fun getNodeCoords(id: Int): Pair<Int, Int> {
+            if (nodesToCoords.containsKey(id)) {
+                val coords = nodesToCoords[id]!!
+                return Pair((coords.first * 1224 / 1632), (coords.second * 792 / 1056))
+            } else if (nodesToCoords2.containsKey(id)) {
+                return nodesToCoords2[id]!!
+            } else {
+                throw Exception("Invalid node ID " + id)
+            }
+        }
     }
 }

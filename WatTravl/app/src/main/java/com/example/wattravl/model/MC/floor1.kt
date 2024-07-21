@@ -254,7 +254,7 @@ fun connectHallways(hallways: Map<Int, HallwayNode>) {
     }
 }
 
-
+val unit = 1.0
 fun setDistances(hallways: Map<Int, HallwayNode>) {
     globalDistances[hallways[101]!! to hallways[102]!!] = 1 * unit
     globalDistances[hallways[102]!! to hallways[101]!!] = 1 * unit

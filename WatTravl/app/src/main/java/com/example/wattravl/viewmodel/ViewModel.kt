@@ -18,6 +18,9 @@ import com.example.wattravl.model.MC.Model
 import java.lang.Exception
 import java.util.logging.Level
 import java.util.logging.Logger
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 private val logger = Logger.getLogger("ViewModel")
 
@@ -28,6 +31,8 @@ class ViewModel(
     var resBitmap: MutableLiveData<Bitmap>? = null
     private var svg: SVG = SVG.getFromInputStream(activity.assets.open("MCFloor1.svg"))
     val pathCoordinates: MutableList<Pair<Int, Int>> = mutableListOf()
+    var startPathCoord = 0
+    var endPathCoord = 0
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun transform(coord: Pair<Int, Int>, zoomScale: Float, offsetX: Float, offsetY: Float): Pair<Float, Float> {
@@ -92,6 +97,48 @@ class ViewModel(
         logger.log(Level.INFO, path.joinToString(" -> ") { it.nodeId.toString() })
     }
 
+    data class Point(var x: Double, var y: Double)
+
+    data class Triangle(var p1: Point, var p2: Point, var p3: Point) {
+
+        fun translate(dx: Double, dy: Double) {
+            p1.x += dx
+            p1.y += dy
+            p2.x += dx
+            p2.y += dy
+            p3.x += dx
+            p3.y += dy
+        }
+
+        fun rotate(angle: Double, centerX: Double = 0.0, centerY: Double = 0.0) {
+            val radians = Math.toRadians(angle)
+            rotatePoint(p1, radians, centerX, centerY)
+            rotatePoint(p2, radians, centerX, centerY)
+            rotatePoint(p3, radians, centerX, centerY)
+        }
+
+        private fun rotatePoint(point: Point, radians: Double, centerX: Double, centerY: Double) {
+            val x = point.x - centerX
+            val y = point.y - centerY
+            val xNew = x * cos(radians) - y * sin(radians) + centerX
+            val yNew = x * sin(radians) + y * cos(radians) + centerY
+            point.x = xNew
+            point.y = yNew
+        }
+    }
+
+    fun drawArrow(coord1: Pair<Int, Int>, coord2: Pair<Int, Int>): String {
+        val midX = (coord2.first + coord1.first).toFloat() / 2f
+        val midY = (coord2.second + coord1.second).toFloat() / 2f
+        val arrowTriangle = Triangle(Point(-5.0, -5.0), Point(5.0, 0.0), Point(-5.0, 5.0))
+        val angle = atan2((coord2.second - coord1.second).toDouble(), (coord2.first - coord1.first).toDouble()) * 180 / Math.PI
+        arrowTriangle.rotate(angle, 0.0, 0.0)
+        arrowTriangle.translate(midX.toDouble(), midY.toDouble())
+        return """
+            <polygon id="arrowhead" points="${arrowTriangle.p1.x},${arrowTriangle.p1.y} ${arrowTriangle.p2.x},${arrowTriangle.p2.y} ${arrowTriangle.p3.x},${arrowTriangle.p3.y}"
+            fill="red" />
+        """.trimIndent()
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun draw(zoomScale: Float, offsetX: Float, offsetY: Float, width: Int, height: Int): Bitmap {
@@ -109,15 +156,33 @@ class ViewModel(
         // svg.setDocumentViewBox(offsetX, offsetY, width.toFloat(), height.toFloat())
         svg.renderToCanvas(canvas)
 
+        val startCoords = pathCoordinates.first()
+        val endCoords = pathCoordinates.last()
+
         var svgString = """
             <svg xmlns="http://www.w3.org/2000/svg" width="1632" height="1056">
         """.trimIndent()
 
-        pathCoordinates.zipWithNext().forEach { (coord1, coord2) ->
+        for (i in startPathCoord..(endPathCoord - 1)) {
+            val coord1 = pathCoordinates[i]
+            val coord2 = pathCoordinates[i + 1]
+
             svgString += "<line x1=\"" + coord1.first + "\" y1 = \"" + coord1.second + "\" x2 = \"" + coord2.first + "\" y2 = \"" + coord2.second + "\" stroke = \"blue\" stroke-width = \"2\"/>"
+            svgString += drawArrow(coord1, coord2)
         }
 
-        svgString += "</svg>"
+        /*
+        pathCoordinates.zipWithNext().forEach { (coord1, coord2) ->
+            svgString += "<line x1=\"" + coord1.first + "\" y1 = \"" + coord1.second + "\" x2 = \"" + coord2.first + "\" y2 = \"" + coord2.second + "\" stroke = \"blue\" stroke-width = \"2\"/>"
+            svgString += drawArrow(coord1, coord2)
+        }
+         */
+
+        svgString += """
+            <circle cx="${startCoords.first}" cy="${startCoords.second}" r="5" fill="red" />
+            <circle cx="${endCoords.first}" cy="${endCoords.second}" r="5" fill="cyan" />
+            </svg>
+        """.trimIndent()
         svgString.trimIndent()
 
         val svg2 = SVG.getFromString(svgString)
@@ -132,8 +197,11 @@ class ViewModel(
     fun setPathCoordinates(pathCoords: List<Pair<Int, Int>>) {
         pathCoordinates.clear()
         pathCoordinates.addAll(pathCoords)
+        startPathCoord = 0
+        endPathCoord = pathCoordinates.size - 1
     }
 
+    /*
     fun getNodeCoords(id: Int): Pair<Int, Int> {
         if (MapActivity.Companion.nodesToCoords.containsKey(id)) {
             val coords = MapActivity.Companion.nodesToCoords[id]!!
@@ -144,6 +212,15 @@ class ViewModel(
             throw Exception("Invalid node ID " + id)
         }
     }
+     */
+
+    fun getFloorOfRoom(roomId: Int): Int {
+        TODO("needs implementing")
+    }
+
+    fun updateFloor(newFloor: Int) {
+        TODO("needs implementing")
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun drawPath(start: Int, end: Int) {
@@ -152,7 +229,7 @@ class ViewModel(
         path.forEach {
             logger.log(Level.INFO, it.nodeId.toString())
             // coords.add(MapActivity.Companion.nodesToCoords[it.nodeId]!!)
-            coords.add(getNodeCoords(it.nodeId))
+            coords.add(MapActivity.getNodeCoords(it.nodeId))
         }
 
 
