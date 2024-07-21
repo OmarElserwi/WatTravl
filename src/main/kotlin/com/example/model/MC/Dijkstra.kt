@@ -53,7 +53,8 @@ fun findCorrespondingTransition(startingTransition: Int, endingFloor: Int, useEl
     return null
 }
 
-fun dijkstra(startClassroomId: Int, endClassroomId: Int, hallways: Map<Int, HallwayNode>, classroomToHallwayMap: Map<Int, List<Int>>, useElevator: Boolean) {
+fun dijkstra(startClassroomId: Int, endClassroomId: Int, hallways: Map<Int, HallwayNode>, classroomToHallwayMap: Map<Int, List<Int>>, useElevator: Boolean): List<List<HallwayNode>>{
+    var hallwayNodesList = mutableListOf<List<HallwayNode>>()
     val startNodeIds = classroomToHallwayMap[startClassroomId] ?: throw IllegalArgumentException("Classroom $startClassroomId does not exist in the map")
     val endNodeIds = classroomToHallwayMap[endClassroomId] ?: throw IllegalArgumentException("Classroom $endClassroomId does not exist in the map")
     val startingFloor = findFloor(startClassroomId)
@@ -92,7 +93,7 @@ fun dijkstra(startClassroomId: Int, endClassroomId: Int, hallways: Map<Int, Hall
             var closestEndNode2: HallwayNode? = null
             var closestStartNode2: HallwayNode? = null
             var bestDistances2: Map<HallwayNode, Pair<Double, HallwayNode?>>? = null
-            printPath(bestDistances, closestStartNode, closestTransition)
+            hallwayNodesList.add(printPath(bestDistances, closestStartNode, closestTransition))
             val newStart: Int? = findCorrespondingTransition(closestTransitionNum, findFloor(endClassroomId), useElevator || endingFloor - startingFloor > 1)
             val newStartNodeNum: Int = classroomToHallwayMap[newStart]?.firstOrNull() ?: throw IllegalArgumentException("Hallway node $newStart does not exist")
             val newStartNode: HallwayNode = hallways[newStartNodeNum] ?: throw IllegalArgumentException("Hallway node $newStartNodeNum does not exist")
@@ -116,7 +117,7 @@ fun dijkstra(startClassroomId: Int, endClassroomId: Int, hallways: Map<Int, Hall
                 }
             }
             if (closestStartNode2 != null && closestEndNode2 != null && bestDistances2 != null) {
-                printPath(bestDistances2, closestStartNode2, closestEndNode2)
+                hallwayNodesList.add(printPath(bestDistances2, closestStartNode2, closestEndNode2))
             } else {
                 println("No path found from start nodes to end nodes.")
             }
@@ -150,11 +151,12 @@ fun dijkstra(startClassroomId: Int, endClassroomId: Int, hallways: Map<Int, Hall
 
         if (closestStartNode != null && closestEndNode != null && bestDistances != null) {
             println("Distance from start node to hallway node ${closestEndNode.nodeId}: $minDistance")
-            printPath(bestDistances, closestStartNode, closestEndNode)
+            hallwayNodesList.add(printPath(bestDistances, closestStartNode, closestEndNode))
         } else {
             println("No path found from start nodes to end nodes.")
         }
     }
+    return hallwayNodesList
 }
 
 fun printPath(distances: Map<HallwayNode, Pair<Double, HallwayNode?>>, start: HallwayNode, end: HallwayNode): MutableList<HallwayNode> {
