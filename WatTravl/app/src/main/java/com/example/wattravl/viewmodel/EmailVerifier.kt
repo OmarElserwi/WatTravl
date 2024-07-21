@@ -2,6 +2,7 @@ package com.example.wattravl.viewmodel
 
 import android.content.Context
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.wattravl.LoginActivity
 import com.sendgrid.helpers.mail.objects.Content
@@ -46,6 +47,7 @@ class EmailVerifier(
                 canSendEmail = true
                 moveEnd = cap - 1
             } else {
+                Toast.makeText(activity, "Too many verifications, please wait 24 hours", Toast.LENGTH_SHORT).show()
                 return
             }
         }
