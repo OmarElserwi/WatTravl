@@ -31,8 +31,10 @@ class ViewModel(
     var resBitmap: MutableLiveData<Bitmap>? = null
     private var svg: SVG = SVG.getFromInputStream(activity.assets.open("MCFloor1.svg"))
     val pathCoordinates: MutableList<Pair<Int, Int>> = mutableListOf()
+    val pathFloors: MutableList<Int> = mutableListOf()
     var startPathCoord = 0
     var endPathCoord = 0
+    var currentFloor = 0
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun transform(coord: Pair<Int, Int>, zoomScale: Float, offsetX: Float, offsetY: Float): Pair<Float, Float> {
@@ -97,6 +99,9 @@ class ViewModel(
         logger.log(Level.INFO, path.joinToString(" -> ") { it.nodeId.toString() })
     }
 
+    /**
+     * These 2 data classes are made just for translating coordinates of the arrow in rendering
+     */
     data class Point(var x: Double, var y: Double)
 
     data class Triangle(var p1: Point, var p2: Point, var p3: Point) {
@@ -197,8 +202,6 @@ class ViewModel(
     fun setPathCoordinates(pathCoords: List<Pair<Int, Int>>) {
         pathCoordinates.clear()
         pathCoordinates.addAll(pathCoords)
-        startPathCoord = 0
-        endPathCoord = pathCoordinates.size - 1
     }
 
     /*
@@ -214,22 +217,42 @@ class ViewModel(
     }
      */
 
-    fun getFloorOfRoom(roomId: Int): Int {
-        TODO("needs implementing")
+    fun getFloorOfNode(nodeId: Int): Int {
+        return 0
     }
 
+    fun getFloorOfRoom(roomId: Int): Int {
+        return 0
+    }
+
+    /**
+     * This function assumes all routes of the same floor are consecutive. This should be a correct assumption.
+     */
     fun updateFloor(newFloor: Int) {
-        TODO("needs implementing")
+        currentFloor = newFloor
+
+        startPathCoord = -1
+        endPathCoord = -1
+        for (i in 0..(pathFloors.size - 1)) {
+            if (pathFloors[i] == newFloor) {
+                if (startPathCoord == -1) {
+                    startPathCoord = i
+                }
+                endPathCoord = i
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun drawPath(start: Int, end: Int) {
         val path = model.getPath(start, end)
         val coords = mutableListOf<Pair<Int, Int>>()
+
         path.forEach {
             logger.log(Level.INFO, it.nodeId.toString())
             // coords.add(MapActivity.Companion.nodesToCoords[it.nodeId]!!)
             coords.add(MapActivity.getNodeCoords(it.nodeId))
+            pathFloors.add(getFloorOfNode(it.nodeId))
         }
 
 
@@ -250,9 +273,7 @@ class ViewModel(
         })
 */
         setPathCoordinates(coords)
-
-
-
+        updateFloor(getFloorOfRoom(start))
 
         /*
         setPathCoordinates(listOf(
