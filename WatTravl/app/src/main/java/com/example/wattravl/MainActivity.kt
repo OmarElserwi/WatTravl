@@ -1,33 +1,28 @@
 package com.example.wattravl
 
-import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Button
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import android.content.Intent
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.widget.TextView
+import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.wattravl.databinding.ActivityMainBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,6 +39,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Check if user is logged in
+        val isLoggedIn = intent.getBooleanExtra("isloggedin", false)
+        if (!isLoggedIn) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableEdgeToEdge()
@@ -106,14 +111,6 @@ class MainActivity : AppCompatActivity() {
             updateLocation()
             startLocationUpdates()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        fusedLocationClient?.removeLocationUpdates(locationCallback)
-        Log.d("MainActivity", "onPause: Removing location updates")
-        longitudeText.text = "Longitude: N/A"
-        latitudeText.text = "Latitude: N/A"
     }
 
     private val locationCallback = object : LocationCallback() {

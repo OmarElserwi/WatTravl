@@ -78,8 +78,11 @@ class MapActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.button)
         button.setOnClickListener {
             // Start SecondActivity and pass the selected items
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra("isloggedin", true)
+            }
             startActivity(intent)
+            finish()
         }
 
         //val btn: Button = findViewById(R.id.button2)

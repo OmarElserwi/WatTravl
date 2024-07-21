@@ -16,6 +16,10 @@
         android:theme="@style/Theme.WatTravl"
         tools:targetApi="31">
         <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.WatTravl" />
+        <activity
             android:name=".MapActivity"
             android:exported="false" />
         <activity
