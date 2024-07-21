@@ -28,51 +28,71 @@
                 android:id="@+id/Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="76dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/uwfont"
                 android:text="WatTravl"
                 android:textColor="#ffd54f"
-                android:textSize="50sp"
+                android:textSize="70sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/refreshButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="refresh"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.364" />
+<!--            <ImageView-->
+<!--                android:layout_width="411dp"-->
+<!--                android:layout_height="346dp"-->
+<!--                android:src="@drawable/uwlogo"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                tools:layout_editor_absoluteY="74dp" />-->
 
-            <TextView
-                android:id="@+id/longitudeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="longitude"
-                android:textColor="#ffd54f"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/refreshButton"
+            <ImageView
+                android:id="@+id/uw_logo_image"
+                android:layout_width="336dp"
+                android:layout_height="278dp"
+                android:layout_marginTop="136dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="UWlogo"
+                android:src="@drawable/uwlogoalt2"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.626"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Title"
-                app:layout_constraintVertical_bias="0.794" />
+                app:layout_constraintTop_toTopOf="parent" />
+            <!--            <Button-->
+<!--                android:id="@+id/refreshButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="refresh"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.498"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintVertical_bias="0.364" />-->
 
-            <TextView
-                android:id="@+id/latitudeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="latitude"
-                android:textColor="#ffd54f"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/longitudeText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Title" />
+<!--            <TextView-->
+<!--                android:id="@+id/longitudeText"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="longitude"-->
+<!--                android:textColor="#ffd54f"-->
+<!--                android:textSize="20sp"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/refreshButton"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/Title"-->
+<!--                app:layout_constraintVertical_bias="0.794" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/latitudeText"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="latitude"-->
+<!--                android:textColor="#ffd54f"-->
+<!--                android:textSize="20sp"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/longitudeText"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/Title" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
