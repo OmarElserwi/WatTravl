@@ -28,9 +28,23 @@ fun main() {
     val classroomToHallwayMap = createClassroomToHallwayMap(hallways)
 
     // Change these to the desired starting and ending classroom IDs
-    val startClassroomId = 2015
+    val startClassroomId = 3035
     val endClassroomId = 3055
     val useElevator = false
+    val toDC = true
+    
+    if (toDC == true) {
+        if (startClassroomId.toString()[0].toString().toInt() == 3) {
+            val nodeListMC = dijkstra(startClassroomId, 30, hallways, classroomToHallwayMap, useElevator)
+            val dcNodes = listOf(2390, 2380, 2370, 2360, 2350, 2340)
+            // Convert the list of IDs to a list of HallwayNode objects
+            val hallwayNodesDC = dcNodes.map { HallwayNode(it) }
+            val nodeList = nodeListMC + hallwayNodesDC
+        }
+    }
+    else {
+        val nodeList = dijkstra(startClassroomId, endClassroomId, hallways, classroomToHallwayMap, useElevator)
+    }
 
-    val nodeList = dijkstra(startClassroomId, endClassroomId, hallways, classroomToHallwayMap, useElevator)
+    
 }
