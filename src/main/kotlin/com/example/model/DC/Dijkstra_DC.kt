@@ -71,7 +71,6 @@ fun dijkstra(startClassroomId: Int, enDClassroomId: Int, hallways: Map<Int, Hall
             val startNode = hallways[startNodeId] ?: throw IllegalArgumentException("Hallway node $startNodeId does not exist")
             val distances = dijkstraInternal(startNode, hallways)
             for (t in transitions) {
-                println("${t}")
                 val targetNode = classroomToHallwayMap[t]?.getOrNull(0)?.let { hallways[it] } //staircases only have one entrance
                 val distanceToTarget = distances[targetNode]?.first ?: throw IllegalArgumentException("Distance to hallway node $targetNode not found${targetNode}")
                 if (distanceToTarget < minDistance) {
