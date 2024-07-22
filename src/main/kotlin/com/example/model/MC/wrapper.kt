@@ -7,7 +7,7 @@ import com.example.model.MC.buildGraphFloor4
 import com.example.model.MC.buildGraphFloor5
 import com.example.model.MC.buildGraphFloor6
 
-fun mc_pathing():List<List<HallwayNode>> {
+fun mc_pathing(start: Int, end: Int, useElevator: Boolean):List<List<HallwayNode>> {
     val hallwaysFloor1 = buildGraphFloor1()
     val hallwaysFloor2 = buildGraphFloor2()
     val hallwaysFloor3 = buildGraphFloor3()
@@ -30,7 +30,6 @@ fun mc_pathing():List<List<HallwayNode>> {
     // Change these to the desired starting and ending classroom IDs
     val startClassroomId = 2015
     val endClassroomId = 3055
-    val useElevator = false
 
-    return dijkstra(startClassroomId, endClassroomId, hallways, classroomToHallwayMap, useElevator)
+    return dijkstra(start, end, hallways, classroomToHallwayMap, useElevator)
 }
