@@ -78,4 +78,11 @@ class Model {
         // return classroomToHallwayMap[roomId] ?: throw IllegalArgumentException("Classroom $startClassroomId does not exist in the map")
         return classroomToHallwayMap[roomId]?.get(0) ?: throw IllegalArgumentException("Classroom $roomId does not exist")
     }
+
+    companion object {
+        private val instance: Model = Model()
+        fun getInstance(): Model {
+            return instance
+        }
+    }
 }

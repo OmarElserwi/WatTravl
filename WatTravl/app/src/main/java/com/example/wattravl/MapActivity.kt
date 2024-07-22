@@ -8,6 +8,8 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.ScaleGestureDetector.OnScaleGestureListener
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Spinner
@@ -42,8 +44,6 @@ class MapActivity : AppCompatActivity() {
     var densityScale = 0f // used to convert screen distances to pixels
 
     val matrix = Matrix()
-
-    private val model = Model()
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun updateImage() {
@@ -84,7 +84,6 @@ class MapActivity : AppCompatActivity() {
         val isIndoors = intent.getBooleanExtra("SELECTED_INDOOR", false)
 
 
-
         val backButton: ImageButton = findViewById(R.id.imageButton)
         backButton.setOnClickListener {
             // Start MainActivity and pass the login state
@@ -104,6 +103,7 @@ class MapActivity : AppCompatActivity() {
 
             // Put logic here for update floor
             viewModel.updateFloor(floor.last().digitToInt())
+            updateImage()
         }
 
         buildingSpinner = findViewById(R.id.buildingSpinner)
@@ -117,6 +117,18 @@ class MapActivity : AppCompatActivity() {
         val floorAdapter = ArrayAdapter.createFromResource(this, R.array.Floors, android.R.layout.simple_spinner_item)
         floorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         floorSpinner.adapter = floorAdapter
+        floorSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val floor = floorSpinner.selectedItem.toString()
+
+                viewModel.updateFloor(floor.last().digitToInt())
+                updateImage()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                // do nothing
+            }
+        }
 
         densityScale = applicationContext.resources.displayMetrics.density - 0.55f
 
@@ -127,6 +139,7 @@ class MapActivity : AppCompatActivity() {
         val fromRoom = convertCharRooms(selectedFromRoom!!)
         val toRoom = convertCharRooms(selectedToRoom!!)
         logger.log(Level.INFO, isAccessability.toString())
+        floorSpinner.setSelection(selectedFromRoom.toString().first().digitToInt() - 1)
         /*
         val coords = getNodeCoords(model.getNodeId(fromRoom))
         curOffsetX = coords.first.toFloat() * densityScale / scale

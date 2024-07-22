@@ -27,7 +27,6 @@ private val logger = Logger.getLogger("ViewModel")
 class ViewModel(
     private val activity: MapActivity,
 ) {
-    private val model = Model()
     var resBitmap: MutableLiveData<Bitmap>? = null
     private lateinit var svg: SVG
     val pathCoordinates: MutableList<Pair<Int, Int>> = mutableListOf()
@@ -283,7 +282,7 @@ class ViewModel(
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun drawPath(start: Int, end: Int, useElevator: Boolean) {
-        val path = model.getPath(start, end, useElevator)
+        val path = Model.getInstance().getPath(start, end, useElevator)
         val coords = mutableListOf<Pair<Int, Int>>()
 
         path.forEach {

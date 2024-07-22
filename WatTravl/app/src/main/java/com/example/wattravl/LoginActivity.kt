@@ -42,9 +42,9 @@ class LoginActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.nextButton)
 
         nextButton.setOnClickListener {
-            val email = emailEditText.text.toString()
+            val email = emailEditText.text.toString().trim()
 
-            if (isValidEmail(email)) {
+            if (isValidEmail(email) && email.endsWith("@uwaterloo.ca")) {
                 // Save the email and move to the next step
                 sharedPref.edit().putString("email", email).apply()
 
@@ -54,7 +54,11 @@ class LoginActivity : AppCompatActivity() {
                 // Move to the next step
                 showVerificationStep()
             } else {
-                Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show()
+                if (!email.endsWith("@uwaterloo.ca")) {
+                    Toast.makeText(this, "Email is not a Waterloo email", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -109,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
         // This is just a placeholder. Implement actual email sending here.
 
         // return emailVerifier.sendEmail(email)
-        Toast.makeText(this, "Verification code sent to $email", Toast.LENGTH_SHORT).show()
+        // Toast.makeText(this, "Verification code sent to $email", Toast.LENGTH_SHORT).show()
         return true
     }
 
@@ -117,6 +121,6 @@ class LoginActivity : AppCompatActivity() {
         // Placeholder for actual verification logic
 
         return code == "123456"
-        // return emailVerifier.verifyCode(code)
+        return emailVerifier.verifyCode(code)
     }
 }

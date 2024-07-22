@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         val editor = sharedPref.edit()
         editor.putBoolean("isLoggedIn", false)
         editor.apply()
-
+        
          */
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -115,6 +115,8 @@ class MainActivity : AppCompatActivity() {
 
             val isAccessability = accessCheck.isChecked
             val isIndoors = indoorCheck.isChecked
+
+            // TODO(Add check here to make sure rooms are valid)
 
             // Start SecondActivity and pass the selected items
             val intent = Intent(this, MapActivity::class.java).apply {
