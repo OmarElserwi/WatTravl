@@ -1,4 +1,6 @@
-package com.example.wattravl.model
+package com.example.wattravl.model.MC
+
+val unit: Double = 1.0  // Example value for unit
 
 data class HallwayNode(
     val nodeId: Int,                        // Identifier for the hallway node
@@ -17,8 +19,10 @@ data class HallwayNode(
         if (other !is HallwayNode) return false
         return nodeId == other.nodeId
     }
+
+    override fun toString(): String {
+        return "HallwayNode(nodeId=$nodeId)"
+    }
 }
 
 val globalDistances = mutableMapOf<Pair<HallwayNode, HallwayNode>, Double>()
-
-// No need to print the map structure anymore, focusing on Dijkstra's algorithm

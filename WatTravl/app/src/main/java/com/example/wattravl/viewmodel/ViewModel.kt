@@ -75,6 +75,7 @@ class ViewModel(
 
     }
 
+    /*
     @RequiresApi(Build.VERSION_CODES.N)
     fun logPath() {
         val hallways = buildGraph()
@@ -98,6 +99,8 @@ class ViewModel(
         val path = getPath(distances, startNode, endNode)
         logger.log(Level.INFO, path.joinToString(" -> ") { it.nodeId.toString() })
     }
+
+     */
 
     /**
      * These 2 data classes are made just for translating coordinates of the arrow in rendering
