@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -58,6 +59,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidsvg.aar)
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation(libs.android.sendgrid)
+    implementation(libs.sendgrid.java)
 }
 
 secrets {
@@ -73,6 +76,5 @@ secrets {
     // "sdk.dir" is ignored by default.
     ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
     ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
-    implementation(libs.android.sendgrid)
-    implementation(libs.sendgrid.java)
+
 }
