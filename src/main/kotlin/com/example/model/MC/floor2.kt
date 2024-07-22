@@ -36,7 +36,7 @@ fun createHallways2(): Map<Int, HallwayNode> {
 
 fun connectClassroomsToHallways2(hallways: Map<Int, HallwayNode>) {
     hallways[202]?.classrooms?.add(2074) //staircase
-    hallways[203]?.classrooms?.addAll(listOf(2039, 2077)) //2077 is a staircase
+    hallways[203]?.classrooms?.addAll(listOf(2039, 2077)) //2077 is a staircase 2039 is outside
     hallways[204]?.classrooms?.addAll(listOf(2040, 2078)) //2078 is an elevator
     hallways[205]?.classrooms?.addAll(listOf(2029, 2031))
     hallways[206]?.classrooms?.addAll(listOf(2034, 2036))

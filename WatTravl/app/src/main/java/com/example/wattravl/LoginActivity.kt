@@ -3,12 +3,15 @@ package com.example.wattravl
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.wattravl.viewmodel.EmailVerifier
 
 class LoginActivity : AppCompatActivity() {
 
@@ -20,15 +23,18 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var resendCodeButton: Button
 
     private lateinit var sharedPref: SharedPreferences
+    private lateinit var emailVerifier: EmailVerifier
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-
+        emailVerifier = EmailVerifier(this)
         // Start with the email input step
         showEmailStep()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showEmailStep() {
         setContentView(R.layout.activity_login_step1)
 
@@ -53,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showVerificationStep() {
         setContentView(R.layout.activity_login_step2)
 
@@ -96,14 +103,20 @@ class LoginActivity : AppCompatActivity() {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun sendVerificationCode(email: String) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun sendVerificationCode(email: String): Boolean {
         // Logic to send a verification code to the provided email
         // This is just a placeholder. Implement actual email sending here.
+
+        // return emailVerifier.sendEmail(email)
         Toast.makeText(this, "Verification code sent to $email", Toast.LENGTH_SHORT).show()
+        return true
     }
 
     private fun isValidVerificationCode(code: String): Boolean {
         // Placeholder for actual verification logic
+
         return code == "123456"
+        // return emailVerifier.verifyCode(code)
     }
 }
