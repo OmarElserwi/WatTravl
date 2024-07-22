@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         val isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
-        if (!isLoggedIn) {
+        if (isLoggedIn) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
@@ -109,6 +110,11 @@ class MainActivity : AppCompatActivity() {
             val selectedToLocation = toLocationSpinner.selectedItem.toString()
             val selectedFromRoom = fromRoomEditText.text.toString()
             val selectedToRoom = toRoomEditText.text.toString()
+            val accessCheck : CheckBox = findViewById(R.id.accessCheck)
+            val indoorCheck : CheckBox = findViewById(R.id.indoorCheck)
+
+            val isAccessability = accessCheck.isChecked
+            val isIndoors = indoorCheck.isChecked
 
             // Start SecondActivity and pass the selected items
             val intent = Intent(this, MapActivity::class.java).apply {
@@ -116,9 +122,15 @@ class MainActivity : AppCompatActivity() {
                 putExtra("SELECTED_TO_LOCATION", selectedToLocation)
                 putExtra("SELECTED_FROM_ROOM", selectedFromRoom)
                 putExtra("SELECTED_TO_ROOM", selectedToRoom)
+                putExtra("SELECTED_ACCESS", isAccessability)
+                putExtra("SELECTED_INDOOR", isIndoors)
             }
             startActivity(intent)
         }
+
+
+
+
 
         val googleMapsViewToggle: Button = findViewById(R.id.googleMapsViewToggle)
         googleMapsViewToggle.setOnClickListener {

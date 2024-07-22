@@ -207,14 +207,14 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/indoorCheck"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Indoors Only" />
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/accessCheck"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

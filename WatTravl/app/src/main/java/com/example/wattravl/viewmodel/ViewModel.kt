@@ -282,8 +282,8 @@ class ViewModel(
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun drawPath(start: Int, end: Int) {
-        val path = model.getPath(start, end)
+    fun drawPath(start: Int, end: Int, useElevator: Boolean) {
+        val path = model.getPath(start, end, useElevator)
         val coords = mutableListOf<Pair<Int, Int>>()
 
         path.forEach {

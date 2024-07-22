@@ -22,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.wattravl.model.MC.Model
 import com.example.wattravl.viewmodel.ViewModel
 import java.lang.Exception
+import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.math.floor
 
@@ -79,6 +80,10 @@ class MapActivity : AppCompatActivity() {
         val selectedToLocation = intent.getStringExtra("SELECTED_TO_LOCATION")
         val selectedFromRoom = intent.getStringExtra("SELECTED_FROM_ROOM")
         val selectedToRoom = intent.getStringExtra("SELECTED_TO_ROOM")
+        val isAccessability = intent.getBooleanExtra("SELECTED_ACCESS", false)
+        val isIndoors = intent.getBooleanExtra("SELECTED_INDOOR", false)
+
+
 
         val backButton: ImageButton = findViewById(R.id.imageButton)
         backButton.setOnClickListener {
@@ -121,13 +126,14 @@ class MapActivity : AppCompatActivity() {
 
         val fromRoom = convertCharRooms(selectedFromRoom!!)
         val toRoom = convertCharRooms(selectedToRoom!!)
+        logger.log(Level.INFO, isAccessability.toString())
         /*
         val coords = getNodeCoords(model.getNodeId(fromRoom))
         curOffsetX = coords.first.toFloat() * densityScale / scale
         curOffsetY = coords.second.toFloat() * densityScale / scale
 
          */
-        viewModel.drawPath(fromRoom, toRoom)
+        viewModel.drawPath(fromRoom, toRoom, isAccessability)
 
         updateImage()
 
@@ -464,7 +470,103 @@ class MapActivity : AppCompatActivity() {
             584 to Pair(979, 331),
             585 to Pair(980, 287),
             586 to Pair(979, 250),
-            587 to Pair(980, 191)
+            587 to Pair(980, 191),
+            2010 to Pair(508, 381), // DC Floor 2
+            2020 to Pair(546, 381),
+            2030 to Pair(570, 381),
+            2040 to Pair(595, 381),
+            2050 to Pair(621, 381),
+            2060 to Pair(648, 379),
+            2070 to Pair(673, 380),
+            2080 to Pair(686, 380),
+            2090 to Pair(700, 381),
+            2100 to Pair(725, 380),
+            2110 to Pair(745, 379),
+            2120 to Pair(765, 380),
+            2130 to Pair(507, 407),
+            2140 to Pair(508, 441),
+            2150 to Pair(576, 441),
+            2160 to Pair(642, 441),
+            2170 to Pair(661, 441),
+            2180 to Pair(688, 442),
+            2190 to Pair(737, 442),
+            2200 to Pair(812, 442),
+            2210 to Pair(849, 441),
+            2220 to Pair(892, 441),
+            2230 to Pair(918, 441),
+            2240 to Pair(979, 444),
+            2250 to Pair(1022, 442),
+            2260 to Pair(1085, 441),
+            2270 to Pair(1086, 403),
+            2280 to Pair(968, 288),
+            2290 to Pair(1086, 385),
+            2300 to Pair(1086, 358),
+            2310 to Pair(1086, 333),
+            2320 to Pair(1086, 307),
+            2330 to Pair(1086, 281),
+            2340 to Pair(1086, 254),
+            2350 to Pair(1086, 228),
+            2360 to Pair(1086, 199),
+            2370 to Pair(1086, 180),
+            2380 to Pair(1086, 159),
+            2390 to Pair(1061, 157),
+            2400 to Pair(1062, 105),
+            2410 to Pair(575, 492),
+            2420 to Pair(576, 553),
+            2430 to Pair(575, 582),
+            2440 to Pair(661, 463),
+            2450 to Pair(660, 521),
+            2460 to Pair(661, 582),
+            2470 to Pair(736, 483),
+            2480 to Pair(737, 561),
+            2490 to Pair(813, 483),
+            2500 to Pair(813, 521),
+            2510 to Pair(813, 558),
+            2520 to Pair(979, 468),
+            2530 to Pair(978, 544),
+            2540 to Pair(1086, 477),
+            2550 to Pair(1086, 511),
+            2560 to Pair(1085, 535),
+            2570 to Pair(1085, 557),
+            2580 to Pair(505, 608),
+            2590 to Pair(575, 606),
+            2600 to Pair(662, 603),
+            2610 to Pair(686, 603),
+            2620 to Pair(737, 604),
+            2630 to Pair(811, 604),
+            2640 to Pair(849, 602),
+            2650 to Pair(891, 602),
+            2660 to Pair(979, 601),
+            2670 to Pair(1021, 602),
+            2680 to Pair(1083, 602),
+            2690 to Pair(1086, 642),
+            2700 to Pair(1086, 662),
+            2710 to Pair(1086, 685),
+            2720 to Pair(1086, 713),
+            2730 to Pair(1086, 736),
+            2740 to Pair(507, 662),
+            2750 to Pair(543, 663),
+            2760 to Pair(569, 664),
+            2770 to Pair(596, 662),
+            2780 to Pair(622, 663),
+            2790 to Pair(648, 663),
+            2800 to Pair(673, 663),
+            2810 to Pair(699, 663),
+            2820 to Pair(725, 663),
+            2830 to Pair(746, 663),
+            2840 to Pair(241, 551),
+            2850 to Pair(263, 551),
+            2860 to Pair(300, 551),
+            2870 to Pair(332, 552),
+            2880 to Pair(220, 617),
+            2890 to Pair(243, 617),
+            2900 to Pair(333, 615),
+            2910 to Pair(351, 605),
+            2920 to Pair(350, 661),
+            2930 to Pair(228, 662),
+            2940 to Pair(267, 662),
+            2950 to Pair(294, 663),
+            2960 to Pair(319, 662)
         )
 
         fun getNodeCoords(id: Int): Pair<Int, Int> {
