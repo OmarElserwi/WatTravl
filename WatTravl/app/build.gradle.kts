@@ -61,6 +61,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation(libs.android.sendgrid)
     implementation(libs.sendgrid.java)
+    implementation ("com.google.maps.android:android-maps-utils:2.3.0")
+    implementation ("org.slf4j:slf4j-simple:1.7.25")
+    implementation ("com.google.maps:google-maps-services:2.2.0")
 }
 
 secrets {
