@@ -98,6 +98,7 @@ class MapActivity : AppCompatActivity() {
             val floor = floorSpinner.selectedItem.toString()
 
             // Put logic here for update floor
+            viewModel.updateFloor(floor.last().digitToInt())
         }
 
         buildingSpinner = findViewById(R.id.buildingSpinner)

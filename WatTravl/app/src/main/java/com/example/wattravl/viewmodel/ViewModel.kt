@@ -29,7 +29,7 @@ class ViewModel(
 ) {
     private val model = Model()
     var resBitmap: MutableLiveData<Bitmap>? = null
-    private var svg: SVG = SVG.getFromInputStream(activity.assets.open("MCFloor1.svg"))
+    private var svg: SVG = SVG.getFromInputStream(activity.assets.open("MCFloor2.svg"))
     val pathCoordinates: MutableList<Pair<Int, Int>> = mutableListOf()
     val pathFloors: MutableList<Int> = mutableListOf()
     var startPathCoord = 0
@@ -237,6 +237,8 @@ class ViewModel(
      */
     fun updateFloor(newFloor: Int) {
         currentFloor = newFloor
+
+        svg = SVG.getFromInputStream(activity.assets.open("MCFloor${newFloor}.svg"))
 
         startPathCoord = -1
         endPathCoord = -1
