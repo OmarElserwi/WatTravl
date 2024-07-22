@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Navigate to the src directory
+echo "Navigating to the src/main/kotlin directory..."
 cd "$(dirname "$0")/src/main/kotlin"
+echo "Current directory: $(pwd)"
 
 # Set the source directory
 SRC_DIR="com/example/model/MC"
