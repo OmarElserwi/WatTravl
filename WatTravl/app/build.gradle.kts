@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.places)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -64,6 +65,10 @@ dependencies {
     implementation ("com.google.maps.android:android-maps-utils:2.3.0")
     implementation ("org.slf4j:slf4j-simple:1.7.25")
     implementation ("com.google.maps:google-maps-services:2.2.0")
+    implementation("com.google.android.gms:play-services-places:17.0.0")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.android.material:material:1.3.0")
+
 }
 
 secrets {

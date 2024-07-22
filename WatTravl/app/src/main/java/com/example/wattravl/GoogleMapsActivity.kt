@@ -5,14 +5,11 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,6 +18,12 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.gms.common.api.Status
 import com.google.maps.DirectionsApi
 import com.google.maps.GeoApiContext
 import com.google.maps.android.PolyUtil
@@ -31,6 +34,8 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var placesClient: PlacesClient
+    private lateinit var searchEditText: EditText
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -39,6 +44,14 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_googlemaps)
+
+        // Initialize the Places API
+        Places.initialize(applicationContext, "REDACTED_GOOGLE_API_KEY")
+        placesClient = Places.createClient(this)
+
+        // Set up the search EditText
+//        searchEditText = findViewById(R.id.et_search)
+        setupPlaceAutocomplete()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -56,7 +69,7 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
         } else {
             // Permission already granted
-            getDeviceLocation()
+            getDeviceLocation { }
         }
     }
 
@@ -64,12 +77,12 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                getDeviceLocation()
+                getDeviceLocation { }
             }
         }
     }
 
-    private fun getDeviceLocation() {
+    private fun getDeviceLocation(callback: (LatLng) -> Unit) {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -78,27 +91,19 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            // Request the missing permissions, and then overriding
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
             return
         }
         requestSingleLocationUpdate()
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             if (location != null) {
                 val origin = LatLng(location.latitude, location.longitude)
-                val destination = LatLng(43.47, -80.54) // UW
-
-                mMap.addMarker(MarkerOptions().position(origin).title("Current Location"))
-                mMap.addMarker(MarkerOptions().position(destination).title("Marker in University of Waterloo"))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 10f))
-
-                // Fetch and display the route
-                fetchRoute(origin, destination)
+                callback(origin)
             } else {
                 // In case the location is null, request a single update
                 requestSingleLocationUpdate()
@@ -138,6 +143,30 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback {
             return
         }
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+    }
+
+    private fun setupPlaceAutocomplete() {
+        val autocompleteFragment = supportFragmentManager
+            .findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
+
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                val destination = place.latLng ?: return
+
+                // Fetch the current location and then call fetchRoute
+                getDeviceLocation { origin ->
+                    mMap.addMarker(MarkerOptions().position(destination).title(place.name)
+                    )
+                    mMap.addMarker(MarkerOptions().position(origin).title("Current Location"))
+                    fetchRoute(origin, destination)
+                }
+            }
+
+            override fun onError(status: Status) {
+                // Handle error
+            }
+        })
     }
 
     private fun fetchRoute(origin: LatLng, destination: LatLng) {

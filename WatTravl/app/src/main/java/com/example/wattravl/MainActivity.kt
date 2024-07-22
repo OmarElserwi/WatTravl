@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         val isLoggedIn = sharedPref.getBoolean("isLoggedIn", false)
-        if (isLoggedIn) {
+        if (!isLoggedIn) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
@@ -129,10 +129,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-
-
-        val googleMapsViewToggle: Button = findViewById(R.id.googleMapsViewToggle)
+        val googleMapsViewToggle: Button = findViewById(R.id.button_google_maps)
         googleMapsViewToggle.setOnClickListener {
             // Start SecondActivity and pass the selected items
             startActivity(Intent(this, GoogleMapsActivity::class.java))
