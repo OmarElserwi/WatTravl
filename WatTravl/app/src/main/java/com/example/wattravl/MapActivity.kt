@@ -31,7 +31,7 @@ class MapActivity : AppCompatActivity() {
     private lateinit var scaleDetector: ScaleGestureDetector
     private lateinit var gestureDetector: GestureDetector
     private var scale = 10f
-    private var curOffsetX = 500f
+    private var curOffsetX = 700f
     private var curOffsetY = 200f
     private lateinit var viewModel: ViewModel
     private lateinit var imgView: ImageView
@@ -121,9 +121,12 @@ class MapActivity : AppCompatActivity() {
 
         val fromRoom = convertCharRooms(selectedFromRoom!!)
         val toRoom = convertCharRooms(selectedToRoom!!)
+        /*
         val coords = getNodeCoords(model.getNodeId(fromRoom))
         curOffsetX = coords.first.toFloat() * densityScale / scale
         curOffsetY = coords.second.toFloat() * densityScale / scale
+
+         */
         viewModel.drawPath(fromRoom, toRoom)
 
         updateImage()

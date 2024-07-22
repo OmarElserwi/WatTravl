@@ -29,7 +29,7 @@ class ViewModel(
 ) {
     private val model = Model()
     var resBitmap: MutableLiveData<Bitmap>? = null
-    private var svg: SVG = SVG.getFromInputStream(activity.assets.open("MCFloor2.svg"))
+    private lateinit var svg: SVG
     val pathCoordinates: MutableList<Pair<Int, Int>> = mutableListOf()
     val pathFloors: MutableList<Int> = mutableListOf()
     var startPathCoord = 0
@@ -186,9 +186,23 @@ class ViewModel(
         }
          */
 
-        svgString += """
-            <circle cx="${startCoords.first}" cy="${startCoords.second}" r="5" fill="red" />
+        var startCircle = """
+            <circle cx="${startCoords.first}" cy="${startCoords.second}" r="5" fill="red" />"
+        """.trimIndent()
+        var endCircle = """
             <circle cx="${endCoords.first}" cy="${endCoords.second}" r="5" fill="cyan" />
+        """.trimIndent()
+
+        if (startPathCoord > 0) {
+            startCircle = ""
+        }
+        if (endPathCoord != pathCoordinates.size - 1) {
+            endCircle = ""
+        }
+
+        svgString += """
+            $startCircle
+            $endCircle
             </svg>
         """.trimIndent()
         svgString.trimIndent()
