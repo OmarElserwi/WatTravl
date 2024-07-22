@@ -171,33 +171,44 @@ class ViewModel(
             <svg xmlns="http://www.w3.org/2000/svg" width="1632" height="1056">
         """.trimIndent()
 
-        for (i in startPathCoord..(endPathCoord - 1)) {
-            val coord1 = pathCoordinates[i]
-            val coord2 = pathCoordinates[i + 1]
+        var startCircle = ""
+        var endCircle = ""
 
-            svgString += "<line x1=\"" + coord1.first + "\" y1 = \"" + coord1.second + "\" x2 = \"" + coord2.first + "\" y2 = \"" + coord2.second + "\" stroke = \"blue\" stroke-width = \"2\"/>"
-            svgString += drawArrow(coord1, coord2)
-        }
+        if (startPathCoord != -1 && endPathCoord != -1) {
+            for (i in startPathCoord..(endPathCoord - 1)) {
+                val coord1 = pathCoordinates[i]
+                val coord2 = pathCoordinates[i + 1]
 
-        /*
-        pathCoordinates.zipWithNext().forEach { (coord1, coord2) ->
-            svgString += "<line x1=\"" + coord1.first + "\" y1 = \"" + coord1.second + "\" x2 = \"" + coord2.first + "\" y2 = \"" + coord2.second + "\" stroke = \"blue\" stroke-width = \"2\"/>"
-            svgString += drawArrow(coord1, coord2)
-        }
-         */
+                svgString += "<line x1=\"" + coord1.first + "\" y1 = \"" + coord1.second + "\" x2 = \"" + coord2.first + "\" y2 = \"" + coord2.second + "\" stroke = \"blue\" stroke-width = \"2\"/>"
+                svgString += drawArrow(coord1, coord2)
+            }
 
-        var startCircle = """
+            /*
+            pathCoordinates.zipWithNext().forEach { (coord1, coord2) ->
+                svgString += "<line x1=\"" + coord1.first + "\" y1 = \"" + coord1.second + "\" x2 = \"" + coord2.first + "\" y2 = \"" + coord2.second + "\" stroke = \"blue\" stroke-width = \"2\"/>"
+                svgString += drawArrow(coord1, coord2)
+            }
+             */
+
+            startCircle = """
             <circle cx="${startCoords.first}" cy="${startCoords.second}" r="5" fill="red" />"
         """.trimIndent()
-        var endCircle = """
+            endCircle = """
             <circle cx="${endCoords.first}" cy="${endCoords.second}" r="5" fill="cyan" />
         """.trimIndent()
 
-        if (startPathCoord > 0) {
-            startCircle = ""
-        }
-        if (endPathCoord != pathCoordinates.size - 1) {
-            endCircle = ""
+            if (startPathCoord > 0) {
+                val curStartCoords = pathCoordinates[startPathCoord]
+                startCircle = """
+                <circle cx="${curStartCoords.first}" cy="${curStartCoords.second}" r="5" fill="green" />
+            """.trimIndent()
+            }
+            if (endPathCoord < pathCoordinates.size - 1) {
+                val curEndCoords = pathCoordinates[endPathCoord]
+                endCircle = """
+                <circle cx="${curEndCoords.first}" cy="${curEndCoords.second}" r="5" fill="darkgreen" />
+            """.trimIndent()
+            }
         }
 
         svgString += """
