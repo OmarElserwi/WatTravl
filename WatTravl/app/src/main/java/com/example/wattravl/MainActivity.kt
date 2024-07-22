@@ -117,6 +117,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val googleMapsViewToggle: Button = findViewById(R.id.googleMapsViewToggle)
+        googleMapsViewToggle.setOnClickListener {
+            // Start SecondActivity and pass the selected items
+            startActivity(Intent(this, GoogleMapsActivity::class.java))
+        }
+
 //        val locationRefreshButton: Button = findViewById(R.id.refreshButton)
 //        locationRefreshButton.setOnClickListener {
 //            Log.d("MainActivity", "Refreshing location")

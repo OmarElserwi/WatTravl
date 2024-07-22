@@ -37,13 +37,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-<!--            <ImageView-->
-<!--                android:layout_width="411dp"-->
-<!--                android:layout_height="346dp"-->
-<!--                android:src="@drawable/uwlogo"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                tools:layout_editor_absoluteY="74dp" />-->
+            <!--            <ImageView-->
+            <!--                android:layout_width="411dp"-->
+            <!--                android:layout_height="346dp"-->
+            <!--                android:src="@drawable/uwlogo"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                tools:layout_editor_absoluteY="74dp" />-->
 
             <ImageView
                 android:id="@+id/uw_logo_image"
@@ -58,49 +58,56 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-<!--            <Button-->
-<!--                android:id="@+id/buttonGoogleMapsNav"-->
-<!--                android:layout_width="40sp"-->
-<!--                android:layout_height="40sp"-->
-<!--                android:text="Finfefd Route"-->
-<!--                tools:layout_editor_absoluteX="36dp"-->
-<!--                tools:layout_editor_absoluteY="375dp" />-->
+
+            <Button
+                android:id="@+id/googleMapsViewToggle"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/round_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.952"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.585" />
+
+
             <!--            <Button-->
-<!--                android:id="@+id/refreshButton"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="refresh"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.498"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintVertical_bias="0.364" />-->
+            <!--                android:id="@+id/refreshButton"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="refresh"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintHorizontal_bias="0.498"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:layout_constraintVertical_bias="0.364" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/longitudeText"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="longitude"-->
-<!--                android:textColor="#ffd54f"-->
-<!--                android:textSize="20sp"-->
-<!--                app:layout_constraintBottom_toTopOf="@+id/refreshButton"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/Title"-->
-<!--                app:layout_constraintVertical_bias="0.794" />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/longitudeText"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="longitude"-->
+            <!--                android:textColor="#ffd54f"-->
+            <!--                android:textSize="20sp"-->
+            <!--                app:layout_constraintBottom_toTopOf="@+id/refreshButton"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/Title"-->
+            <!--                app:layout_constraintVertical_bias="0.794" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/latitudeText"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="latitude"-->
-<!--                android:textColor="#ffd54f"-->
-<!--                android:textSize="20sp"-->
-<!--                app:layout_constraintBottom_toTopOf="@+id/longitudeText"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/Title" />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/latitudeText"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="latitude"-->
+            <!--                android:textColor="#ffd54f"-->
+            <!--                android:textSize="20sp"-->
+            <!--                app:layout_constraintBottom_toTopOf="@+id/longitudeText"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/Title" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
