@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.wattravl.databinding.ActivityMainBinding
+import com.example.wattravl.model.MC.Model
 import com.google.android.gms.location.*
 
 class MainActivity : AppCompatActivity() {
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         val editor = sharedPref.edit()
         editor.putBoolean("isLoggedIn", false)
         editor.apply()
-        
+
          */
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -117,6 +118,21 @@ class MainActivity : AppCompatActivity() {
             val isIndoors = indoorCheck.isChecked
 
             // TODO(Add check here to make sure rooms are valid)
+            var validRooms = Model.getInstance().isClassroom(Model.convertCharRooms(selectedFromRoom))
+            var invalidRoom = ""
+            if (validRooms) {
+                validRooms = Model.getInstance().isClassroom(Model.convertCharRooms(selectedToRoom))
+                if (!validRooms) {
+                    invalidRoom = selectedToRoom
+                }
+            } else {
+                invalidRoom = selectedFromRoom
+            }
+
+            if (!validRooms) {
+                Toast.makeText(this, "Invalid room $invalidRoom", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             // Start SecondActivity and pass the selected items
             val intent = Intent(this, MapActivity::class.java).apply {

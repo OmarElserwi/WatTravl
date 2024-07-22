@@ -79,10 +79,23 @@ class Model {
         return classroomToHallwayMap[roomId]?.get(0) ?: throw IllegalArgumentException("Classroom $roomId does not exist")
     }
 
+    fun isClassroom(roomId: Int): Boolean {
+        return classroomToHallwayMap.containsKey(roomId)
+    }
+
     companion object {
         private val instance: Model = Model()
         fun getInstance(): Model {
             return instance
+        }
+
+        fun convertCharRooms(id: String): Int {
+            if (id.length == 5) {
+                val lastDigit = id[4] - 'A' + 1
+                return id.substring(0, 4).toInt() * 10 + lastDigit
+            } else {
+                return id.toInt()
+            }
         }
     }
 }

@@ -55,15 +55,6 @@ class MapActivity : AppCompatActivity() {
         imgView.setImageBitmap(bitmap)
     }
 
-    fun convertCharRooms(id: String): Int {
-        if (id.length == 5) {
-            val lastDigit = id[4] - 'A' + 1
-            return id.substring(0, 4).toInt() * 10 + lastDigit
-        } else {
-            return id.toInt()
-        }
-    }
-
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,8 +127,8 @@ class MapActivity : AppCompatActivity() {
 
         viewModel = ViewModel(this)
 
-        val fromRoom = convertCharRooms(selectedFromRoom!!)
-        val toRoom = convertCharRooms(selectedToRoom!!)
+        val fromRoom = Model.convertCharRooms(selectedFromRoom!!)
+        val toRoom = Model.convertCharRooms(selectedToRoom!!)
         logger.log(Level.INFO, isAccessability.toString())
         floorSpinner.setSelection(selectedFromRoom.toString().first().digitToInt() - 1)
         /*
