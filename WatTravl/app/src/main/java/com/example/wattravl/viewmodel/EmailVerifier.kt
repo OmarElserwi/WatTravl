@@ -34,9 +34,11 @@ class EmailVerifier(
         var moveEnd = 0
 
         // COMMENT OUT AFTER DEBUG
+        /*
         val edit = pref.edit()
         edit.putLong("lastLogin1", 0L)
         edit.commit()
+         */
 
         for (i in 1..cap) {
             if (pref.getLong("lastLogin$i", 0) == 0L) {

@@ -57,9 +57,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Remove this to stop constant login
+        /*
         val editor = sharedPref.edit()
         editor.putBoolean("isLoggedIn", false)
         editor.apply()
+
+         */
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

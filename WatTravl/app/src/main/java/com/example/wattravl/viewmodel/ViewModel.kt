@@ -29,7 +29,7 @@ class ViewModel(
 ) {
     private val model = Model()
     var resBitmap: MutableLiveData<Bitmap>? = null
-    private var svg: SVG = SVG.getFromInputStream(activity.assets.open("MCFloor1.svg"))
+    private var svg: SVG = SVG.getFromInputStream(activity.assets.open("MCFloor2.svg"))
     val pathCoordinates: MutableList<Pair<Int, Int>> = mutableListOf()
     val pathFloors: MutableList<Int> = mutableListOf()
     var startPathCoord = 0
@@ -75,6 +75,7 @@ class ViewModel(
 
     }
 
+    /*
     @RequiresApi(Build.VERSION_CODES.N)
     fun logPath() {
         val hallways = buildGraph()
@@ -83,8 +84,8 @@ class ViewModel(
         val classroomToHallwayMap = createClassroomToHallwayMap(hallways)
 
         // Change these to the desired starting and ending classroom IDs
-        val startClassroomId = 1027
-        val endClassroomId = 1085
+        val startClassroomId = 1023
+        val endClassroomId = 1048
 
         // Find the corresponding hallway nodes for the start and end classrooms
         val startNodeId = classroomToHallwayMap[startClassroomId] ?: throw IllegalArgumentException("Classroom $startClassroomId does not exist in the map")
@@ -98,6 +99,8 @@ class ViewModel(
         val path = getPath(distances, startNode, endNode)
         logger.log(Level.INFO, path.joinToString(" -> ") { it.nodeId.toString() })
     }
+
+     */
 
     /**
      * These 2 data classes are made just for translating coordinates of the arrow in rendering
@@ -234,6 +237,8 @@ class ViewModel(
      */
     fun updateFloor(newFloor: Int) {
         currentFloor = newFloor
+
+        svg = SVG.getFromInputStream(activity.assets.open("MCFloor${newFloor}.svg"))
 
         startPathCoord = -1
         endPathCoord = -1
