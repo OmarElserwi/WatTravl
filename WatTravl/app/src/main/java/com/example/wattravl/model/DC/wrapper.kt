@@ -1,10 +1,16 @@
-package com.example.model.DC
+package com.example.wattravl.model.DC
 
-import com.example.model.DC.buildGraphFloor1
-import com.example.model.DC.buildGraphFloor2
-import com.example.model.DC.buildGraphFloor3
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.example.wattravl.model.DC.buildGraphFloor1
+import com.example.wattravl.model.DC.buildGraphFloor2
+import com.example.wattravl.model.DC.buildGraphFloor3
+import com.example.wattravl.model.MC.unit
+import com.example.wattravl.model.MC.HallwayNode
+import com.example.wattravl.model.MC.globalDistances
 
-fun main() {
+@RequiresApi(Build.VERSION_CODES.N)
+fun dc_pathing():List<List<HallwayNode>> {
     val hallwaysFloor1 = buildGraphFloor1()
     val hallwaysFloor2 = buildGraphFloor2()
     val hallwaysFloor3 = buildGraphFloor3()
@@ -23,5 +29,6 @@ fun main() {
     val enDClassroomId = 3853
     val useElevator = false
 
-    val nodeList = dijkstra(startClassroomId, enDClassroomId, hallways, classroomToHallwayMap, useElevator)
+    return dijkstra(startClassroomId, enDClassroomId, hallways, classroomToHallwayMap, useElevator)
+
 }

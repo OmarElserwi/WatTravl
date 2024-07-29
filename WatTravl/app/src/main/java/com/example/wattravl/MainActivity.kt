@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.wattravl.databinding.ActivityMainBinding
+import com.example.wattravl.model.DC.ModelDC
 import com.example.wattravl.model.MC.Model
 import com.google.android.gms.location.*
 
@@ -117,20 +118,42 @@ class MainActivity : AppCompatActivity() {
             val isAccessability = accessCheck.isChecked
             val isIndoors = indoorCheck.isChecked
 
+
             // TODO(Add check here to make sure rooms are valid)
-            var validRooms = Model.getInstance().isClassroom(Model.convertCharRooms(selectedFromRoom))
             var invalidRoom = ""
+            var validRooms = false
+            if (selectedFromLocation == "Davis Centre (DC)") {
+                validRooms = ModelDC.getInstance().isClassroom(ModelDC.convertCharRooms(selectedFromRoom))
+            } else if (selectedFromLocation == "Mathematics and Computer (MC)") {
+                validRooms= Model.getInstance().isClassroom(Model.convertCharRooms(selectedFromRoom))
+            } else {
+                invalidRoom = "building"
+            }
+
+
             if (validRooms) {
-                validRooms = Model.getInstance().isClassroom(Model.convertCharRooms(selectedToRoom))
+                if (selectedToLocation == "Davis Centre (DC)") {
+                    validRooms = ModelDC.getInstance().isClassroom(ModelDC.convertCharRooms(selectedToRoom))
+                } else if (selectedToLocation == "Mathematics and Computer (MC)") {
+                    validRooms= Model.getInstance().isClassroom(Model.convertCharRooms(selectedToRoom))
+                } else {
+                    validRooms = false
+                    invalidRoom = "building"
+                }
+
                 if (!validRooms) {
-                    invalidRoom = selectedToRoom
+                    if (invalidRoom == "") {
+                        invalidRoom = "room ${selectedToRoom}"
+                    }
                 }
             } else {
-                invalidRoom = selectedFromRoom
+                if (invalidRoom == "") {
+                    invalidRoom = "room ${selectedFromRoom}"
+                }
             }
 
             if (!validRooms) {
-                Toast.makeText(this, "Invalid room $invalidRoom", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Invalid $invalidRoom", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

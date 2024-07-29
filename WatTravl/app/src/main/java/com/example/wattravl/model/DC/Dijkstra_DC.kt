@@ -1,7 +1,15 @@
-package com.example.model.DC
+package com.example.wattravl.model.DC
 
+import android.os.Build
 import java.util.PriorityQueue
+import androidx.annotation.RequiresApi
+import com.example.wattravl.model.MC.unit
+import com.example.wattravl.model.MC.HallwayNode
+import com.example.wattravl.model.MC.globalDistances
+import java.util.logging.Level
+import java.util.logging.Logger
 
+private val logger = Logger.getLogger("Djikstra_DC")
 val staircases = mapOf(
     1 to listOf(18411, 18412, 18521, 18421, 18422),
     2 to listOf(2809, 2807, 2829, 2805, 2827, 2810, 2828, 2808, 2806, 28411, 28412, 2804, 2803, 2802, 2801, 2811, 28363, 2812),
@@ -14,39 +22,104 @@ val elevators = mapOf(
     3 to listOf(3817, 3818),
 )
 
+val correspondTransition = mapOf(
+    Pair(1818, 2) to 2818,
+    Pair(1818, 3) to 3818,
+    Pair(2818, 3) to 3818,
+    Pair(2818, 1) to 1818,
+    Pair(3818, 2) to 2818,
+    Pair(3818, 1) to 1818,
+    Pair(3817, 2) to 2817,
+    Pair(2817, 3) to 3817,
+//    Pair(1801, 2) to 2801, Pair(1801, 3) to 3801,
+//    Pair(1802, 2) to 2802, Pair(1802, 3) to 3802,
+//    Pair(1803, 2) to 2803, Pair(1803, 3) to 3803,
+//    Pair(1804, 2) to 2804, Pair(1804, 3) to 3804,
+//    Pair(2801, 1) to 1801,
+    Pair(2801, 3) to 3801,
+//    Pair(2802, 1) to 1802,
+    Pair(2802, 3) to 3802,
+//    Pair(2803, 1) to 1803,
+    Pair(2803, 3) to 3803,
+//    Pair(2804, 1) to 1804,
+    Pair(2804, 3) to 3804,
+//    Pair(3801, 1) to 1801,
+    Pair(3801, 2) to 2801,
+//    Pair(3802, 1) to 1802,
+    Pair(3802, 2) to 2802,
+//    Pair(3803, 1) to 1803,
+    Pair(3803, 2) to 2803,
+//    Pair(3804, 1) to 1804,
+    Pair(3804, 2) to 2804,
+    Pair(18411, 2) to 28411,
+    Pair(18412, 2) to 28412,
+    Pair(18421, 2) to 28401,
+    Pair(18422, 2) to 28402,
+    Pair(18521, 2) to 28521,
+    Pair(28411, 1) to 18411,
+    Pair(28412, 1) to 18412,
+    Pair(28401, 1) to 18421,
+    Pair(28402, 1) to 18422,
+    Pair(28521, 1) to 18521,
+
+    Pair(2809, 3) to 3809,
+    Pair(2807, 3) to 3807,
+    Pair(2805, 3) to 3805,
+    Pair(2810, 3) to 3810,
+    Pair(2808, 3) to 3808,
+    Pair(2806, 3) to 3806,
+
+    Pair(3809, 2) to 2809,
+    Pair(3807, 2) to 2807,
+    Pair(3805, 2) to 2805,
+    Pair(3810, 2) to 2810,
+    Pair(3808, 2) to 2808,
+    Pair(3806, 2) to 2806
+)
+
+
 fun findFloor(number: Int): Int {
     val numberStr = number.toString()
     return numberStr[0].toString().toInt()
 }
 
 fun finDCorrespondingTransition(startingTransition: Int, endingFloor: Int, useElevator: Boolean): Int? {
-    val transitions = if (useElevator) elevators else staircases
+    //val transitions = if (useElevator) elevators else staircases
 
-    // Find the index of the startingTransition in its corresponding floor list
-    val startFloorIndex = transitions.values.indexOfFirst { it.contains(startingTransition) }
-    
-    // If the startingTransition is found in one of the floor lists
-    if (startFloorIndex != -1) {
-        // Get the list of transitions for the starting floor
-        val startTransitions = transitions[startFloorIndex + 1]
-        
-        // Find the index of the startingTransition in its list
-        val transitionIndex = startTransitions?.indexOf(startingTransition)
-        
-        // If the index is found
-        if (transitionIndex != -1) {
-            // Get the list of transitions for the ending floor
-            val endTransitions = transitions[endingFloor]
-            
-            // Return the transition at the same index for the ending floor
-            return endTransitions?.get(transitionIndex!!)
-        }
-    }
-    
-    // If the startingTransition is not found or index is invalid, return null
-    return null
+//    // Find the index of the startingTransition in its corresponding floor list
+//    val startFloorIndex = transitions.values.indexOfFirst { it.contains(startingTransition) }
+//
+//    // If the startingTransition is found in one of the floor lists
+//    if (startFloorIndex != -1) {
+//        // Get the list of transitions for the starting floor
+//        val startTransitions = transitions[startFloorIndex + 1]
+//
+//        // Find the index of the startingTransition in its list
+//        val transitionIndex = startTransitions?.indexOf(startingTransition)
+//
+//        // If the index is found
+//        if (transitionIndex != -1) {
+//            // Get the list of transitions for the ending floor
+//            val endTransitions = transitions[endingFloor]
+//
+//            // Return the transition at the same index for the ending floor
+//            return endTransitions?.get(transitionIndex!!)
+//        }
+//    }
+//
+//    // If the startingTransition is not found or index is invalid, return null
+//    return null
+   return correspondTransition.get(Pair(startingTransition, endingFloor))
 }
 
+fun mergeList(floor:Int): List<Int> {
+    val staircase = staircases[floor]?: throw IllegalArgumentException("Staircases not found")
+    val elevator =  elevators[floor] ?: throw IllegalArgumentException("Elevators not found")
+    return staircase + elevator
+}
+
+
+@RequiresApi(Build.VERSION_CODES.N)
 fun dijkstra(startClassroomId: Int, enDClassroomId: Int, hallways: Map<Int, HallwayNode>, classroomToHallwayMap: Map<Int, List<Int>>, useElevator: Boolean): List<List<HallwayNode>>{
     var hallwayNodesList = mutableListOf<List<HallwayNode>>()
     val startNodeIds = classroomToHallwayMap[startClassroomId] ?: throw IllegalArgumentException("Classroom $startClassroomId does not exist in the map")
@@ -59,21 +132,28 @@ fun dijkstra(startClassroomId: Int, enDClassroomId: Int, hallways: Map<Int, Hall
         val transitions = if (useElevator || endingFloor - startingFloor > 1) {
             elevators[floor] ?: throw IllegalArgumentException("Elevators not found")
         } else {
-            staircases[floor] ?: throw IllegalArgumentException("Staircases not found")
+            mergeList(floor) //staircases[floor]?: throw IllegalArgumentException("Staircases not found")
         }
         var minDistance = Double.MAX_VALUE
         var closestTransition: HallwayNode? = null
         var closestTransitionNum: Int? = null
         var closestStartNode: HallwayNode? = null
         var bestDistances: Map<HallwayNode, Pair<Double, HallwayNode?>>? = null
+
         
         for (startNodeId in startNodeIds) {
             val startNode = hallways[startNodeId] ?: throw IllegalArgumentException("Hallway node $startNodeId does not exist")
             val distances = dijkstraInternal(startNode, hallways)
+            logger.log(Level.INFO, distances.toString())
+            logger.log(Level.INFO, "Start: ${startNode}, hall: ${hallways}")
             for (t in transitions) {
                 val targetNode = classroomToHallwayMap[t]?.getOrNull(0)?.let { hallways[it] } //staircases only have one entrance
+                logger.log(Level.INFO, distances[targetNode].toString())
+                for ((key, value) in distances) {
+                    println("Key: $key, Value: $value")
+                }
                 val distanceToTarget = distances[targetNode]?.first ?: throw IllegalArgumentException("Distance to hallway node $targetNode not found${targetNode}")
-                if (distanceToTarget < minDistance) {
+                if (distanceToTarget < minDistance || finDCorrespondingTransition(t, findFloor(enDClassroomId), useElevator) != null) {
                     minDistance = distanceToTarget
                     closestTransition = targetNode
                     closestStartNode = startNode
@@ -89,6 +169,7 @@ fun dijkstra(startClassroomId: Int, enDClassroomId: Int, hallways: Map<Int, Hall
             var bestDistances2: Map<HallwayNode, Pair<Double, HallwayNode?>>? = null
             hallwayNodesList.add(printPath(bestDistances, closestStartNode, closestTransition))
             val newStart: Int? = finDCorrespondingTransition(closestTransitionNum, findFloor(enDClassroomId), useElevator || endingFloor - startingFloor > 1)
+            logger.log(Level.INFO, newStart.toString())
             val newStartNodeNum: Int = classroomToHallwayMap[newStart]?.firstOrNull() ?: throw IllegalArgumentException("Hallway node $newStart does not exist")
             val newStartNode: HallwayNode = hallways[newStartNodeNum] ?: throw IllegalArgumentException("Hallway node $newStartNodeNum does not exist")
             val distances2: Map<HallwayNode, Pair<Double, HallwayNode?>> = dijkstraInternal(newStartNode, hallways)
@@ -170,6 +251,7 @@ fun printPath(distances: Map<HallwayNode, Pair<Double, HallwayNode?>>, start: Ha
 }
 
 
+@RequiresApi(Build.VERSION_CODES.N)
 fun dijkstraInternal(start: HallwayNode, hallways: Map<Int, HallwayNode>): Map<HallwayNode, Pair<Double, HallwayNode?>> {
     val distances = mutableMapOf<HallwayNode, Pair<Double, HallwayNode?>>().withDefault { Double.MAX_VALUE to null }
     val priorityQueue = PriorityQueue<Pair<HallwayNode, Double>>(compareBy { it.second })
@@ -179,6 +261,7 @@ fun dijkstraInternal(start: HallwayNode, hallways: Map<Int, HallwayNode>): Map<H
 
     while (priorityQueue.isNotEmpty()) {
         val (currentNode, currentDistance) = priorityQueue.poll()
+        println(currentNode.nodeId)
 
         if (currentDistance > distances.getValue(currentNode).first) continue
 

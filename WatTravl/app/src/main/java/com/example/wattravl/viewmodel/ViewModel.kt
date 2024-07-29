@@ -14,6 +14,8 @@ import com.caverock.androidsvg.RenderOptions
 import com.caverock.androidsvg.SVG
 import com.example.wattravl.MapActivity
 import com.example.wattravl.model.*
+import com.example.wattravl.model.DC.ModelDC
+import com.example.wattravl.model.MC.HallwayNode
 import com.example.wattravl.model.MC.Model
 import java.lang.Exception
 import java.util.logging.Level
@@ -31,9 +33,11 @@ class ViewModel(
     private lateinit var svg: SVG
     val pathCoordinates: MutableList<Pair<Int, Int>> = mutableListOf()
     val pathFloors: MutableList<Int> = mutableListOf()
+    val pathBuildings: MutableList<String>  = mutableListOf()
     var startPathCoord = 0
     var endPathCoord = 0
     var currentFloor = 0
+    var building = "MC"
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun transform(coord: Pair<Int, Int>, zoomScale: Float, offsetX: Float, offsetY: Float): Pair<Float, Float> {
@@ -245,7 +249,11 @@ class ViewModel(
      */
 
     fun getBuildingOfNode(nodeId: Int): String {
-        return "MC"
+        if (nodeId < 1000) {
+            return "MC"
+        } else {
+            return "DC"
+        }
     }
 
     fun getFloorOfNode(nodeId: Int): Int {
@@ -260,14 +268,17 @@ class ViewModel(
      * This function assumes all routes of the same floor are consecutive. This should be a correct assumption.
      */
     fun updateFloor(newFloor: Int) {
+        if (building == "DC" && newFloor > 3) {
+            return
+        }
         currentFloor = newFloor
 
-        svg = SVG.getFromInputStream(activity.assets.open("MCFloor${newFloor}.svg"))
+        svg = SVG.getFromInputStream(activity.assets.open("${building}Floor${newFloor}.svg"))
 
         startPathCoord = -1
         endPathCoord = -1
         for (i in 0..(pathFloors.size - 1)) {
-            if (pathFloors[i] == newFloor) {
+            if (pathFloors[i] == newFloor && pathBuildings[i] == building) {
                 if (startPathCoord == -1) {
                     startPathCoord = i
                 }
@@ -277,12 +288,53 @@ class ViewModel(
     }
 
     fun updateBuilding(newBuilding: String) {
-        TODO("Implement update building")
+        var oldBuilding = building
+        building = newBuilding
+        if (oldBuilding == "MC") {
+            currentFloor = 2
+            svg = SVG.getFromInputStream(activity.assets.open("${building}Floor${currentFloor}.svg"))
+        } else {
+            currentFloor = 3
+            svg = SVG.getFromInputStream(activity.assets.open("${building}Floor${currentFloor}.svg"))
+        }
+
+        startPathCoord = -1
+        endPathCoord = -1
+        for (i in 0..(pathFloors.size - 1)) {
+            if (pathFloors[i] == currentFloor && pathBuildings[i] == building) {
+                if (startPathCoord == -1) {
+                    startPathCoord = i
+                }
+                endPathCoord = i
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun drawPath(start: Int, end: Int, useElevator: Boolean) {
-        val path = Model.getInstance().getPath(start, end, useElevator)
+    fun drawPath(startBuilding: String, endBuilding: String, start: Int, end: Int, useElevator: Boolean) : String {
+        val path : List<HallwayNode>
+        var toastMsg = ""
+
+        if (startBuilding == endBuilding) {
+            if (startBuilding == "MC") {
+                path = Model.getInstance().getPath(start, end, useElevator)
+            } else {
+                path = ModelDC.getInstance().getPath(start, end, useElevator)
+            }
+        } else {
+            if (startBuilding == "MC") {
+                path = Model.getInstance().getPath(start, 30, useElevator) + ModelDC.getInstance().getPath(28521, end, useElevator)
+                if (getFloorOfNode(path[0].nodeId) != 3){
+                    toastMsg = "Go to Floor 3"
+                }
+            } else {
+                path = Model.getInstance().getPath(start, 28521, useElevator) + Model.getInstance().getPath(30, end, useElevator)
+                if (getFloorOfNode(path[0].nodeId) != 2){
+                    toastMsg = "Go to Floor 2"
+                }
+            }
+        }
+        //val path = Model.getInstance().getPath(start, end, useElevator)
         val coords = mutableListOf<Pair<Int, Int>>()
 
         path.forEach {
@@ -290,6 +342,7 @@ class ViewModel(
             // coords.add(MapActivity.Companion.nodesToCoords[it.nodeId]!!)
             coords.add(MapActivity.getNodeCoords(it.nodeId))
             pathFloors.add(getFloorOfNode(it.nodeId))
+            pathBuildings.add(getBuildingOfNode(it.nodeId))
         }
 
 
@@ -311,6 +364,7 @@ class ViewModel(
 */
         setPathCoordinates(coords)
         updateFloor(getFloorOfRoom(start))
+        return toastMsg
 
         /*
         setPathCoordinates(listOf(

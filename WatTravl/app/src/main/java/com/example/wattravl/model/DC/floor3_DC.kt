@@ -1,5 +1,7 @@
-package com.example.model.DC
-import com.example.model.DC.unit
+package com.example.wattravl.model.DC
+import com.example.wattravl.model.MC.unit
+import com.example.wattravl.model.MC.HallwayNode
+import com.example.wattravl.model.MC.globalDistances
 
 fun buildGraphFloor3(): Map<Int, HallwayNode> {
     println("Floor 3 classrooms created")

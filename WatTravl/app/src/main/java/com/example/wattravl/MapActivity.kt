@@ -36,14 +36,19 @@ class MapActivity : AppCompatActivity() {
     private var scale = 10f
     private var curOffsetX = 700f
     private var curOffsetY = 200f
+    private var floorChange = 0
+    private var toastMsg = ""
     private lateinit var viewModel: ViewModel
     private lateinit var imgView: ImageView
     private lateinit var buildingSpinner: Spinner
     private lateinit var floorSpinner: Spinner
 
+
     var densityScale = 0f // used to convert screen distances to pixels
 
     val matrix = Matrix()
+
+
 
     @RequiresApi(Build.VERSION_CODES.R)
     fun updateImage() {
@@ -53,6 +58,32 @@ class MapActivity : AppCompatActivity() {
 
         val bitmap = viewModel.draw(scale, curOffsetX, curOffsetY, width, height)
         imgView.setImageBitmap(bitmap)
+        if (toastMsg != "") {
+            Toast.makeText(this, toastMsg, Toast.LENGTH_SHORT).show()
+            if (toastMsg != "Take DC Link") {
+                floorChange = toastMsg.last().digitToInt()
+                logger.log(Level.INFO, floorChange.toString())
+            }
+        }
+        toastMsg = ""
+    }
+
+    fun locToBuilding(location: String) : String {
+        logger.log(Level.INFO, location)
+        if (location == "Davis Centre (DC)") {
+            return "DC"
+        } else if (location == "Mathematics and Computer (MC)"){
+            return "MC"
+        }
+        return "MC"
+    }
+
+    fun buildingToIdx(building : String) : Int {
+        if (building == "DC") {
+            return 1
+        } else {
+            return 2
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -93,6 +124,7 @@ class MapActivity : AppCompatActivity() {
             val floor = floorSpinner.selectedItem.toString()
 
             // Put logic here for update floor
+            logger.log(Level.INFO, "${floor.last().digitToInt()} and ${floorChange}")
             viewModel.updateFloor(floor.last().digitToInt())
             updateImage()
         }
@@ -100,10 +132,12 @@ class MapActivity : AppCompatActivity() {
         buildingSpinner = findViewById(R.id.buildingSpinner)
         floorSpinner = findViewById(R.id.floorSpinner)
 
-        // Set up spinners
-        val buildingAdapter = ArrayAdapter.createFromResource(this, R.array.Locations, android.R.layout.simple_spinner_item)
-        buildingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        buildingSpinner.adapter = buildingAdapter
+        val fromRoom = Model.convertCharRooms(selectedFromRoom!!)
+        val toRoom = Model.convertCharRooms(selectedToRoom!!)
+        val fromBuilding = locToBuilding(selectedFromLocation!!)
+        val toBuilding = locToBuilding(selectedToLocation!!)
+        logger.log(Level.INFO, isAccessability.toString())
+
 
         val floorAdapter = ArrayAdapter.createFromResource(this, R.array.Floors, android.R.layout.simple_spinner_item)
         floorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -113,11 +147,42 @@ class MapActivity : AppCompatActivity() {
                 val floor = floorSpinner.selectedItem.toString()
 
                 viewModel.updateFloor(floor.last().digitToInt())
+                if (floor.last().digitToInt() == floorChange) {
+                    toastMsg = "Take DC Link"
+                    floorChange = 0
+                }
                 updateImage()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 // do nothing
+            }
+        }
+
+        // Set up spinners
+        var firstRun = true
+        val buildingAdapter = ArrayAdapter.createFromResource(this, R.array.Locations, android.R.layout.simple_spinner_item)
+        buildingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        buildingSpinner.adapter = buildingAdapter
+        buildingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val building = locToBuilding(buildingSpinner.selectedItem.toString())
+                logger.log(Level.INFO, building)
+                if (firstRun) {
+                    firstRun = false
+                } else {
+                    if (building == "DC") {
+                        floorSpinner.setSelection(1)
+                    } else {
+                        floorSpinner.setSelection(2)
+                    }
+                }
+                viewModel.updateBuilding(building)
+                updateImage()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                // Do Nothing
             }
         }
 
@@ -127,17 +192,21 @@ class MapActivity : AppCompatActivity() {
 
         viewModel = ViewModel(this)
 
-        val fromRoom = Model.convertCharRooms(selectedFromRoom!!)
-        val toRoom = Model.convertCharRooms(selectedToRoom!!)
-        logger.log(Level.INFO, isAccessability.toString())
         floorSpinner.setSelection(selectedFromRoom.toString().first().digitToInt() - 1)
+        firstRun = true
+        buildingSpinner.setSelection(buildingToIdx(fromBuilding))
+
+
+
         /*
         val coords = getNodeCoords(model.getNodeId(fromRoom))
         curOffsetX = coords.first.toFloat() * densityScale / scale
         curOffsetY = coords.second.toFloat() * densityScale / scale
 
          */
-        viewModel.drawPath(fromRoom, toRoom, isAccessability)
+
+
+        toastMsg = viewModel.drawPath(fromBuilding, toBuilding, fromRoom, toRoom, isAccessability)
 
         updateImage()
 
@@ -604,7 +673,106 @@ class MapActivity : AppCompatActivity() {
             1310 to Pair(1065, 532),
             1320 to Pair(1065, 483),
             1330 to Pair(1065, 437),
-            1340 to Pair(1028, 432)
+            1340 to Pair(1028, 432),
+            3010 to Pair(450, 375), // DC Floor 3
+            3020 to Pair(465, 375),
+            3030 to Pair(486, 374),
+            3040 to Pair(513, 374),
+            3050 to Pair(540, 375),
+            3060 to Pair(566, 374),
+            3070 to Pair(593, 375),
+            3080 to Pair(630, 375),
+            3090 to Pair(450, 400),
+            3100 to Pair(449, 435),
+            3110 to Pair(485, 435),
+            3120 to Pair(546, 436),
+            3130 to Pair(585, 435),
+            3140 to Pair(608, 437),
+            3150 to Pair(631, 435),
+            3160 to Pair(683, 436),
+            3170 to Pair(759, 437),
+            3180 to Pair(797, 437),
+            3190 to Pair(875, 436),
+            3200 to Pair(932, 437),
+            3210 to Pair(972, 436),
+            3220 to Pair(1035, 435),
+            3230 to Pair(1035, 398),
+            3240 to Pair(1035, 378),
+            3250 to Pair(1035, 351),
+            3260 to Pair(1035, 327),
+            3270 to Pair(1035, 300),
+            3280 to Pair(1035, 274),
+            3290 to Pair(1035, 246),
+            3300 to Pair(1035, 221),
+            3310 to Pair(1035, 194),
+            3320 to Pair(1035, 167),
+            3330 to Pair(1036, 141),
+            3340 to Pair(1035, 116),
+            3350 to Pair(1036, 84),
+            3360 to Pair(545, 456),
+            3370 to Pair(546, 495),
+            3380 to Pair(545, 516),
+            3390 to Pair(546, 556),
+            3400 to Pair(606, 466),
+            3410 to Pair(606, 499),
+            3420 to Pair(606, 539),
+            3430 to Pair(606, 567),
+            3440 to Pair(796, 463),
+            3450 to Pair(795, 523),
+            3460 to Pair(1037, 465),
+            3470 to Pair(1037, 501),
+            3480 to Pair(1036, 540),
+            3490 to Pair(1036, 565),
+            3500 to Pair(454, 600),
+            3510 to Pair(476, 600),
+            3520 to Pair(517, 600),
+            3530 to Pair(545, 599),
+            3540 to Pair(606, 599),
+            3550 to Pair(633, 600),
+            3560 to Pair(692, 599),
+            3570 to Pair(729, 599),
+            3580 to Pair(759, 600),
+            3590 to Pair(795, 599),
+            3600 to Pair(862, 599),
+            3610 to Pair(911, 600),
+            3620 to Pair(934, 600),
+            3630 to Pair(971, 599),
+            3640 to Pair(1037, 602),
+            3650 to Pair(1036, 638),
+            3660 to Pair(1037, 656),
+            3670 to Pair(1036, 682),
+            3680 to Pair(1036, 710),
+            3690 to Pair(1037, 734),
+            3700 to Pair(450, 619),
+            3710 to Pair(450, 659),
+            3720 to Pair(488, 660),
+            3730 to Pair(513, 660),
+            3740 to Pair(540, 660),
+            3750 to Pair(569, 660),
+            3760 to Pair(596, 660),
+            3770 to Pair(618, 659),
+            3780 to Pair(632, 661),
+            3790 to Pair(630, 632),
+            3800 to Pair(160, 563),
+            3810 to Pair(196, 563),
+            3820 to Pair(208, 563),
+            3830 to Pair(233, 563),
+            3840 to Pair(261, 563),
+            3850 to Pair(298, 563),
+            3860 to Pair(160, 602),
+            3870 to Pair(250, 600),
+            3880 to Pair(291, 600),
+            3890 to Pair(164, 635),
+            3900 to Pair(164, 659),
+            3910 to Pair(184, 660),
+            3920 to Pair(207, 659),
+            3930 to Pair(233, 660),
+            3940 to Pair(259, 660),
+            3950 to Pair(279, 660),
+            3960 to Pair(290, 659),
+            3970 to Pair(290, 632),
+            3980 to Pair(1036, 67),
+            3990 to Pair(1011, 66)
         )
 
         fun getNodeCoords(id: Int): Pair<Int, Int> {
