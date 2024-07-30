@@ -321,6 +321,7 @@ class ViewModel(
             } else {
                 path = ModelDC.getInstance().getPath(start, end, useElevator)
             }
+            toastMsg = "Head to Floor ${end.toString().first()}"
         } else {
             if (startBuilding == "MC") {
                 path = Model.getInstance().getPath(start, 30, useElevator) + ModelDC.getInstance().getPath(28521, end, useElevator)
