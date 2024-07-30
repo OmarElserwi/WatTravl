@@ -173,8 +173,14 @@ class MapActivity : AppCompatActivity() {
                 } else {
                     if (building == "DC") {
                         floorSpinner.setSelection(1)
+                        if (toRoom.toString().first() != '2' && toBuilding == "DC"){
+                            toastMsg = "Head to Floor ${toRoom.toString().first()}"
+                        }
                     } else {
                         floorSpinner.setSelection(2)
+                        if (toRoom.toString().first() != '3' && toBuilding == "MC"){
+                            toastMsg = "Head to Floor ${toRoom.toString().first()}"
+                        }
                     }
                 }
                 viewModel.updateBuilding(building)
@@ -635,11 +641,12 @@ class MapActivity : AppCompatActivity() {
             2890 to Pair(243, 617),
             2900 to Pair(333, 615),
             2910 to Pair(351, 605),
-            2920 to Pair(350, 661),
+            2920 to Pair(428, 603),
             2930 to Pair(228, 662),
             2940 to Pair(267, 662),
             2950 to Pair(294, 663),
             2960 to Pair(319, 662),
+            2970 to Pair(350, 661),
             1010 to Pair(899, 416), //  DC Floor 1
             1020 to Pair(932, 416),
             1030 to Pair(1028, 415),

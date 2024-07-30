@@ -314,14 +314,16 @@ class ViewModel(
     fun drawPath(startBuilding: String, endBuilding: String, start: Int, end: Int, useElevator: Boolean) : String {
         val path : List<HallwayNode>
         var toastMsg = ""
-
+        logger.log(Level.INFO, "${startBuilding} ${endBuilding}")
         if (startBuilding == endBuilding) {
             if (startBuilding == "MC") {
                 path = Model.getInstance().getPath(start, end, useElevator)
             } else {
                 path = ModelDC.getInstance().getPath(start, end, useElevator)
             }
-            toastMsg = "Head to Floor ${end.toString().first()}"
+            if (end.toString().first() != start.toString().first()) {
+                toastMsg = "Head to Floor ${end.toString().first()}"
+            }
         } else {
             if (startBuilding == "MC") {
                 path = Model.getInstance().getPath(start, 30, useElevator) + ModelDC.getInstance().getPath(28521, end, useElevator)

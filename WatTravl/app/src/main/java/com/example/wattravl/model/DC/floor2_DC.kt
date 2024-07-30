@@ -606,6 +606,7 @@ fun connectHallways2(hallways: Map<Int, HallwayNode>) {
     hallways[2910]?.apply {
         west = hallways[2900]
         east = hallways[2920]
+        south = hallways[2970]
     }
 
     hallways[2920]?.apply {
