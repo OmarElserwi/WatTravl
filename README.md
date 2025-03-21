@@ -1,6 +1,7 @@
 # WatTravl 🌍
 
 <div align="center">
+
   [![Kotlin](https://img.shields.io/badge/Kotlin-1.8.0-purple.svg)](https://kotlinlang.org/)
   [![Android](https://img.shields.io/badge/Android-API%2024-green.svg)](https://developer.android.com/)
   [![Gradle](https://img.shields.io/badge/Gradle-7.5-blue.svg)](https://gradle.org/)
