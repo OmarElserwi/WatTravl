@@ -1,7 +1,8 @@
 # WatTravl 🌍
 
 <div align="center">
-
+  <img src="Logo.JPG" alt="WatTravl Logo" width="200"/>
+  
   [![Kotlin](https://img.shields.io/badge/Kotlin-1.8.0-purple.svg)](https://kotlinlang.org/)
   [![Android](https://img.shields.io/badge/Android-API%2024-green.svg)](https://developer.android.com/)
   [![Gradle](https://img.shields.io/badge/Gradle-7.5-blue.svg)](https://gradle.org/)
@@ -11,7 +12,7 @@
 
 ## 📱 Demo
 
-[![WatTravl Demo](https://img.youtube.com/vi/[YOUR_VIDEO_ID]/maxresdefault.jpg)](https://www.youtube.com/watch?v=[YOUR_VIDEO_ID])
+[![WatTravl Demo](https://img.youtube.com/vi/rKdbXoNlu4o/maxresdefault.jpg)](https://www.youtube.com/watch?v=rKdbXoNlu4o)
 
 ## ✨ Features
 
@@ -146,7 +147,7 @@ cd WatTravl
       </td>
       <td align="center">
         <a href="https://developers.google.com/maps">
-          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/googlemaps/googlemaps-original.svg" alt="Google Maps" width="40" height="40"/>
+          <img src="https://www.vectorlogo.zone/logos/google_maps/google_maps-icon.svg" alt="Google Maps" width="40" height="40"/>
         </a>
       </td>
     </tr>
@@ -184,58 +185,30 @@ WatTravl/
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👥 Team Members
 
 <div align="center">
   <table>
     <tr>
       <td align="center">
-        <img src="[Omar's Photo URL]" alt="Omar Elserwi" width="100"/>
-        <br/>
         <strong>Omar Elserwi</strong>
-        <br/>
-        <em>Project Lead</em>
       </td>
       <td align="center">
-        <img src="[Nicholas's Photo URL]" alt="Nicholas Lee" width="100"/>
-        <br/>
         <strong>Nicholas Lee</strong>
-        <br/>
-        <em>Android Developer</em>
       </td>
       <td align="center">
-        <img src="[David's Photo URL]" alt="David Kim" width="100"/>
-        <br/>
         <strong>David Kim</strong>
-        <br/>
-        <em>Backend Developer</em>
       </td>
     </tr>
     <tr>
       <td align="center">
-        <img src="[Edmond's Photo URL]" alt="Edmond Zhang" width="100"/>
-        <br/>
         <strong>Edmond Zhang</strong>
-        <br/>
-        <em>UI/UX Designer</em>
       </td>
       <td align="center">
-        <img src="[Roshan's Photo URL]" alt="Roshan Kumar" width="100"/>
-        <br/>
         <strong>Roshan Kumar</strong>
-        <br/>
-        <em>Mobile Developer</em>
       </td>
       <td align="center">
-        <img src="[Duc's Photo URL]" alt="Duc Huu Nguyen" width="100"/>
-        <br/>
         <strong>Duc Huu Nguyen</strong>
-        <br/>
-        <em>Full Stack Developer</em>
       </td>
     </tr>
   </table>
