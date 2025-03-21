@@ -1,8 +1,6 @@
 # WatTravl 🌍
 
 <div align="center">
-  <img src="Logo.JPG" alt="WatTravl Logo" width="200"/>
-  
   [![Kotlin](https://img.shields.io/badge/Kotlin-1.8.0-purple.svg)](https://kotlinlang.org/)
   [![Android](https://img.shields.io/badge/Android-API%2024-green.svg)](https://developer.android.com/)
   [![Gradle](https://img.shields.io/badge/Gradle-7.5-blue.svg)](https://gradle.org/)
@@ -13,6 +11,8 @@
 ## 📱 Demo
 
 [![WatTravl Demo](https://img.youtube.com/vi/rKdbXoNlu4o/maxresdefault.jpg)](https://www.youtube.com/watch?v=rKdbXoNlu4o)
+[Watch Demo Video](https://www.youtube.com/watch?v=rKdbXoNlu4o)
+
 
 ## ✨ Features
 
